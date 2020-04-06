@@ -18,8 +18,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void goToJoinParty(View view) {
-        Log.i("Info", "Settings Button pressed");
+        Log.i("Info", "Join Party Button pressed");
         Intent intent = new Intent(this, JoinPartyActivity.class);
+        startActivity(intent);
+    }
+
+    public void goToStartParty(View view) {
+        Log.i("Info", "Start Party Button pressed");
+        Intent intent = new Intent(this, StartPartyActivity.class);
         startActivity(intent);
     }
 
