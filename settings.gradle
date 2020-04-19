@@ -1,2 +1,2 @@
 rootProject.name='YouQueue'
-include ':app', ':spotify-app-remote'
+include ':app', ':spotify-app-remote', ':spotify-auth-release-1.2.1'

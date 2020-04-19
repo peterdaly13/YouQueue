@@ -11,6 +11,7 @@ import android.widget.Toast;
 import com.spotify.android.appremote.api.ConnectionParams;
 import com.spotify.android.appremote.api.Connector;
 import com.spotify.android.appremote.api.SpotifyAppRemote;
+import com.spotify.android.
 
 import com.spotify.protocol.client.CallResult;
 import com.spotify.protocol.client.Subscription;
@@ -19,7 +20,12 @@ import com.spotify.protocol.types.PlayerState;
 import com.spotify.protocol.types.Track;
 import com.spotify.protocol.types.Repeat;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.List;
+import java.util.Scanner;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -67,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
                     public void onConnected(SpotifyAppRemote spotifyAppRemote) {
                         mSpotifyAppRemote = spotifyAppRemote;
                         Log.d("MainActivity", "Connected! Yay!");
+                        String accessToken;
                         connected();
                     }
 
@@ -125,6 +132,37 @@ public class MainActivity extends AppCompatActivity {
 
     private void search(String track){
 
+    }
+
+    /**
+     * Gets the response from http Url request
+     * @param url
+     * @return
+     * @throws IOException
+     */
+    public static String getResponseFromHttpUrl(URL url) throws IOException {
+
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+        connection.setRequestMethod("GET");
+        connection.addRequestProperty("Accept","application/json");
+        connection.addRequestProperty("Content-Type","application/json");
+        connection.addRequestProperty("Authorization","Bearer <spotify api key>");
+
+        try {
+            InputStream in = connection.getInputStream();
+
+            Scanner scanner = new Scanner(in);
+            scanner.useDelimiter("\\A");
+
+            boolean hasInput = scanner.hasNext();
+            if (hasInput) {
+                return scanner.next();
+            } else {
+                return null;
+            }
+        } finally {
+            connection.disconnect();
+        }
     }
 
 }
