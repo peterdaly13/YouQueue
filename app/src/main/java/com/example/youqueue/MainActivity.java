@@ -3,11 +3,19 @@ package com.example.youqueue;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.spotify.android.appremote.api.ConnectionParams;
 import com.spotify.android.appremote.api.Connector;
 import com.spotify.android.appremote.api.SpotifyAppRemote;
@@ -24,6 +32,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.io.ByteArrayOutputStream;
+
 import java.util.List;
 import java.util.Scanner;
 
@@ -130,8 +140,18 @@ public class MainActivity extends AppCompatActivity {
 
     private void resumePlayback(){ mSpotifyAppRemote.getPlayerApi().resume(); }
 
-    private void search(String track){
+    private void search(String track){ }
 
+    //Need to write code to push a songQueue to Firebase
+    private void pushData(SongQueue s){
+
+    }
+    //Need to write code to pull a songQueue from Firebase
+    private SongQueue pullData(){
+        //only here to temporarily remove return error
+        SongQueue s = new SongQueue(1);
+
+        return s;
     }
 
     /**
