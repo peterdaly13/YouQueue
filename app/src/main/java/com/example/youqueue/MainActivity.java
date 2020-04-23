@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -27,6 +28,7 @@ import com.spotify.protocol.types.PlayerState;
 import com.spotify.protocol.types.Track;
 import com.spotify.protocol.types.Repeat;
 
+
 import java.io.ByteArrayOutputStream;
 import java.util.List;
 
@@ -34,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String CLIENT_ID = "d19dfd48fcd54626a0f8ff696ada3b9e";
     private static final String REDIRECT_URI = "com.youqueue://callback";
-    private SpotifyAppRemote mSpotifyAppRemote;
+    private SpotifyAppRemote mSpotifyAppRemote = null;
 
     public void goToSettings(View view) {
         Log.i("Info", "Settings Button pressed");
@@ -52,6 +54,31 @@ public class MainActivity extends AppCompatActivity {
         Log.i("Info", "Start Party Button pressed");
         Intent intent = new Intent(this, StartPartyActivity.class);
         startActivity(intent);
+    }
+
+    public void goToURL(View view) {
+        //Dialog opens if user is already logged in, else opens spotify login webpage
+        //TODO: Fix checking connector to see if user is already logged in
+        if (mSpotifyAppRemote != null && mSpotifyAppRemote.isConnected()) {
+            openDialog();
+        } else {
+            Log.i("Info", "Spotify Button pressed");
+            String url = "https://accounts.spotify.com/en/login/";
+            Uri uriURL = Uri.parse(url);
+            Intent launchBrowser = new Intent(Intent.ACTION_VIEW, uriURL);
+            startActivity(launchBrowser);
+
+            //Set listener to tell when user has logged in and redirect back to MainActivity
+        }
+    }
+
+    public void openDialog() {
+        AlreadyLoggedInDialog dialog = new AlreadyLoggedInDialog();
+        dialog.show(getSupportFragmentManager(), "logged in dialog");
+    }
+
+    public SpotifyAppRemote getmSpotifyAppRemote() {
+        return this.mSpotifyAppRemote;
     }
 
     @Override
