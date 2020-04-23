@@ -4,201 +4,274 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#282728"
     tools:context=".SettingsActivity">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="173dp"
-        android:layout_marginLeft="173dp"
-        android:layout_marginTop="17dp"
-        android:layout_marginEnd="173dp"
-        android:layout_marginRight="173dp"
-        android:layout_marginBottom="690dp"
-        android:text="Settings"
-        android:textSize="22sp"
+    <ImageButton
+        android:id="@+id/imageButton"
+        android:layout_width="53dp"
+        android:layout_height="44dp"
+        android:background="@null"
+        android:onClick="goHome"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintHorizontal_bias="0.865"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.068"
+        app:srcCompat="@drawable/back_icon_foreground"
+        tools:ignore="VectorDrawableCompat" />
 
     <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
+        android:id="@+id/smallTextContainer"
+        android:layout_width="210dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="19dp"
-        android:layout_marginLeft="19dp"
-        android:layout_marginTop="46dp"
-        android:layout_marginEnd="261dp"
-        android:layout_marginRight="261dp"
-        android:layout_marginBottom="666dp"
-        android:text="Who can add songs?"
-        android:textSize="20sp"
+        android:fontFamily="@font/raleway"
+        android:text=""
+        android:textColor="#F7F7F7"
+        android:textSize="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.142"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.25" />
+        app:layout_constraintVertical_bias="0.15" />
+
+    <TextView
+        android:id="@+id/smallTextContainer2"
+        android:layout_width="210dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/raleway"
+        android:text=""
+        android:textColor="#F7F7F7"
+        android:textSize="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.17" />
+
+    <TextView
+        android:id="@+id/smallTextContainer3"
+        android:layout_width="210dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/raleway"
+        android:text=""
+        android:textColor="#F7F7F7"
+        android:textSize="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.308" />
+
+    <TextView
+        android:id="@+id/smallTextContainer4"
+        android:layout_width="210dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/raleway"
+        android:text=""
+        android:textColor="#F7F7F7"
+        android:textSize="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.373" />
+
+    <TextView
+        android:id="@+id/smallTextContainer5"
+        android:layout_width="210dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/raleway"
+        android:text=""
+        android:textColor="#F7F7F7"
+        android:textSize="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.422"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.716" />
 
     <RadioGroup
         android:id="@+id/radioGroup"
-        android:layout_width="400dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="23dp"
-        android:layout_marginLeft="23dp"
-        android:layout_marginTop="82dp"
-        android:layout_marginEnd="388dp"
-        android:layout_marginRight="388dp"
-        android:layout_marginBottom="649dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.029"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintHorizontal_bias="0.283"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.023">
+        app:layout_constraintVertical_bias="0.918">
 
         <RadioButton
             android:id="@+id/radioButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Anyone can add 1 song" />
+            android:fontFamily="@font/raleway"
+            android:text="Anyone can add 1 song"
+            android:textColor="#F7F7F7"
+            android:textSize="12sp" />
 
         <RadioButton
             android:id="@+id/radioButton2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Anyone can add __ songs" />
+            android:fontFamily="@font/raleway"
+            android:text="Anyone can add __ songs"
+            android:textColor="#F7F7F7"
+            android:textSize="12sp" />
 
         <RadioButton
             android:id="@+id/radioButton3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Anyone can add unlimited songs" />
+            android:fontFamily="@font/raleway"
+            android:text="Anyone can add unlimited songs"
+            android:textColor="#F7F7F7"
+            android:textSize="12sp" />
 
         <RadioButton
             android:id="@+id/radioButton4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Another code is required to add songs" />
+            android:fontFamily="@font/raleway"
+            android:text="Another code is required to add songs"
+            android:textColor="#F7F7F7"
+            android:textSize="12sp" />
+
+
     </RadioGroup>
 
     <TextView
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="11dp"
-        android:layout_marginLeft="11dp"
-        android:layout_marginTop="14dp"
-        android:layout_marginEnd="268dp"
-        android:layout_marginRight="268dp"
-        android:layout_marginBottom="483dp"
+        android:fontFamily="@font/raleway"
         android:text="Who can vote?"
-        android:textSize="20sp"
+        android:textColor="#F7F7F7"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
+        app:layout_constraintHorizontal_bias="0.153"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.334" />
+
+    <Switch
+        android:id="@+id/switch1"
+        android:layout_width="180dp"
+        android:layout_height="32dp"
+        android:fontFamily="@font/raleway"
+        android:text=" Ban explicit songs? "
+        android:textColor="#F7F7F7"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.212"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.197" />
+
+    <Switch
+        android:id="@+id/switch2"
+        android:layout_width="180dp"
+        android:layout_height="32dp"
+        android:fontFamily="@font/raleway"
+        android:text="Allow downvoting?   "
+        android:textColor="#F7F7F7"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.212"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.243" />
+
+    <Button
+        android:id="@+id/logOutButton"
+        android:layout_width="153dp"
+        android:layout_height="43dp"
+        android:background="@drawable/rounded_border_button"
+        android:fontFamily="@font/raleway"
+        android:text="Log out of Spotify"
+        android:textColor="#282728"
+        android:textSize="13dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.189"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.072" />
 
     <RadioGroup
         android:id="@+id/radioGroup2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:layout_marginLeft="12dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="67dp"
-        android:layout_marginRight="67dp"
-        android:layout_marginBottom="350dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView3">
+        app:layout_constraintHorizontal_bias="0.235"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.487">
 
         <RadioButton
-            android:id="@+id/radioButton8"
-            android:layout_width="match_parent"
+            android:id="@+id/radioButton2-1"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="No voting, play songs in the order they're added" />
+            android:fontFamily="@font/raleway"
+            android:text="No voting allowed"
+            android:textColor="#F7F7F7"
+            android:textSize="12sp" />
 
         <RadioButton
-            android:id="@+id/radioButton5"
-            android:layout_width="match_parent"
+            android:id="@+id/radioButton2-2"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Anyone can vote once" />
+            android:fontFamily="@font/raleway"
+            android:text="Anyone can vote unlimted times"
+            android:textColor="#F7F7F7"
+            android:textSize="12sp" />
 
         <RadioButton
-            android:id="@+id/radioButton6"
-            android:layout_width="match_parent"
+            android:id="@+id/radioButton2-3"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Anyone can vote __ times" />
+            android:fontFamily="@font/raleway"
+            android:text="Anyone can vote __ times"
+            android:textColor="#F7F7F7"
+            android:textSize="12sp" />
 
         <RadioButton
-            android:id="@+id/radioButton7"
-            android:layout_width="match_parent"
+            android:id="@+id/radioButton2-4"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Anyone can vote unlimited times" />
+            android:fontFamily="@font/raleway"
+            android:text="Anyone can vote once"
+            android:textColor="#F7F7F7"
+            android:textSize="12sp" />
+
     </RadioGroup>
 
-    <Switch
-        android:id="@+id/switch1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:layout_marginLeft="12dp"
-        android:layout_marginTop="19dp"
-        android:layout_marginEnd="176dp"
-        android:layout_marginRight="176dp"
-        android:layout_marginBottom="13dp"
-        android:text=" Ban explicit songs? "
-        android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/switch2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/radioGroup2" />
-
-    <Switch
-        android:id="@+id/switch2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="13dp"
-        android:layout_marginLeft="13dp"
-        android:layout_marginEnd="174dp"
-        android:layout_marginRight="174dp"
-        android:layout_marginBottom="18dp"
-        android:text="Allow downvoting?   "
-        android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/textView6"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_height="80dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="28dp"
-        android:layout_marginEnd="2dp"
-        android:layout_marginRight="2dp"
-        android:layout_marginBottom="273dp"
-        android:text="Log out of Spotify"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/switch2"
-        app:layout_constraintTop_toBottomOf="@+id/radioGroup2"
-        app:layout_constraintVertical_bias="0.903" />
-
     <TextView
-        android:id="@+id/textView6"
+        android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="FAQs"
-        android:textSize="20sp"
-        tools:layout_editor_absoluteX="13dp"
-        tools:layout_editor_absoluteY="479dp" />
+        android:layout_marginLeft="11dp"
+        android:fontFamily="@font/raleway"
+        android:text="Who can add songs?"
+        android:textColor="#F7F7F7"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.142"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.672" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
