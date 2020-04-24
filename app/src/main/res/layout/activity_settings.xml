@@ -52,35 +52,71 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.17" />
 
-    <TextView
-        android:id="@+id/smallTextContainer3"
-        android:layout_width="210dp"
+    <RadioGroup
+        android:id="@+id/radioGroup"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/raleway"
-        android:text=""
-        android:textColor="#F7F7F7"
-        android:textSize="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintHorizontal_bias="0.769"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.308" />
+        app:layout_constraintVertical_bias="0.943">
+
+        <RadioButton
+            android:id="@+id/radioButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/raleway"
+            android:text="Anyone can add 1 song"
+            android:textColor="#F7F7F7"
+            android:textSize="14sp" />
+
+        <RadioButton
+            android:id="@+id/radioButton2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/raleway"
+            android:text="Anyone can add __ songs"
+            android:textColor="#F7F7F7"
+            android:textSize="14sp" />
+
+        <RadioButton
+            android:id="@+id/radioButton3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/raleway"
+            android:text="Anyone can add unlimited songs"
+            android:textColor="#F7F7F7"
+            android:textSize="14sp" />
+
+        <RadioButton
+            android:id="@+id/radioButton4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/raleway"
+            android:text="Another code is required to add songs"
+            android:textColor="#F7F7F7"
+            android:textSize="14sp" />
+
+
+    </RadioGroup>
 
     <TextView
-        android:id="@+id/smallTextContainer4"
-        android:layout_width="210dp"
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="11dp"
         android:fontFamily="@font/raleway"
-        android:text=""
+        android:text="Who can add songs?"
         android:textColor="#F7F7F7"
-        android:textSize="10dp"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintHorizontal_bias="0.256"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.373" />
+        app:layout_constraintVertical_bias="0.696" />
 
     <TextView
         android:id="@+id/smallTextContainer5"
@@ -91,59 +127,102 @@
         android:textColor="#F7F7F7"
         android:textSize="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.422"
+        app:layout_constraintHorizontal_bias="0.701"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.716" />
+        app:layout_constraintVertical_bias="0.739" />
+
+    <Switch
+        android:id="@+id/switch2"
+        android:layout_width="215dp"
+        android:layout_height="35dp"
+        android:fontFamily="@font/raleway"
+        android:text="Allow downvoting?   "
+        android:textColor="#F7F7F7"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.428"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.261" />
+
+    <Switch
+        android:id="@+id/switch1"
+        android:layout_width="215dp"
+        android:layout_height="35dp"
+        android:fontFamily="@font/raleway"
+        android:text=" Ban explicit songs? "
+        android:textColor="#F7F7F7"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.418"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.201" />
+
+    <TextView
+        android:id="@+id/smallTextContainer3"
+        android:layout_width="210dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/raleway"
+        android:text=""
+        android:textColor="#F7F7F7"
+        android:textSize="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.761"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.313" />
 
     <RadioGroup
-        android:id="@+id/radioGroup"
+        android:id="@+id/radioGroup2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.283"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.918">
+        app:layout_constraintVertical_bias="0.515">
 
         <RadioButton
-            android:id="@+id/radioButton"
+            android:id="@+id/radioButton2-1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/raleway"
-            android:text="Anyone can add 1 song"
+            android:text="No voting allowed"
             android:textColor="#F7F7F7"
-            android:textSize="12sp" />
+            android:textSize="14sp" />
 
         <RadioButton
-            android:id="@+id/radioButton2"
+            android:id="@+id/radioButton2-2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/raleway"
-            android:text="Anyone can add __ songs"
+            android:text="Anyone can vote unlimted times"
             android:textColor="#F7F7F7"
-            android:textSize="12sp" />
+            android:textSize="14sp" />
 
         <RadioButton
-            android:id="@+id/radioButton3"
+            android:id="@+id/radioButton2-3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/raleway"
-            android:text="Anyone can add unlimited songs"
+            android:text="Anyone can vote __ times"
             android:textColor="#F7F7F7"
-            android:textSize="12sp" />
+            android:textSize="14sp" />
 
         <RadioButton
-            android:id="@+id/radioButton4"
+            android:id="@+id/radioButton2-4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/raleway"
-            android:text="Another code is required to add songs"
+            android:text="Anyone can vote once"
             android:textColor="#F7F7F7"
-            android:textSize="12sp" />
-
+            android:textSize="14sp" />
 
     </RadioGroup>
 
@@ -154,43 +233,28 @@
         android:fontFamily="@font/raleway"
         android:text="Who can vote?"
         android:textColor="#F7F7F7"
-        android:textSize="16sp"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.153"
+        app:layout_constraintHorizontal_bias="0.218"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.334" />
+        app:layout_constraintVertical_bias="0.355" />
 
-    <Switch
-        android:id="@+id/switch1"
-        android:layout_width="180dp"
-        android:layout_height="32dp"
+    <TextView
+        android:id="@+id/smallTextContainer4"
+        android:layout_width="210dp"
+        android:layout_height="wrap_content"
         android:fontFamily="@font/raleway"
-        android:text=" Ban explicit songs? "
+        android:text=""
         android:textColor="#F7F7F7"
-        android:textSize="12sp"
+        android:textSize="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.212"
+        app:layout_constraintHorizontal_bias="0.756"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.197" />
-
-    <Switch
-        android:id="@+id/switch2"
-        android:layout_width="180dp"
-        android:layout_height="32dp"
-        android:fontFamily="@font/raleway"
-        android:text="Allow downvoting?   "
-        android:textColor="#F7F7F7"
-        android:textSize="12sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.212"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.243" />
+        app:layout_constraintVertical_bias="0.397" />
 
     <Button
         android:id="@+id/logOutButton"
@@ -208,71 +272,6 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.072" />
-
-    <RadioGroup
-        android:id="@+id/radioGroup2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.235"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.487">
-
-        <RadioButton
-            android:id="@+id/radioButton2-1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/raleway"
-            android:text="No voting allowed"
-            android:textColor="#F7F7F7"
-            android:textSize="12sp" />
-
-        <RadioButton
-            android:id="@+id/radioButton2-2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/raleway"
-            android:text="Anyone can vote unlimted times"
-            android:textColor="#F7F7F7"
-            android:textSize="12sp" />
-
-        <RadioButton
-            android:id="@+id/radioButton2-3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/raleway"
-            android:text="Anyone can vote __ times"
-            android:textColor="#F7F7F7"
-            android:textSize="12sp" />
-
-        <RadioButton
-            android:id="@+id/radioButton2-4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/raleway"
-            android:text="Anyone can vote once"
-            android:textColor="#F7F7F7"
-            android:textSize="12sp" />
-
-    </RadioGroup>
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="11dp"
-        android:fontFamily="@font/raleway"
-        android:text="Who can add songs?"
-        android:textColor="#F7F7F7"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.142"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.672" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

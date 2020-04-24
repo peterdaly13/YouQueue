@@ -7,47 +7,17 @@
     tools:context=".MainActivity"
     android:background="@color/Black">
 
-    <Button
-        android:id="@+id/joinPartyButton"
-        android:layout_width="180dp"
-        android:layout_height="wrap_content"
-        android:background="@color/Black"
-        android:onClick="goToJoinParty"
-        android:text="Join A Party"
-        android:textColor="@color/White"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.543" />
-
-
-    <Button
-        android:id="@+id/startPartyButton"
-        android:layout_width="180dp"
-        android:layout_height="wrap_content"
-        android:background="@color/Black"
-        android:onClick="goToStartParty"
-        android:text="Start A Party"
-        android:textColor="@color/White"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.142" />
 
     <ImageButton
         android:id="@+id/settingsButton"
         android:layout_width="76dp"
         android:layout_height="56dp"
-        android:layout_marginBottom="124dp"
-        android:onClick="goToSettings"
+        android:layout_marginBottom="60dp"
         android:background="@color/Black"
+        android:onClick="goToSettings"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.184"
+        app:layout_constraintHorizontal_bias="0.179"
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/ic_settings"
         tools:ignore="VectorDrawableCompat" />
@@ -56,24 +26,58 @@
         android:id="@+id/spotifyButton"
         android:layout_width="72dp"
         android:layout_height="65dp"
-        android:layout_marginBottom="124dp"
-        android:onClick="goToURL"
+        android:layout_marginBottom="60dp"
         android:background="@color/Black"
+        android:onClick="goToURL"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.711"
+        app:layout_constraintHorizontal_bias="0.704"
         app:layout_constraintStart_toEndOf="@+id/settingsButton"
         app:srcCompat="@drawable/ic_spotify" />
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="149dp"
-        android:layout_height="127dp"
+        android:layout_width="183dp"
+        android:layout_height="149dp"
         app:layout_constraintBottom_toTopOf="@+id/joinPartyButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/startPartyButton"
-        app:srcCompat="@drawable/uqicon" />
+        app:layout_constraintVertical_bias="0.503"
+        app:srcCompat="@drawable/youqueuelogo" />
+
+    <Button
+        android:id="@+id/joinPartyButton"
+        android:layout_width="180dp"
+        android:layout_height="wrap_content"
+        android:background="@color/Black"
+        android:fontFamily="@font/raleway"
+        android:onClick="goToJoinParty"
+        android:text="Join A Party"
+        android:textColor="#F7F7F7"
+        android:textSize="24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.666" />
+
+    <Button
+        android:id="@+id/startPartyButton"
+        android:layout_width="203dp"
+        android:layout_height="63dp"
+        android:background="@color/Black"
+        android:fontFamily="@font/raleway"
+        android:onClick="goToStartParty"
+        android:text="Start A Party"
+        android:textColor="#F7F7F7"
+        android:textSize="24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.143" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

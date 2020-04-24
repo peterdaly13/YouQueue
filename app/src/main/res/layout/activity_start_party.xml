@@ -27,6 +27,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/raleway"
+        android:paddingLeft="20dp"
         android:text="000000"
         android:textColor="#F7F7F7"
         android:textSize="24dp"
@@ -52,102 +53,52 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.173" />
 
+    <!--    <TextView-->
+<!--        android:id="@+id/largeTextContainer2"-->
+<!--        android:layout_width="210dp"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:fontFamily="@font/raleway"-->
+<!--        android:text=""-->
+<!--        android:textColor="#F7F7F7"-->
+<!--        android:textSize="20dp"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.452"-->
+<!--        app:layout_constraintLeft_toLeftOf="parent"-->
+<!--        app:layout_constraintRight_toRightOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        app:layout_constraintVertical_bias="0.411" />-->
+
+    <!--    <LinearLayout-->
+<!--        android:id="@+id/searchResults"-->
+<!--        android:layout_width="250dp"-->
+<!--        android:layout_height="100dp"-->
+<!--        android:background="@drawable/rounded_border_edittext"-->
+<!--        android:orientation="vertical"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.496"-->
+<!--        app:layout_constraintLeft_toLeftOf="parent"-->
+<!--        app:layout_constraintRight_toRightOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        app:layout_constraintVertical_bias="0.736">-->
+
+<!--    </LinearLayout>-->
+
     <LinearLayout
         android:id="@+id/queue"
-        android:layout_width="250dp"
-        android:layout_height="100dp"
+        android:layout_width="260dp"
+        android:layout_height="242dp"
         android:background="@drawable/rounded_border_edittext"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.27">
+        app:layout_constraintVertical_bias="0.345">
 
     </LinearLayout>
-
-    <TextView
-        android:id="@+id/largeTextContainer2"
-        android:layout_width="210dp"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/raleway"
-        android:text=""
-        android:textColor="#F7F7F7"
-        android:textSize="20dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.452"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.411" />
 
     <TextView
         android:id="@+id/largeTextContainer3"
-        android:layout_width="210dp"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/raleway"
-        android:text=""
-        android:textColor="#F7F7F7"
-        android:textSize="20dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.452"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.46" />
-
-    <EditText
-        android:id="@+id/editText"
-        android:layout_width="250dp"
-        android:layout_height="50dp"
-        android:background="@drawable/rounded_border_edittext"
-        android:ems="10"
-        android:fontFamily="@font/raleway"
-        android:hint="Search "
-        android:inputType="textVisiblePassword"
-        android:textColor="#F7F7F7"
-        android:textColorHint="#F7F7F7"
-        android:paddingLeft="12dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.537" />
-
-    <TextView
-        android:id="@+id/largeTextContainer4"
-        android:layout_width="210dp"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/raleway"
-        android:text=""
-        android:textColor="#F7F7F7"
-        android:textSize="20dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.452"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.602" />
-
-    <LinearLayout
-        android:id="@+id/searchResults"
-        android:layout_width="250dp"
-        android:layout_height="100dp"
-        android:background="@drawable/rounded_border_edittext"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.73">
-
-    </LinearLayout>
-
-    <TextView
-        android:id="@+id/largeTextContainer5"
         android:layout_width="210dp"
         android:layout_height="wrap_content"
         android:fontFamily="@font/raleway"
@@ -159,7 +110,56 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.812" />
+        app:layout_constraintVertical_bias="0.623" />
+
+    <!--    <TextView-->
+<!--        android:id="@+id/largeTextContainer5"-->
+<!--        android:layout_width="210dp"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:fontFamily="@font/raleway"-->
+<!--        android:text=""-->
+<!--        android:textColor="#F7F7F7"-->
+<!--        android:textSize="20dp"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.497"-->
+<!--        app:layout_constraintLeft_toLeftOf="parent"-->
+<!--        app:layout_constraintRight_toRightOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        app:layout_constraintVertical_bias="0.839" />-->
+
+    <EditText
+        android:id="@+id/editText"
+        android:layout_width="260dp"
+        android:layout_height="50dp"
+        android:background="@drawable/rounded_border_edittext"
+        android:ems="10"
+        android:fontFamily="@font/raleway"
+        android:hint="Search "
+        android:inputType="textVisiblePassword"
+        android:paddingLeft="12dp"
+        android:textColor="#F7F7F7"
+        android:textColorHint="#F7F7F7"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.737" />
+
+    <TextView
+        android:id="@+id/largeTextContainer4"
+        android:layout_width="210dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/raleway"
+        android:text=""
+        android:textColor="#F7F7F7"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.811" />
 
     <ImageButton
         android:id="@+id/imageButton"
