@@ -29,6 +29,8 @@ import com.spotify.protocol.types.Repeat;
 
 import java.io.ByteArrayOutputStream;
 import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -136,6 +138,8 @@ public class MainActivity extends AppCompatActivity {
 
     //Need to write code to push a songQueue to Firebase
     private void pushData(SongQueue s){
+        Map<Integer, SongQueue> hashMap = new HashMap<Integer, SongQueue>();
+        hashMap.put(1, s);
 
     }
     //Need to write code to pull a songQueue from Firebase

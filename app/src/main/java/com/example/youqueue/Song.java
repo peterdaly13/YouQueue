@@ -5,11 +5,13 @@ public class Song implements Comparable<Song>{
     private int URI;
     private int userID;
     private int votes;
+    private String name;
 
-    public Song(int URI, int userID, int votes){
+    public Song(int URI, int userID, int votes, String name){
         this.URI=URI;
         this.userID=userID;
         this.votes=votes;
+        this.name=name;
     }
     //Getters
     int getURI(){
@@ -21,8 +23,9 @@ public class Song implements Comparable<Song>{
     int getVotes(){
         return votes;
     }
+    String getName(){ return name;}
 
-    //Setters (Shouldn't ever need to change URI or userID)
+    //Setters (Shouldn't ever need to change URI, userID or name)
     private void setVotes(int v){
         this.votes=v;
     }
