@@ -1,8 +1,12 @@
 package com.example.youqueue;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.preference.PreferenceManager;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -11,6 +15,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -33,12 +38,14 @@ import java.io.ByteArrayOutputStream;
 import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
+import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
 
     private static final String CLIENT_ID = "d19dfd48fcd54626a0f8ff696ada3b9e";
     private static final String REDIRECT_URI = "com.youqueue://callback";
     private SpotifyAppRemote mSpotifyAppRemote = null;
+    public String yourUserID;
 
     public void goToSettings(View view) {
         Log.i("Info", "Settings Button pressed");
@@ -83,10 +90,61 @@ public class MainActivity extends AppCompatActivity {
         return this.mSpotifyAppRemote;
     }
 
+    // Generate the 6 Digit User ID
+    public static String generateUserID() {
+        // Generate random number from 0 to 999999
+        Random rnd = new Random();
+        int number = rnd.nextInt(999999);
+
+        // Convert any number sequence into 6 digits (Example: 0 becomes 000000)
+        return String.format("%06d", number);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // Pop-up which prompts for username
+        // Saves the username in a preference field
+        final SharedPreferences prefs = PreferenceManager
+                .getDefaultSharedPreferences(this);
+        String userName = prefs.getString("user_name", null);
+
+        // Check if the preference field is set. If not, prompt the user to input their username
+        if (userName == null) {
+            EditText input = new EditText(this);
+            input.setId(1000);
+            AlertDialog dialog = new AlertDialog.Builder(this)
+                    .setView(input).setTitle("Enter your username!")
+                    .setPositiveButton("Ok",
+                            new DialogInterface.OnClickListener() {
+
+                                @Override
+                                public void onClick(DialogInterface dialog,
+                                                    int which) {
+                                    EditText theInput = (EditText) ((AlertDialog) dialog)
+                                            .findViewById(1000);
+                                    String enteredText = theInput.getText()
+                                            .toString();
+                                    if (!enteredText.equals("")) {
+                                        SharedPreferences.Editor editor = prefs
+                                                .edit();
+                                        editor.putString("user_name",
+                                                enteredText);
+                                        editor.commit();
+                                    }
+                                }
+                            }).create();
+            dialog.show();
+        }
+
+        // Generate userID using the random number generating function above
+        yourUserID = generateUserID();
+
+        // Text to check if the username is being set correctly (Can also be kept and styled if we want to display their username)
+        TextView xmlUserNameCheck = (TextView) findViewById(R.id.userNameCheck);
+        xmlUserNameCheck.setText("HELLO, " + userName.toUpperCase());
     }
 
     @Override

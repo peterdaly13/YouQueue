@@ -7,12 +7,19 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Switch;
 
 import com.spotify.android.appremote.api.SpotifyAppRemote;
 
 public class SettingsActivity extends AppCompatActivity {
 
     MainActivity ma = new MainActivity();
+
+//    // Initiate Location Switch
+//    Switch simpleSwitch = (Switch) findViewById(R.id.locationSwitch);
+//
+//    // Check whether Starting Parties by Location is True or False
+//    Boolean switchState = simpleSwitch.isChecked();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
