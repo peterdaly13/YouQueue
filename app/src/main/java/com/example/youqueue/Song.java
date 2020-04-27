@@ -2,19 +2,19 @@ package com.example.youqueue;
 
 public class Song implements Comparable<Song>{
 
-    private int URI;
+    private String URI;
     private int userID;
     private int votes;
     private String name;
 
-    public Song(int URI, int userID, int votes, String name){
+    public Song(String URI, int userID, int votes, String name){
         this.URI=URI;
         this.userID=userID;
         this.votes=votes;
         this.name=name;
     }
     //Getters
-    int getURI(){
+    String getURI(){
         return URI;
     }
     int getUserID(){

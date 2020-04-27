@@ -30,6 +30,8 @@ import com.spotify.protocol.types.Repeat;
 
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
@@ -39,6 +41,8 @@ public class MainActivity extends AppCompatActivity {
     private static final String CLIENT_ID = "d19dfd48fcd54626a0f8ff696ada3b9e";
     private static final String REDIRECT_URI = "com.youqueue://callback";
     private SpotifyAppRemote mSpotifyAppRemote = null;
+    final StorageReference storageReference = FirebaseStorage.getInstance().getReference();
+    final StorageReference queueReference = storageReference.child("Queues");
 
     public void goToSettings(View view) {
         Log.i("Info", "Settings Button pressed");
@@ -53,6 +57,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void goToStartParty(View view) {
+        SongQueue queue = new SongQueue(123);
+        Song song = new Song("spotify:track:5nrmGFJ87crVoJF5xdRqwn",1,5,"thissong");
+        queue.addSong(song);
+        try {
+            pushData(queue);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         Log.i("Info", "Start Party Button pressed");
         Intent intent = new Intent(this, StartPartyActivity.class);
         startActivity(intent);
@@ -87,6 +100,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
     }
 
     @Override
@@ -164,11 +179,19 @@ public class MainActivity extends AppCompatActivity {
     private void search(String track){ }
 
     //Need to write code to push a songQueue to Firebase
-    private void pushData(SongQueue s){
-        Map<Integer, SongQueue> hashMap = new HashMap<Integer, SongQueue>();
-        hashMap.put(1, s);
+    private void pushData(SongQueue s) throws IOException {
+        Map<String, SongQueue> hashMap = new HashMap<String, SongQueue>();
+        String id = Integer.toString(s.getPartyLeaderID());
+        hashMap.put(id, s);
 
+        ByteArrayOutputStream boas = new ByteArrayOutputStream();
+
+        ObjectOutputStream out = new ObjectOutputStream(boas);
+        out.writeObject(hashMap);
+
+        UploadTask uploadTask = queueReference.putBytes(boas.toByteArray());
     }
+    
     //Need to write code to pull a songQueue from Firebase
     private SongQueue pullData(){
         //only here to temporarily remove return error
