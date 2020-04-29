@@ -59,7 +59,8 @@ public class MainActivity extends AppCompatActivity {
 
     public void goToJoinParty(View view) throws InterruptedException {
         Log.i("Info1", "before Pull Data");
-        pullData(111333 , "updateVotes", "QWERTY", null);
+        Song s = new Song("Taco", 111, 1234, "Peter's Song");
+        pullData(111 , "addASong", null, s);
 
         Log.i("Info2", "Join Party Button pressed");
         Intent intent = new Intent(this, JoinPartyActivity.class);
@@ -207,26 +208,26 @@ public class MainActivity extends AppCompatActivity {
     }
     //Need to write code to pull a songQueue from Firebase
     private void pullData(int partyLeaderID, final String action, final String uri, final Song song) throws InterruptedException {
-
-        Log.i("In Pull Data","asdfad");
+        final String[] actionRef = {action};
+        Log.i("InPullData","asdfad");
         DatabaseReference qReference = mDatabase.child("queues").child(Integer.toString(partyLeaderID));
         ValueEventListener postListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // Get Post object and use the values to update the UI
                 SongQueue st = dataSnapshot.getValue(SongQueue.class);
-
                 Log.i("onDataChange", action + "    " + st.toString());
-                if (action.equals("displayQueue")) {
+                if (actionRef[0].equals("displayQueue")) {
                     displayQueue(st);
-                } else if (action.equals("updateVotes")){
+                } else if (actionRef[0].equals("updateVotes")){
                     updateVotes(st,uri);
-                } else if (action.equals("addASong")) {
+                } else if (actionRef[0].equals("addASong")) {
                     addASong(st, song);
-                } else if (action.equals("playNextSong")) {
+                } else if (actionRef[0].equals("playNextSong")) {
                     playNextSong(st);
                 }
-
+                actionRef[0] ="";
+                Log.i("InPullData","asdfaddd");
                 updateQueue(st);
                 //Log.d("PullData", sq.toString());
 
@@ -286,7 +287,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void updateQueue(SongQueue s) {
         sq=s;
-        Log.i("Info2", s.toString());
+        Log.i("Info3", s.toString());
     }
 
 }
