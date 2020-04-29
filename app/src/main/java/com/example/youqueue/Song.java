@@ -33,7 +33,7 @@ public class Song implements Comparable<Song>{
     private void setVotes(int v){
         this.votes=v;
     }
-    private void incrementVotes(){
+    public void incrementVotes(){
         this.votes+=1;
     }
 

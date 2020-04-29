@@ -15,138 +15,39 @@ public class SongQueue {
     public int partyLeaderID;
     public List<Song> queue;
 
-        public SongQueue(){
-
-        }
+        public SongQueue(){}
 
         public SongQueue(int partyLeaderID) {
             this.partyLeaderID = partyLeaderID;
-            queue = new ArrayList<Song>(); /*{
-                @Override
-                public int size() {
-                    return 0;
-                }
-
-                @Override
-                public boolean isEmpty() {
-                    return false;
-                }
-
-                @Override
-                public boolean contains(@Nullable Object o) {
-                    return false;
-                }
-
-                @NonNull
-                @Override
-                public Iterator<Song> iterator() {
-                    return null;
-                }
-
-                @NonNull
-                @Override
-                public Object[] toArray() {
-                    return new Object[0];
-                }
-
-                @NonNull
-                @Override
-                public <T> T[] toArray(@NonNull T[] a) {
-                    return null;
-                }
-
-                @Override
-                public boolean add(Song song) {
-                    return false;
-                }
-
-                @Override
-                public boolean remove(@Nullable Object o) {
-                    return false;
-                }
-
-                @Override
-                public boolean containsAll(@NonNull Collection<?> c) {
-                    return false;
-                }
-
-                @Override
-                public boolean addAll(@NonNull Collection<? extends Song> c) {
-                    return false;
-                }
-
-                @Override
-                public boolean addAll(int index, @NonNull Collection<? extends Song> c) {
-                    return false;
-                }
-
-                @Override
-                public boolean removeAll(@NonNull Collection<?> c) {
-                    return false;
-                }
-
-                @Override
-                public boolean retainAll(@NonNull Collection<?> c) {
-                    return false;
-                }
-
-                @Override
-                public void clear() {
-
-                }
-
-                @Override
-                public Song get(int index) {
-                    return null;
-                }
-
-                @Override
-                public Song set(int index, Song element) {
-                    return null;
-                }
-
-                @Override
-                public void add(int index, Song element) {
-
-                }
-
-                @Override
-                public Song remove(int index) {
-                    return null;
-                }
-
-                @Override
-                public int indexOf(@Nullable Object o) {
-                    return 0;
-                }
-
-                @Override
-                public int lastIndexOf(@Nullable Object o) {
-                    return 0;
-                }
-
-                @NonNull
-                @Override
-                public ListIterator<Song> listIterator() {
-                    return null;
-                }
-
-                @NonNull
-                @Override
-                public ListIterator<Song> listIterator(int index) {
-                    return null;
-                }
-
-                @NonNull
-                @Override
-                public List<Song> subList(int fromIndex, int toIndex) {
-                    return null;
-                }
-            };*/
+            queue = new ArrayList<Song>();
         }
 
-        Song nextSong() {
-            return queue.get(0);
+         Song nextSong() {
+            Song result = null;
+            int maxVotes = -1;
+            for (int i = 0; i < queue.size(); i++){
+                if (queue.get(i).getVotes() > maxVotes) {
+                    result = queue.get(i);
+                }
+            }
+            return result;
+        }
+
+        void removeSong(String uri) {
+            for (int i = 0; i < queue.size(); i++){
+                if (queue.get(i).getURI().equals(uri)) {
+                    queue.remove(i);
+                }
+            }
+        }
+
+        Song getSong(String uri) {
+            for (int i = 0; i < queue.size(); i++){
+                if (queue.get(i).getURI().equals(uri)) {
+                    return queue.get(i);
+                }
+            }
+            return null;
         }
 
         void addSong(Song s) {

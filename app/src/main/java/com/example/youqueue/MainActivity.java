@@ -58,10 +58,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void goToJoinParty(View view) throws InterruptedException {
-        pullData(111333);
-        Thread.sleep(5000);
-        Log.i("Info",sq.toString() + "11111");
-        Log.i("Info", "Join Party Button pressed");
+        Log.i("Info1", "before Pull Data");
+        pullData(111333 , "updateVotes", "QWERTY", null);
+
+        Log.i("Info2", "Join Party Button pressed");
         Intent intent = new Intent(this, JoinPartyActivity.class);
         startActivity(intent);
     }
@@ -206,16 +206,29 @@ public class MainActivity extends AppCompatActivity {
                 });
     }
     //Need to write code to pull a songQueue from Firebase
-    private void pullData(int partyLeaderID) throws InterruptedException {
+    private void pullData(int partyLeaderID, final String action, final String uri, final Song song) throws InterruptedException {
 
+        Log.i("In Pull Data","asdfad");
         DatabaseReference qReference = mDatabase.child("queues").child(Integer.toString(partyLeaderID));
         ValueEventListener postListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // Get Post object and use the values to update the UI
-                SongQueue st= dataSnapshot.getValue(SongQueue.class);
+                SongQueue st = dataSnapshot.getValue(SongQueue.class);
+
+                Log.i("onDataChange", action + "    " + st.toString());
+                if (action.equals("displayQueue")) {
+                    displayQueue(st);
+                } else if (action.equals("updateVotes")){
+                    updateVotes(st,uri);
+                } else if (action.equals("addASong")) {
+                    addASong(st, song);
+                } else if (action.equals("playNextSong")) {
+                    playNextSong(st);
+                }
+
                 updateQueue(st);
-                Log.d("PullData", sq.toString());
+                //Log.d("PullData", sq.toString());
 
                 // ...
             }
@@ -228,6 +241,46 @@ public class MainActivity extends AppCompatActivity {
             }
         };
         qReference.addValueEventListener(postListener);
+    }
+
+
+    /*
+    This grabs the top voted song from the queue, plays it,
+    deletes the song from the queue and pushes the queue
+    back to firebase
+     */
+    private void playNextSong(SongQueue songQueue) {
+        Song s = songQueue.nextSong();
+        playSong(s.getURI());
+        songQueue.removeSong(s.getURI());
+        pushData(songQueue);
+    }
+
+    /*
+    This adds a song to the queue and then
+    returns the queue to firebase
+     */
+    private void addASong(SongQueue songQueue, Song song) {
+        songQueue.addSong(song);
+        pushData(songQueue);
+    }
+
+    /*
+    This updates the specific song with one more vote and
+    pushes the resulting queue back to firebase
+     */
+    private void updateVotes(SongQueue songQueue, String uri) {
+        Log.i("updateVotes", songQueue.toString());
+        songQueue.getSong(uri).incrementVotes();
+
+        pushData(songQueue);
+        Log.i("updateVotes2", songQueue.toString());
+    }
+
+    /*
+    This displays the queue... Need some help from front end folks
+     */
+    private void displayQueue(SongQueue st) {
 
     }
 
