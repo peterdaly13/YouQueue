@@ -2,10 +2,14 @@ package com.example.youqueue;
 
 public class Song implements Comparable<Song>{
 
-    private String URI;
-    private int userID;
-    private int votes;
-    private String name;
+    public String URI;
+    public int userID;
+    public int votes;
+    public String name;
+
+    public Song(){
+
+    }
 
     public Song(String URI, int userID, int votes, String name){
         this.URI=URI;
@@ -47,5 +51,15 @@ public class Song implements Comparable<Song>{
         else{
             return 1;
         }
+    }
+
+    @Override
+    public String toString() {
+        return "Song{" +
+                "URI='" + URI + '\'' +
+                ", userID=" + userID +
+                ", votes=" + votes +
+                ", name='" + name + '\'' +
+                '}';
     }
 }

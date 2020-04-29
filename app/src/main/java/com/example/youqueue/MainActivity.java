@@ -1,5 +1,6 @@
 package com.example.youqueue;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -13,10 +14,15 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.spotify.android.appremote.api.ConnectionParams;
 import com.spotify.android.appremote.api.Connector;
 import com.spotify.android.appremote.api.SpotifyAppRemote;
@@ -39,6 +45,11 @@ public class MainActivity extends AppCompatActivity {
     private static final String CLIENT_ID = "d19dfd48fcd54626a0f8ff696ada3b9e";
     private static final String REDIRECT_URI = "com.youqueue://callback";
     private SpotifyAppRemote mSpotifyAppRemote = null;
+    // Access a Cloud Firestore instance from your Activity
+    private DatabaseReference mDatabase;
+    HashMap map;
+    SongQueue sq = new SongQueue();
+
 
     public void goToSettings(View view) {
         Log.i("Info", "Settings Button pressed");
@@ -46,16 +57,31 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void goToJoinParty(View view) {
+    public void goToJoinParty(View view) throws InterruptedException {
+        pullData(111333);
+        Thread.sleep(5000);
+        Log.i("Info",sq.toString() + "11111");
         Log.i("Info", "Join Party Button pressed");
         Intent intent = new Intent(this, JoinPartyActivity.class);
         startActivity(intent);
     }
 
     public void goToStartParty(View view) {
+        try {
+            Song s = new Song("1dfsccdf",100, 12, "TestSong");
+            Song s2 = new Song("jsdhfiweur",1000, 120, "TestSong2");
+            SongQueue songQueue= new SongQueue(111);
+            songQueue.addSong(s);
+            songQueue.addSong(s2);
+            pushData(songQueue);
+        }catch (Exception e){
+            Log.w("Potato", "Error adding document", e);
+        }
+
         Log.i("Info", "Start Party Button pressed");
         Intent intent = new Intent(this, StartPartyActivity.class);
         startActivity(intent);
+
     }
 
     public void goToURL(View view) {
@@ -87,12 +113,14 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        mDatabase = FirebaseDatabase.getInstance().getReference();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
         // Set the connection parameters
+        /*
         ConnectionParams connectionParams =
                 new ConnectionParams.Builder(CLIENT_ID)
                         .setRedirectUri(REDIRECT_URI)
@@ -115,7 +143,7 @@ public class MainActivity extends AppCompatActivity {
                         // Something went wrong when attempting to connect! Handle errors here
                     }
                 });
-
+            */
     }
 
     @Override
@@ -165,16 +193,47 @@ public class MainActivity extends AppCompatActivity {
 
     //Need to write code to push a songQueue to Firebase
     private void pushData(SongQueue s){
-        Map<Integer, SongQueue> hashMap = new HashMap<Integer, SongQueue>();
-        hashMap.put(1, s);
-
+        Log.d("PushData", "1234");
+        HashMap<String, Object> map = new HashMap<>();
+        String folder = "/queues/"+ Integer.toString(s.partyLeaderID);
+        map.put(folder, s);
+        mDatabase.updateChildren(map)
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w("Potato", "Error adding document", e);
+                    }
+                });
     }
     //Need to write code to pull a songQueue from Firebase
-    private SongQueue pullData(){
-        //only here to temporarily remove return error
-        SongQueue s = new SongQueue(1);
+    private void pullData(int partyLeaderID) throws InterruptedException {
 
-        return s;
+        DatabaseReference qReference = mDatabase.child("queues").child(Integer.toString(partyLeaderID));
+        ValueEventListener postListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // Get Post object and use the values to update the UI
+                SongQueue st= dataSnapshot.getValue(SongQueue.class);
+                updateQueue(st);
+                Log.d("PullData", sq.toString());
+
+                // ...
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // Getting Post failed, log a message
+                Log.w("PullData", "Failed to Load SongQueue from Firebase", databaseError.toException());
+                // ...
+            }
+        };
+        qReference.addValueEventListener(postListener);
+
+    }
+
+    private void updateQueue(SongQueue s) {
+        sq=s;
+        Log.i("Info2", s.toString());
     }
 
 }
