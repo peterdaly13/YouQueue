@@ -39,7 +39,7 @@ public class authLib extends AppCompatActivity {
                     .build();
 
 
-    AuthorizationClient client = new AuthorizationClient();
+    //AuthorizationClient client = new AuthorizationClient();
     //client.openLoginActivity(this, AUTH_TOKEN_REQUEST_CODE , request);
 
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
