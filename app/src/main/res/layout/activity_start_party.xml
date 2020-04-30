@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".StartPartyActivity"
-    android:background="#282728" >
+    android:background="#282728"
+    tools:context=".StartPartyActivity">
 
     <TextView
         android:id="@+id/startPartyText_Code"
@@ -54,46 +54,47 @@
         app:layout_constraintVertical_bias="0.173" />
 
     <!--    <TextView-->
-<!--        android:id="@+id/largeTextContainer2"-->
-<!--        android:layout_width="210dp"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:fontFamily="@font/raleway"-->
-<!--        android:text=""-->
-<!--        android:textColor="#F7F7F7"-->
-<!--        android:textSize="20dp"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintHorizontal_bias="0.452"-->
-<!--        app:layout_constraintLeft_toLeftOf="parent"-->
-<!--        app:layout_constraintRight_toRightOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent"-->
-<!--        app:layout_constraintVertical_bias="0.411" />-->
+    <!--        android:id="@+id/largeTextContainer2"-->
+    <!--        android:layout_width="210dp"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:fontFamily="@font/raleway"-->
+    <!--        android:text=""-->
+    <!--        android:textColor="#F7F7F7"-->
+    <!--        android:textSize="20dp"-->
+    <!--        app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--        app:layout_constraintHorizontal_bias="0.452"-->
+    <!--        app:layout_constraintLeft_toLeftOf="parent"-->
+    <!--        app:layout_constraintRight_toRightOf="parent"-->
+    <!--        app:layout_constraintTop_toTopOf="parent"-->
+    <!--        app:layout_constraintVertical_bias="0.411" />-->
 
     <!--    <LinearLayout-->
-<!--        android:id="@+id/searchResults"-->
-<!--        android:layout_width="250dp"-->
-<!--        android:layout_height="100dp"-->
-<!--        android:background="@drawable/rounded_border_edittext"-->
-<!--        android:orientation="vertical"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintHorizontal_bias="0.496"-->
-<!--        app:layout_constraintLeft_toLeftOf="parent"-->
-<!--        app:layout_constraintRight_toRightOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent"-->
-<!--        app:layout_constraintVertical_bias="0.736">-->
+    <!--        android:id="@+id/searchResults"-->
+    <!--        android:layout_width="250dp"-->
+    <!--        android:layout_height="100dp"-->
+    <!--        android:background="@drawable/rounded_border_edittext"-->
+    <!--        android:orientation="vertical"-->
+    <!--        app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--        app:layout_constraintHorizontal_bias="0.496"-->
+    <!--        app:layout_constraintLeft_toLeftOf="parent"-->
+    <!--        app:layout_constraintRight_toRightOf="parent"-->
+    <!--        app:layout_constraintTop_toTopOf="parent"-->
+    <!--        app:layout_constraintVertical_bias="0.736">-->
 
-<!--    </LinearLayout>-->
+    <!--    </LinearLayout>-->
 
     <LinearLayout
         android:id="@+id/queue"
-        android:layout_width="260dp"
-        android:layout_height="242dp"
+        android:layout_width="262dp"
+        android:layout_height="216dp"
         android:background="@drawable/rounded_border_edittext"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.345">
+        app:layout_constraintVertical_bias="0.308">
 
     </LinearLayout>
 
@@ -113,19 +114,19 @@
         app:layout_constraintVertical_bias="0.623" />
 
     <!--    <TextView-->
-<!--        android:id="@+id/largeTextContainer5"-->
-<!--        android:layout_width="210dp"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:fontFamily="@font/raleway"-->
-<!--        android:text=""-->
-<!--        android:textColor="#F7F7F7"-->
-<!--        android:textSize="20dp"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintHorizontal_bias="0.497"-->
-<!--        app:layout_constraintLeft_toLeftOf="parent"-->
-<!--        app:layout_constraintRight_toRightOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent"-->
-<!--        app:layout_constraintVertical_bias="0.839" />-->
+    <!--        android:id="@+id/largeTextContainer5"-->
+    <!--        android:layout_width="210dp"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:fontFamily="@font/raleway"-->
+    <!--        android:text=""-->
+    <!--        android:textColor="#F7F7F7"-->
+    <!--        android:textSize="20dp"-->
+    <!--        app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--        app:layout_constraintHorizontal_bias="0.497"-->
+    <!--        app:layout_constraintLeft_toLeftOf="parent"-->
+    <!--        app:layout_constraintRight_toRightOf="parent"-->
+    <!--        app:layout_constraintTop_toTopOf="parent"-->
+    <!--        app:layout_constraintVertical_bias="0.839" />-->
 
     <EditText
         android:id="@+id/editText"
@@ -174,6 +175,64 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.932"
         app:srcCompat="@drawable/back_icon_foreground"
+        tools:ignore="VectorDrawableCompat" />
+
+    <ImageButton
+        android:id="@+id/playButton"
+        android:layout_width="42dp"
+        android:layout_height="36dp"
+        android:layout_marginStart="148dp"
+        android:layout_marginLeft="148dp"
+        android:background="@color/Black"
+        android:onClick="resume"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.561"
+        app:srcCompat="@drawable/ic_play_arrow"
+        tools:ignore="VectorDrawableCompat" />
+
+    <ImageButton
+        android:id="@+id/pauseButton"
+        android:layout_width="39dp"
+        android:layout_height="36dp"
+        android:layout_marginEnd="144dp"
+        android:layout_marginRight="144dp"
+        android:background="@color/Black"
+        android:onClick="pause"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.561"
+        app:srcCompat="@drawable/ic_pause_black_24dp"
+        tools:ignore="VectorDrawableCompat" />
+
+    <ImageButton
+        android:id="@+id/skipNextButton"
+        android:layout_width="37dp"
+        android:layout_height="34dp"
+        android:layout_marginEnd="76dp"
+        android:layout_marginRight="76dp"
+        android:background="@color/Black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.56"
+        app:srcCompat="@drawable/ic_skip_next"
+        tools:ignore="VectorDrawableCompat" />
+
+    <ImageButton
+        android:id="@+id/skipPrevButton"
+        android:layout_width="40dp"
+        android:layout_height="35dp"
+        android:background="@color/Black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/playButton"
+        app:layout_constraintHorizontal_bias="0.694"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.56"
+        app:srcCompat="@drawable/ic_skip_prev"
         tools:ignore="VectorDrawableCompat" />
 
 
