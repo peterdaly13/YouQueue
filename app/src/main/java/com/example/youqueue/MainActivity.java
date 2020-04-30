@@ -341,7 +341,7 @@ public class MainActivity extends AppCompatActivity {
                 });
     }
 
-    private void pullLocation(final String action, final String partyLeaderId, final PartyLocation userLocation){
+    private void pullLocation(final String action, final int partyId, final PartyLocation userLocation){
         final String[] actionRef = {action};
         DatabaseReference qReference = mDatabase.child("locations");
         ValueEventListener postListener = new ValueEventListener() {
@@ -352,6 +352,10 @@ public class MainActivity extends AppCompatActivity {
 
                 if (actionRef[0].equals("addLocation")) {
                     addLocation(partyLocations, userLocation);
+                } else if (actionRef[0].equals("compareLocations")) {
+                    compareLocations(partyLocations, userLocation);
+                } else if (actionRef[0].equals("deleteLocation")) {
+                    deleteLocation(partyLocations, partyId);
                 }
                 actionRef[0] ="";
             }
@@ -364,6 +368,22 @@ public class MainActivity extends AppCompatActivity {
             }
         };
         qReference.addValueEventListener(postListener);
+    }
+
+    private void deleteLocation(List<PartyLocation> partyLocations, int partyId) {
+        for (PartyLocation loc : partyLocations){
+            if (loc.getPartyId() == partyId){
+                partyLocations.remove(loc);
+            }
+        }
+        pushLocation(partyLocations);
+    }
+
+    /*
+        Bilal could you fill this out?
+     */
+    private void compareLocations(List<PartyLocation> partyLocations, PartyLocation userLocation) {
+
     }
 
     /*
