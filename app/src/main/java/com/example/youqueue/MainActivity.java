@@ -58,6 +58,7 @@ import java.net.URL;
 
 import java.net.URLConnection;
 import java.util.List;
+import java.util.Random;
 import java.util.Scanner;
 import java.util.concurrent.ExecutionException;
 
@@ -71,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
     private SpotifyAppRemote mSpotifyAppRemote = null;
     // Access a Cloud Firestore instance from your Activity
     private DatabaseReference mDatabase;
+    public String yourUserID;
     HashMap map;
     SongQueue sq = new SongQueue();
 
@@ -141,10 +143,23 @@ public class MainActivity extends AppCompatActivity {
         return this.mSpotifyAppRemote;
     }
 
+    // Generate the 6 Digit User ID
+    public static String generateUserID() {
+        // Generate random number from 0 to 999999
+        Random rnd = new Random();
+        int number = rnd.nextInt(999999);
+
+        // Convert any number sequence into 6 digits (Example: 0 becomes 000000)
+        return String.format("%06d", number);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // Generate userID using the random number generating function above
+        yourUserID = generateUserID();
 
         // Pop-up which prompts for username
         // Saves the username in a preference field
@@ -155,7 +170,7 @@ public class MainActivity extends AppCompatActivity {
         // Check if the preference field is set. If not, prompt the user to input their username
         if (userName == null) {
             EditText input = new EditText(this);
-            input.setId(1000);
+            input.setId(Integer.parseInt(yourUserID));
             AlertDialog dialog = new AlertDialog.Builder(this)
                     .setView(input).setTitle("Enter your username!")
                     .setPositiveButton("Ok",
@@ -165,7 +180,7 @@ public class MainActivity extends AppCompatActivity {
                                 public void onClick(DialogInterface dialog,
                                                     int which) {
                                     EditText theInput = (EditText) ((AlertDialog) dialog)
-                                            .findViewById(1000);
+                                            .findViewById(Integer.parseInt(yourUserID));
                                     String enteredText = theInput.getText()
                                             .toString();
                                     if (!enteredText.equals("")) {
@@ -179,9 +194,6 @@ public class MainActivity extends AppCompatActivity {
                             }).create();
             dialog.show();
         }
-
-        // Generate userID using the random number generating function above
-        yourUserID = generateUserID();
 
         // Text to check if the username is being set correctly (Can also be kept and styled if we want to display their username)
         TextView xmlUserNameCheck = (TextView) findViewById(R.id.userNameCheck);
