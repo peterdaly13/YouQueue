@@ -144,7 +144,9 @@ public class MainActivity extends AppCompatActivity {
 
         // Text to check if the username is being set correctly (Can also be kept and styled if we want to display their username)
         TextView xmlUserNameCheck = (TextView) findViewById(R.id.userNameCheck);
-        xmlUserNameCheck.setText("HELLO, " + userName.toUpperCase());
+        if (userName != null) {
+            xmlUserNameCheck.setText("HELLO, " + userName.toUpperCase());
+        }
     }
 
     @Override
@@ -213,11 +215,11 @@ public class MainActivity extends AppCompatActivity {
         mSpotifyAppRemote.getPlayerApi().queue(uri);
     }
 
-    private void pausePlayback(){
+    protected void pausePlayback(){
         mSpotifyAppRemote.getPlayerApi().pause();
     }
 
-    private void resumePlayback(){ mSpotifyAppRemote.getPlayerApi().resume(); }
+    protected void resumePlayback(){ mSpotifyAppRemote.getPlayerApi().resume(); }
 
     private void search(String track){ }
 
