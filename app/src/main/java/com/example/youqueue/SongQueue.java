@@ -5,6 +5,7 @@ import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
@@ -48,6 +49,11 @@ public class SongQueue {
                 }
             }
             return null;
+        }
+
+        List<Song> sortSongs() {
+            Collections.sort(queue);
+            return queue;
         }
 
         void addSong(Song s) {

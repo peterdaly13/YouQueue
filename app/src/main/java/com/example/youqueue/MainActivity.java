@@ -1,9 +1,13 @@
 package com.example.youqueue;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.preference.PreferenceManager;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -12,6 +16,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -176,11 +181,12 @@ public class MainActivity extends AppCompatActivity {
         }
 
         // Generate userID using the random number generating function above
-        yourUserID = generateUserID();
+        //yourUserID = generateUserID();
 
         // Text to check if the username is being set correctly (Can also be kept and styled if we want to display their username)
         TextView xmlUserNameCheck = (TextView) findViewById(R.id.userNameCheck);
         xmlUserNameCheck.setText("HELLO, " + userName.toUpperCase());
+
     }
 
     @Override
