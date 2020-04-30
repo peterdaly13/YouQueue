@@ -13,7 +13,7 @@ import java.util.Random;
 public class StartPartyActivity extends AppCompatActivity {
 
     public String yourPartyID;
-    MainActivity ma = new MainActivity();
+    //MainActivity ma = new MainActivity();
 
     // Generate the 6 Digit Party ID
     public static String generatePartyID() {
@@ -44,11 +44,11 @@ public class StartPartyActivity extends AppCompatActivity {
     }
 
     public void resume(View view) {
-        ma.resumePlayback();
+        //ma.resumePlayback();
     }
 
-    public void pause(View view) {
-        ma.pausePlayback();
-    }
+    //public void pause(View view) {
+      //  ma.pausePlayback();
+    //}
 
 }

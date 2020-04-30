@@ -2,22 +2,22 @@ package com.example.youqueue;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.preference.PreferenceManager;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
+import androidx.appcompat.app.AlertDialog;
+import androidx.preference.PreferenceManager;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.location.Location;
+import android.widget.TextView;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -29,6 +29,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.android.gms.maps.model.LatLng;
 import com.spotify.android.appremote.api.ConnectionParams;
 import com.spotify.android.appremote.api.Connector;
 import com.spotify.android.appremote.api.SpotifyAppRemote;
@@ -42,12 +43,10 @@ import com.spotify.protocol.types.Repeat;
 
 
 import java.io.ByteArrayOutputStream;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
-import java.util.Map;
-import java.util.HashMap;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -56,12 +55,11 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
-
 import java.net.URLConnection;
 import java.util.List;
+import java.util.Random;
 import java.util.Scanner;
 import java.util.concurrent.ExecutionException;
-
 import javax.net.ssl.HttpsURLConnection;
 import android.os.AsyncTask;
 
@@ -72,16 +70,15 @@ public class MainActivity extends AppCompatActivity {
     private SpotifyAppRemote mSpotifyAppRemote = null;
     // Access a Cloud Firestore instance from your Activity
     private DatabaseReference mDatabase;
+    public String yourUserID;
     HashMap map;
     SongQueue sq = new SongQueue();
-
     String url_auth =
             "https://accounts.spotify.com/authorize?"
                     + "client_id="+CLIENT_ID+"&"
                     + "response_type=code&"
                     + "redirect_uri="+REDIRECT_URI+"&"
                     + "scope=user-read-private%20user-read-email&";
-
 
     public void goToSettings(View view) {
         Log.i("Info", "Settings Button pressed");
@@ -91,8 +88,26 @@ public class MainActivity extends AppCompatActivity {
 
     public void goToJoinParty(View view) throws InterruptedException {
         Log.i("Info1", "before Pull Data");
-        Song s = new Song("Taco", 111, 1234, "Peter's Song");
-        pullData(111 , "addASong", null,s);
+        //Song s = new Song("Taco3", 11123, 12345, "Peter's Song Please work again");
+        //pullData(111 , "addASong", null, s);
+        /*
+        LatLong latlng = new LatLong(0.5, 8.1);
+        LatLong latlng2 = new LatLong(0.0, 0.0);
+        PartyLocation location = new PartyLocation(latlng, 123, "Ethan");
+        PartyLocation location2 = new PartyLocation(latlng2, 56, "Peter");
+        List<PartyLocation> list = new ArrayList<PartyLocation>();
+        list.add(location);
+        list.add(location2);
+        LocationList loclist = new LocationList(list);
+        pushLocation(loclist);
+        */
+
+        LatLong latlng = new LatLong(1.5, 8.7);
+        PartyLocation location = new PartyLocation(latlng, 123, "Ethan");
+
+
+        pullLocation("addLocation",0 ,location );
+
         Log.i("Info2", "Join Party Button pressed");
         Intent intent = new Intent(this, JoinPartyActivity.class);
         startActivity(intent);
@@ -140,32 +155,41 @@ public class MainActivity extends AppCompatActivity {
     public SpotifyAppRemote getmSpotifyAppRemote() {
         return this.mSpotifyAppRemote;
     }
+    // Generate the 6 Digit User ID
+    public static String generateUserID() {
+        // Generate random number from 0 to 999999
+        Random rnd = new Random();
+        int number = rnd.nextInt(999999);
+        // Convert any number sequence into 6 digits (Example: 0 becomes 000000)
+        return String.format("%06d", number);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        mDatabase = FirebaseDatabase.getInstance().getReference();
 
+        // Generate userID using the random number generating function above
+        yourUserID = generateUserID();
         // Pop-up which prompts for username
         // Saves the username in a preference field
         final SharedPreferences prefs = PreferenceManager
                 .getDefaultSharedPreferences(this);
         String userName = prefs.getString("user_name", null);
-
         // Check if the preference field is set. If not, prompt the user to input their username
         if (userName == null) {
             EditText input = new EditText(this);
-            input.setId(1000);
+            input.setId(Integer.parseInt(yourUserID));
             AlertDialog dialog = new AlertDialog.Builder(this)
                     .setView(input).setTitle("Enter your username!")
                     .setPositiveButton("Ok",
                             new DialogInterface.OnClickListener() {
-
                                 @Override
                                 public void onClick(DialogInterface dialog,
                                                     int which) {
                                     EditText theInput = (EditText) ((AlertDialog) dialog)
-                                            .findViewById(1000);
+                                            .findViewById(Integer.parseInt(yourUserID));
                                     String enteredText = theInput.getText()
                                             .toString();
                                     if (!enteredText.equals("")) {
@@ -179,13 +203,9 @@ public class MainActivity extends AppCompatActivity {
                             }).create();
             dialog.show();
         }
-
-        // Generate userID using the random number generating function above
-        //yourUserID = generateUserID();
-
         // Text to check if the username is being set correctly (Can also be kept and styled if we want to display their username)
         TextView xmlUserNameCheck = (TextView) findViewById(R.id.userNameCheck);
-        xmlUserNameCheck.setText("HELLO, " + userName.toUpperCase());
+        //xmlUserNameCheck.setText("HELLO, " + userName.toUpperCase());
     }
 
     @Override
@@ -200,18 +220,15 @@ public class MainActivity extends AppCompatActivity {
                         .build();
         SpotifyAppRemote.connect(this, connectionParams,
                 new Connector.ConnectionListener() {
-
                     @Override
                     public void onConnected(SpotifyAppRemote spotifyAppRemote) {
                         mSpotifyAppRemote = spotifyAppRemote;
                         Log.d("MainActivity", "Connected! Yay!");
                         connected();
                     }
-
                     @Override
                     public void onFailure(Throwable throwable) {
                         Log.e("MainActivity", throwable.getMessage(), throwable);
-
                         // Something went wrong when attempting to connect! Handle errors here
                     }
                 });
@@ -233,7 +250,6 @@ public class MainActivity extends AppCompatActivity {
         /*
         // Play a playlist
         mSpotifyAppRemote.getPlayerApi().play("spotify:playlist:37i9dQZF1DX2sUQwD7tbmL");
-
         // Subscribe to PlayerState
         mSpotifyAppRemote.getPlayerApi()
                 .subscribeToPlayerState()
@@ -243,7 +259,6 @@ public class MainActivity extends AppCompatActivity {
                         Log.d("MainActivity", track.name + " by " + track.artist.name);
                     }
                 });
-
          */
     }
 
@@ -315,10 +330,11 @@ public class MainActivity extends AppCompatActivity {
         qReference.addValueEventListener(postListener);
     }
 
-    private void pushLocation(List<PartyLocation> loc) {
+
+    private void pushLocation(LocationList ll) {
         HashMap<String, Object> map = new HashMap<>();
         String folder = "/locations";
-        map.put(folder, loc);
+        map.put(folder, ll);
         mDatabase.updateChildren(map)
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
@@ -327,22 +343,24 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
     }
-
-    private void pullLocation(final String action, final String partyLeaderId, final PartyLocation userLocation){
+    private void pullLocation(final String action, final int partyId, final PartyLocation userLocation){
         final String[] actionRef = {action};
         DatabaseReference qReference = mDatabase.child("locations");
         ValueEventListener postListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // Get Post object and use the values to update the UI
-                List<PartyLocation> partyLocations = (List<PartyLocation>)dataSnapshot.getValue();
-
+                Log.i("datasnapshot", dataSnapshot.getValue().toString());
+                LocationList partyLocations = dataSnapshot.getValue(LocationList.class);
                 if (actionRef[0].equals("addLocation")) {
                     addLocation(partyLocations, userLocation);
+                } else if (actionRef[0].equals("compareLocations")) {
+                    compareLocations(partyLocations, userLocation);
+                } else if (actionRef[0].equals("deleteLocation")) {
+                    deleteLocation(partyLocations, partyId);
                 }
                 actionRef[0] ="";
             }
-
             @Override
             public void onCancelled(DatabaseError databaseError) {
                 // Getting Post failed, log a message
@@ -352,59 +370,74 @@ public class MainActivity extends AppCompatActivity {
         };
         qReference.addValueEventListener(postListener);
     }
-
+    private void deleteLocation(LocationList locationList, int partyId) {
+        List<PartyLocation> partyLocations = locationList.getPl();
+        for (int i = partyLocations.size()-1; i>=0; i--){
+            if (partyLocations.get(i).getPartyId() == partyId){
+                partyLocations.remove(partyLocations.get(i));
+            }
+        }
+        locationList.setPl(partyLocations);
+        pushLocation(locationList);
+    }
+    /*
+        Bilal could you fill this out?
+     */
+    private void compareLocations(LocationList locationList, PartyLocation userLocation) {
+    }
     /*
     This adds a location to the list of locations
      */
-    private void addLocation(List<PartyLocation> partyLocations, PartyLocation userLocation) {
+    private void addLocation(LocationList locationList, PartyLocation userLocation) {
+        List<PartyLocation> partyLocations = locationList.getPl();
         partyLocations.add(userLocation);
-        pushLocation(partyLocations);
+        locationList.setPl(partyLocations);
+        pushLocation(locationList);
     }
-
 
     /*
     This grabs the top voted song from the queue, plays it,
     deletes the song from the queue and pushes the queue
     back to firebase
      */
-    private void playNextSong(SongQueue songQueue) {
-        Song s = songQueue.nextSong();
-        playSong(s.getURI());
-        songQueue.removeSong(s.getURI());
-        pushData(songQueue);
-    }
+        private void playNextSong (SongQueue songQueue){
+            Song s = songQueue.nextSong();
+            playSong(s.getURI());
+            songQueue.removeSong(s.getURI());
+            pushData(songQueue);
+        }
 
     /*
     This adds a song to the queue and then
     returns the queue to firebase
      */
-    private void addASong(SongQueue songQueue, Song song) {
-        songQueue.addSong(song);
-        pushData(songQueue);
-    }
+        private void addASong (SongQueue songQueue, Song song){
+            songQueue.addSong(song);
+            pushData(songQueue);
+        }
 
     /*
     This updates the specific song with one more vote and
     pushes the resulting queue back to firebase
      */
-    private void updateVotes(SongQueue songQueue, String uri) {
-        Log.i("updateVotes", songQueue.toString());
-        songQueue.getSong(uri).incrementVotes();
+        private void updateVotes (SongQueue songQueue, String uri){
+            Log.i("updateVotes", songQueue.toString());
+            songQueue.getSong(uri).incrementVotes();
 
-        pushData(songQueue);
-        Log.i("updateVotes2", songQueue.toString());
-    }
+            pushData(songQueue);
+            Log.i("updateVotes2", songQueue.toString());
+        }
 
     /*
     This displays the queue... Need some help from front end folks
      */
-    private void displayQueue(SongQueue st) {
+        private void displayQueue (SongQueue st){
+
+        }
+
+        private void updateQueue (SongQueue s){
+            sq = s;
+            Log.i("Info3", s.toString());
+        }
 
     }
-
-    private void updateQueue(SongQueue s) {
-        sq=s;
-        Log.i("Info3", s.toString());
-    }
-
-}
