@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -314,6 +315,52 @@ public class MainActivity extends AppCompatActivity {
             }
         };
         qReference.addValueEventListener(postListener);
+    }
+
+    private void pushLocation(List<PartyLocation> loc) {
+        HashMap<String, Object> map = new HashMap<>();
+        String folder = "/locations";
+        map.put(folder, loc);
+        mDatabase.updateChildren(map)
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w("Potato", "Error adding document", e);
+                    }
+                });
+    }
+
+    private void pullLocation(final String action, final String partyLeaderId, final PartyLocation userLocation){
+        final String[] actionRef = {action};
+        DatabaseReference qReference = mDatabase.child("locations");
+        ValueEventListener postListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // Get Post object and use the values to update the UI
+                List<PartyLocation> partyLocations = (List<PartyLocation>)dataSnapshot.getValue();
+
+                if (actionRef[0].equals("addLocation")) {
+                    addLocation(partyLocations, userLocation);
+                }
+                actionRef[0] ="";
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // Getting Post failed, log a message
+                Log.w("PullData", "Failed to Load SongQueue from Firebase", databaseError.toException());
+                // ...
+            }
+        };
+        qReference.addValueEventListener(postListener);
+    }
+
+    /*
+    This adds a location to the list of locations
+     */
+    private void addLocation(List<PartyLocation> partyLocations, PartyLocation userLocation) {
+        partyLocations.add(userLocation);
+        pushLocation(partyLocations);
     }
 
 
