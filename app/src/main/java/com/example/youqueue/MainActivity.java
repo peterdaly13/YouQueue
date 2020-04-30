@@ -114,7 +114,47 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mDatabase = FirebaseDatabase.getInstance().getReference();
+
+        // Pop-up which prompts for username
+        // Saves the username in a preference field
+        final SharedPreferences prefs = PreferenceManager
+                .getDefaultSharedPreferences(this);
+        String userName = prefs.getString("user_name", null);
+
+        // Check if the preference field is set. If not, prompt the user to input their username
+        if (userName == null) {
+            EditText input = new EditText(this);
+            input.setId(1000);
+            AlertDialog dialog = new AlertDialog.Builder(this)
+                    .setView(input).setTitle("Enter your username!")
+                    .setPositiveButton("Ok",
+                            new DialogInterface.OnClickListener() {
+
+                                @Override
+                                public void onClick(DialogInterface dialog,
+                                                    int which) {
+                                    EditText theInput = (EditText) ((AlertDialog) dialog)
+                                            .findViewById(1000);
+                                    String enteredText = theInput.getText()
+                                            .toString();
+                                    if (!enteredText.equals("")) {
+                                        SharedPreferences.Editor editor = prefs
+                                                .edit();
+                                        editor.putString("user_name",
+                                                enteredText);
+                                        editor.commit();
+                                    }
+                                }
+                            }).create();
+            dialog.show();
+        }
+
+        // Generate userID using the random number generating function above
+        yourUserID = generateUserID();
+
+        // Text to check if the username is being set correctly (Can also be kept and styled if we want to display their username)
+        TextView xmlUserNameCheck = (TextView) findViewById(R.id.userNameCheck);
+        xmlUserNameCheck.setText("HELLO, " + userName.toUpperCase());
     }
 
     @Override
@@ -184,11 +224,11 @@ public class MainActivity extends AppCompatActivity {
         mSpotifyAppRemote.getPlayerApi().queue(uri);
     }
 
-    private void pausePlayback(){
+    protected void pausePlayback(){
         mSpotifyAppRemote.getPlayerApi().pause();
     }
 
-    private void resumePlayback(){ mSpotifyAppRemote.getPlayerApi().resume(); }
+    protected void resumePlayback(){ mSpotifyAppRemote.getPlayerApi().resume(); }
 
     private void search(String track){ }
 
