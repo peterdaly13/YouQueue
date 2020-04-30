@@ -30,17 +30,16 @@ public class authLib extends AppCompatActivity {
 
     private static final int REQUEST_CODE = 1337;
 
-    AuthorizationRequest.Builder builder =
-            new AuthorizationRequest.Builder(CLIENT_ID, AuthorizationResponse.Type.TOKEN, getRedirectUri().toString())
+    AuthorizationRequest request =
+            new AuthorizationRequest.Builder(CLIENT_ID, AuthorizationResponse.Type.TOKEN, REDIRECT_URI)
                     .setShowDialog(false)
                     .setScopes(new String[]{"user-read-private"})
                     .setCampaign("your-campaign-token")
                     .build();
 
-    AuthorizationRequest request = builder.build();
 
     AuthorizationClient client = new AuthorizationClient();
-    client.openLoginActivity(this, AUTH_TOKEN_REQUEST_CODE , request);
+    //client.openLoginActivity(this, AUTH_TOKEN_REQUEST_CODE , request);
 
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
