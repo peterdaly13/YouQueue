@@ -27,7 +27,6 @@ import com.spotify.android.appremote.api.ConnectionParams;
 import com.spotify.android.appremote.api.Connector;
 import com.spotify.android.appremote.api.SpotifyAppRemote;
 
-
 import com.spotify.protocol.client.CallResult;
 import com.spotify.protocol.client.Subscription;
 import com.spotify.protocol.types.ListItems;
@@ -35,8 +34,11 @@ import com.spotify.protocol.types.PlayerState;
 import com.spotify.protocol.types.Track;
 import com.spotify.protocol.types.Repeat;
 
+
 import java.io.ByteArrayOutputStream;
 import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.HashMap;
 
@@ -74,13 +76,14 @@ public class MainActivity extends AppCompatActivity {
                     + "redirect_uri="+REDIRECT_URI+"&"
                     + "scope=user-read-private%20user-read-email&";
 
+
     public void goToSettings(View view) {
         Log.i("Info", "Settings Button pressed");
         Intent intent = new Intent(this, SettingsActivity.class);
         startActivity(intent);
     }
 
-    public void goToJoinParty(View view) {
+    public void goToJoinParty(View view) throws InterruptedException {
         Log.i("Info1", "before Pull Data");
         Song s = new Song("Taco", 111, 1234, "Peter's Song");
         pullData(111 , "addASong", null, s);
@@ -157,7 +160,6 @@ public class MainActivity extends AppCompatActivity {
                     public void onConnected(SpotifyAppRemote spotifyAppRemote) {
                         mSpotifyAppRemote = spotifyAppRemote;
                         Log.d("MainActivity", "Connected! Yay!");
-                        String accessToken;
                         connected();
                     }
 
@@ -168,7 +170,7 @@ public class MainActivity extends AppCompatActivity {
                         // Something went wrong when attempting to connect! Handle errors here
                     }
                 });
-        */
+            */
     }
 
     @Override
@@ -200,26 +202,24 @@ public class MainActivity extends AppCompatActivity {
          */
     }
 
-    private void playSong(String uri) {
+    private void playSong(String uri){
         mSpotifyAppRemote.getPlayerApi().play(uri);
     }
 
-    private void queueSong(String uri) {
+    private void queueSong(String uri){
         mSpotifyAppRemote.getPlayerApi().queue(uri);
     }
 
-    private void pausePlayback() {
+    private void pausePlayback(){
         mSpotifyAppRemote.getPlayerApi().pause();
     }
 
-    private void resumePlayback() {
-        mSpotifyAppRemote.getPlayerApi().resume();
-    }
+    private void resumePlayback(){ mSpotifyAppRemote.getPlayerApi().resume(); }
 
-    private void search(String track) { }
+    private void search(String track){ }
 
     //Need to write code to push a songQueue to Firebase
-    private void pushData(SongQueue s) {
+    private void pushData(SongQueue s){
         Log.d("PushData", "1234");
         HashMap<String, Object> map = new HashMap<>();
         String folder = "/queues/"+ Integer.toString(s.partyLeaderID);
@@ -233,7 +233,7 @@ public class MainActivity extends AppCompatActivity {
                 });
     }
     //Need to write code to pull a songQueue from Firebase
-    private void pullData((int partyLeaderID, final String action, final String uri, final Song song) throws InterruptedException {
+    private void pullData(int partyLeaderID, final String action, final String uri, final Song song) throws InterruptedException {
         final String[] actionRef = {action};
         Log.i("InPullData","asdfad");
         DatabaseReference qReference = mDatabase.child("queues").child(Integer.toString(partyLeaderID));
@@ -272,10 +272,10 @@ public class MainActivity extends AppCompatActivity {
 
 
     /*
-   This grabs the top voted song from the queue, plays it,
-   deletes the song from the queue and pushes the queue
-   back to firebase
-    */
+    This grabs the top voted song from the queue, plays it,
+    deletes the song from the queue and pushes the queue
+    back to firebase
+     */
     private void playNextSong(SongQueue songQueue) {
         Song s = songQueue.nextSong();
         playSong(s.getURI());
@@ -315,40 +315,5 @@ public class MainActivity extends AppCompatActivity {
         sq=s;
         Log.i("Info3", s.toString());
     }
-
-
-
-    /**
-     * Gets the response from http Url request
-     *
-     * @param url
-     * @return
-     * @throws IOException
-     */
-    public static String getResponseFromHttpUrl(URL url) throws IOException {
-
-        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-        connection.setRequestMethod("GET");
-        connection.addRequestProperty("Accept", "application/json");
-        connection.addRequestProperty("Content-Type", "application/json");
-        connection.addRequestProperty("Authorization", "Bearer <spotify api key>");
-
-        try {
-            InputStream in = connection.getInputStream();
-
-            Scanner scanner = new Scanner(in);
-            scanner.useDelimiter("\\A");
-
-            boolean hasInput = scanner.hasNext();
-            if (hasInput) {
-                return scanner.next();
-            } else {
-                return null;
-            }
-        } finally {
-            connection.disconnect();
-        }
-    }
-
 
 }
