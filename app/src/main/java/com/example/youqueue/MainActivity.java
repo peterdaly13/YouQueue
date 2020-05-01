@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
     private SpotifyAppRemote mSpotifyAppRemote = null;
     // Access a Cloud Firestore instance from your Activity
     private DatabaseReference mDatabase;
-    public String yourUserID;
+    public static String yourUserID;
     HashMap map;
     SongQueue sq = new SongQueue();
     String url_auth =
@@ -170,15 +170,15 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
-        // Generate userID using the random number generating function above
-        yourUserID = generateUserID();
         // Pop-up which prompts for username
         // Saves the username in a preference field
         final SharedPreferences prefs = PreferenceManager
                 .getDefaultSharedPreferences(this);
         String userName = prefs.getString("user_name", null);
         // Check if the preference field is set. If not, prompt the user to input their username
-        if (userName == null) {
+        if (userName == null || yourUserID == null) {
+            // Generate userID using the random number generating function above
+            yourUserID = generateUserID();
             EditText input = new EditText(this);
             input.setId(Integer.parseInt(yourUserID));
             AlertDialog dialog = new AlertDialog.Builder(this)
@@ -438,6 +438,31 @@ public class MainActivity extends AppCompatActivity {
         private void updateQueue (SongQueue s){
             sq = s;
             Log.i("Info3", s.toString());
+        }
+
+    /*
+    Function to calculate the distance between two lat/long location coordinates in kilometers
+    (Used when guest wants to join party by location, will find locations within given range)
+     */
+        private double calculateDistance(double lat1, double lon1, double lat2, double lon2) {
+            double theta = lon1 - lon2;
+            double dist = Math.sin(deg2rad(lat1))
+                * Math.sin(deg2rad(lat2))
+                + Math.cos(deg2rad(lat1))
+                * Math.cos(deg2rad(lat2))
+                * Math.cos(deg2rad(theta));
+            dist = Math.acos(dist);
+            dist = rad2deg(dist);
+            dist = dist * 60 * 1.1515;
+            return (dist);
+        }
+
+        private double deg2rad(double deg) {
+            return (deg * Math.PI / 180.0);
+        }
+
+        private double rad2deg(double rad) {
+            return (rad * 180.0 / Math.PI);
         }
 
     }

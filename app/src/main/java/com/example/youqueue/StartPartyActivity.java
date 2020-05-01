@@ -17,12 +17,13 @@ public class StartPartyActivity extends AppCompatActivity {
 
     // Generate the 6 Digit Party ID
     public static String generatePartyID() {
-        // Generate random number from 0 to 999999
-        Random rnd = new Random();
-        int number = rnd.nextInt(999999);
-
-        // Convert any number sequence into 6 digits (Example: 0 becomes 000000)
-        return String.format("%06d", number);
+//        // Generate random number from 0 to 999999
+//        Random rnd = new Random();
+//        int number = rnd.nextInt(999999);
+//
+//        // Convert any number sequence into 6 digits (Example: 0 becomes 000000)
+//        return String.format("%06d", number);
+        return MainActivity.yourUserID;
     }
 
     @Override
