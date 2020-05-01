@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String REDIRECT_URI = "com.youqueue://callback";
     private SpotifyAppRemote mSpotifyAppRemote = null;
     // Access a Cloud Firestore instance from your Activity
-    private DatabaseReference mDatabase;
+    public DatabaseReference mDatabase;
     public static String yourUserID;
     HashMap map;
     SongQueue sq = new SongQueue();
@@ -218,7 +218,7 @@ public class MainActivity extends AppCompatActivity {
         }
         // Text to check if the username is being set correctly (Can also be kept and styled if we want to display their username)
         TextView xmlUserNameCheck = (TextView) findViewById(R.id.userNameCheck);
-        //xmlUserNameCheck.setText("HELLO, " + userName.toUpperCase());
+        xmlUserNameCheck.setText("HELLO, " + userName.toUpperCase());
     }
 
     @Override
@@ -306,7 +306,7 @@ public class MainActivity extends AppCompatActivity {
                 });
     }
     //Need to write code to pull a songQueue from Firebase
-    private void pullData(int partyLeaderID, final String action, final String uri, final Song song) throws InterruptedException {
+    private void pullData(int partyLeaderID, final String action, final String uri, final Song song) {
         final String[] actionRef = {action};
         Log.i("InPullData","asdfad");
         DatabaseReference qReference = mDatabase.child("queues").child(Integer.toString(partyLeaderID));

@@ -43,6 +43,21 @@ public class Song implements Comparable<Song>{
     public void incrementVotes(){
         this.votes+=1;
     }
+    public void setURI(String URI) {
+        this.URI = URI;
+    }
+    public void setUserID(int userID) {
+        this.userID = userID;
+    }
+    public void setName(String name) {
+        this.name = name;
+    }
+    public void setLength(int length) {
+        this.length = length;
+    }
+    public void setArtist(String artist) {
+        this.artist = artist;
+    }
 
     @Override
     public int compareTo(Song s) {
