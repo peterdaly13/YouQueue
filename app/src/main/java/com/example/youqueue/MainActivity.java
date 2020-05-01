@@ -102,11 +102,22 @@ public class MainActivity extends AppCompatActivity {
         pushLocation(loclist);
         */
 
-        LatLong latlng = new LatLong(1.5, 8.7);
-        PartyLocation location = new PartyLocation(latlng, 123, "Ethan");
+        //LatLong latlng = new LatLong(6.5, 9.7);
+        //PartyLocation location = new PartyLocation(latlng, 1234, "Ethan");
+
+        Song s = new Song("Taco3", 11123, 12345, "Peter's Song Please work again", 120, "Tom");
+        SongQueue sq2 = new SongQueue(111);
+        sq2.addSong(s);
+        SongQueue sq3 = new SongQueue(222);
+        sq3.addSong(s);
+
+        //pushData(sq2);
+        //pushData(sq3);
 
 
-        pullLocation("addLocation",0 ,location );
+        pullData(222, "endParty", null, null);
+        //pullLocation("addLocation",0 ,location );
+
 
         Log.i("Info2", "Join Party Button pressed");
         Intent intent = new Intent(this, JoinPartyActivity.class);
@@ -114,6 +125,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void goToStartParty(View view) {
+        /*
         try {
             Song s = new Song("1dfsccdf",100, 12, "TestSong");
             Song s2 = new Song("jsdhfiweur",1000, 120, "TestSong2");
@@ -124,6 +136,7 @@ public class MainActivity extends AppCompatActivity {
         }catch (Exception e){
             Log.w("Potato", "Error adding document", e);
         }
+         */
 
         Log.i("Info", "Start Party Button pressed");
         Intent intent = new Intent(this, StartPartyActivity.class);
@@ -302,7 +315,7 @@ public class MainActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // Get Post object and use the values to update the UI
                 SongQueue st = dataSnapshot.getValue(SongQueue.class);
-                Log.i("onDataChange", action + "    " + st.toString());
+                //Log.i("onDataChange", action + "    " + st.toString());
                 if (actionRef[0].equals("displayQueue")) {
                     displayQueue(st);
                 } else if (actionRef[0].equals("updateVotes")){
@@ -311,6 +324,8 @@ public class MainActivity extends AppCompatActivity {
                     addASong(st, song);
                 } else if (actionRef[0].equals("playNextSong")) {
                     playNextSong(st);
+                }else if (actionRef[0].equals("endParty")) {
+                    endParty(st);
                 }
                 actionRef[0] ="";
                 Log.i("InPullData","asdfaddd");
@@ -427,6 +442,12 @@ public class MainActivity extends AppCompatActivity {
             pushData(songQueue);
             Log.i("updateVotes2", songQueue.toString());
         }
+
+    private void endParty(SongQueue st) {
+        if(st!=null) {
+            mDatabase.child("/queues/" + st.getPartyLeaderID()).removeValue();
+        }
+    }
 
     /*
     This displays the queue... Need some help from front end folks
