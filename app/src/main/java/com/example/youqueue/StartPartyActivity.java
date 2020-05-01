@@ -12,6 +12,7 @@ import com.spotify.android.appremote.api.ConnectionParams;
 import com.spotify.android.appremote.api.Connector;
 import com.spotify.android.appremote.api.SpotifyAppRemote;
 
+import java.util.List;
 import java.util.Random;
 
 public class StartPartyActivity extends AppCompatActivity {
@@ -21,7 +22,8 @@ public class StartPartyActivity extends AppCompatActivity {
     private SpotifyAppRemote mSpotifyAppRemote = null;
 
     public String yourPartyID;
-    //MainActivity ma = new MainActivity();
+    MainActivity ma = new MainActivity();
+    SongQueue sq = new SongQueue();
 
     // Generate the 6 Digit Party ID
     public static String generatePartyID() {
@@ -74,11 +76,16 @@ public class StartPartyActivity extends AppCompatActivity {
     }
 
     public void resume(View view) {
-        //ma.resumePlayback();
+        ma.resumePlayback();
     }
 
-    //public void pause(View view) {
-      //  ma.pausePlayback();
-    //}
+    public void pause(View view) {
+        ma.pausePlayback();
+    }
+
+    public void skipSong(View view) {
+        List<Song> queue = sq.getQueue();
+        ma.playNextSong((SongQueue) queue);
+    }
 
 }

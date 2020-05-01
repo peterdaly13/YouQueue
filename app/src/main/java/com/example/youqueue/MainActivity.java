@@ -115,7 +115,7 @@ public class MainActivity extends AppCompatActivity {
         //pushData(sq3);
 
 
-        pullData(222, "endParty", null, null);
+        //pullData(222, "endParty", null, null);
         //pullLocation("addLocation",0 ,location );
 
 
@@ -415,7 +415,7 @@ public class MainActivity extends AppCompatActivity {
     deletes the song from the queue and pushes the queue
     back to firebase
      */
-        private void playNextSong (SongQueue songQueue){
+        protected void playNextSong (SongQueue songQueue){
             Song s = songQueue.nextSong();
             playSong(s.getURI());
             songQueue.removeSong(s.getURI());

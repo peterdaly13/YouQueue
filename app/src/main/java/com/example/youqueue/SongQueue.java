@@ -64,6 +64,10 @@ public class SongQueue {
             return partyLeaderID;
         }
 
+    public List<Song> getQueue() {
+        return queue;
+    }
+
     @Override
     public String toString() {
         return "SongQueue{" +
