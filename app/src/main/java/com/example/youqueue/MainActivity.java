@@ -102,11 +102,11 @@ public class MainActivity extends AppCompatActivity {
         pushLocation(loclist);
         */
 
-        LatLong latlng = new LatLong(1.5, 8.7);
-        PartyLocation location = new PartyLocation(latlng, 123, "Ethan");
-
-
+        LatLong latlng = new LatLong(5.98, -18.7);
+        PartyLocation location = new PartyLocation(latlng, 133, "Ethan33");
         pullLocation("addLocation",0 ,location );
+
+        pullData(111, "playNextSong", null, null);
 
         Log.i("Info2", "Join Party Button pressed");
         Intent intent = new Intent(this, JoinPartyActivity.class);
@@ -321,6 +321,8 @@ public class MainActivity extends AppCompatActivity {
                     addASong(st, song);
                 } else if (actionRef[0].equals("playNextSong")) {
                     playNextSong(st);
+                } else if (actionRef[0].equals("endParty")) {
+                    endParty(st);
                 }
                 actionRef[0] ="";
                 Log.i("InPullData","asdfaddd");
@@ -338,6 +340,13 @@ public class MainActivity extends AppCompatActivity {
             }
         };
         qReference.addValueEventListener(postListener);
+    }
+
+    /*
+    This ends the party by deleting the queue
+     */
+    private void endParty(SongQueue st) {
+        mDatabase.child("/queues/" + st.getPartyLeaderID()).removeValue();
     }
 
 
