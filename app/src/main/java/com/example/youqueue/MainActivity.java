@@ -115,8 +115,8 @@ public class MainActivity extends AppCompatActivity {
 
     public void goToStartParty(View view) {
         try {
-            Song s = new Song("1dfsccdf",100, 12, "TestSong");
-            Song s2 = new Song("jsdhfiweur",1000, 120, "TestSong2");
+            Song s = new Song("1dfsccdf",100, 12, "TestSong", 120, "Test Artist1");
+            Song s2 = new Song("jsdhfiweur",1000, 120, "TestSong2", 150, "Test Artist 2");
             SongQueue songQueue= new SongQueue(111);
             songQueue.addSong(s);
             songQueue.addSong(s2);
