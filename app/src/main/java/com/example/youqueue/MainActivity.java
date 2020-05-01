@@ -276,7 +276,17 @@ public class MainActivity extends AppCompatActivity {
 
     protected void resumePlayback(){ mSpotifyAppRemote.getPlayerApi().resume(); }
 
-    private void search(String track){ }
+    private Song search(String track){
+        SongList songList = new SongList();
+        Song song = songList.getSong(track);
+        if(song.equals(null)){
+            System.out.println("Cannot find that song!");
+            return null;
+        }
+        else{
+            return song;
+        }
+    }
 
     //Need to write code to push a songQueue to Firebase
     private void pushData(SongQueue s){
