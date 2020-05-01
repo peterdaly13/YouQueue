@@ -8,9 +8,17 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
+import com.spotify.android.appremote.api.ConnectionParams;
+import com.spotify.android.appremote.api.Connector;
+import com.spotify.android.appremote.api.SpotifyAppRemote;
+
 import java.util.Random;
 
 public class StartPartyActivity extends AppCompatActivity {
+
+    private static final String CLIENT_ID = "d19dfd48fcd54626a0f8ff696ada3b9e";
+    private static final String REDIRECT_URI = "com.youqueue://callback";
+    private SpotifyAppRemote mSpotifyAppRemote = null;
 
     public String yourPartyID;
     //MainActivity ma = new MainActivity();
@@ -35,6 +43,27 @@ public class StartPartyActivity extends AppCompatActivity {
         // Set the party ID to display on the activity
         TextView xmlPartyID = (TextView) findViewById(R.id.xmlPartyID);
         xmlPartyID.setText(yourPartyID);
+
+        //login to spotify
+        ConnectionParams connectionParams =
+                new ConnectionParams.Builder(CLIENT_ID)
+                        .setRedirectUri(REDIRECT_URI)
+                        .showAuthView(true)
+                        .build();
+        SpotifyAppRemote.connect(this, connectionParams,
+                new Connector.ConnectionListener() {
+                    @Override
+                    public void onConnected(SpotifyAppRemote spotifyAppRemote) {
+                        mSpotifyAppRemote = spotifyAppRemote;
+                        Log.d("MainActivity", "Connected! Yay!");
+                        //connected();
+                    }
+                    @Override
+                    public void onFailure(Throwable throwable) {
+                        Log.e("MainActivity", throwable.getMessage(), throwable);
+                        // Something went wrong when attempting to connect! Handle errors here
+                    }
+                });
     }
 
     public void goHome(View view) {
