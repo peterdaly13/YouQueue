@@ -1,5 +1,6 @@
 package com.example.youqueue;
 
+import android.app.ActionBar;
 import android.content.Intent;
 
 import androidx.annotation.NonNull;
@@ -8,6 +9,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -35,7 +38,8 @@ public class StartPartyActivity extends AppCompatActivity {
     public DatabaseReference mDatabase;
     SongQueue sq = new SongQueue();
     PartyLocation currentLocation;
-    //MainActivity ma = new MainActivity();
+
+    LinearLayout mLinLay;
 
     // Generate the 6 Digit Party ID
     public static String generatePartyID() {
@@ -52,6 +56,8 @@ public class StartPartyActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start_party);
+
+        mLinLay = (LinearLayout) this.findViewById(R.id.linlay);
 
         // Generate the party ID using the random number generating function above
         yourPartyID = generatePartyID();
@@ -135,7 +141,6 @@ public class StartPartyActivity extends AppCompatActivity {
     public void stopCounting(){
         counting =false;
     }
-
 
 
 
@@ -307,7 +312,18 @@ public class StartPartyActivity extends AppCompatActivity {
     This displays the queue... Need some help from front end folks
      */
     private void displayQueue (SongQueue st){
+        st.sortSongs();
+        int size = st.getQueueSize();
+        LinearLayout.LayoutParams lparams = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 
+        for (int i = 0; i < size; i++) {
+            TextView tv = new TextView(this);
+            tv.setLayoutParams(lparams);
+            Song mSong = st.getSongAtIndex(i);
+            tv.setText(mSong.getName());
+            this.mLinLay.addView(tv);
+        }
     }
 
     private void updateQueue (SongQueue s){

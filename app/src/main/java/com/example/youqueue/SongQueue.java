@@ -13,6 +13,7 @@ public class SongQueue {
     // This is needed for Firebase stuff to work
     public SongQueue(){}
 
+
     // A Basic constructor which creates an empty ArrayList for the queue field
     public SongQueue(int partyLeaderID) {
         this.partyLeaderID = partyLeaderID;
@@ -76,5 +77,13 @@ public class SongQueue {
                 "partyLeaderID=" + partyLeaderID +
                 ", queue=" + queue +
                 '}';
+    }
+
+    public int getQueueSize () {
+        return queue.size();
+    }
+
+    public Song getSongAtIndex(int index) {
+        return queue.get(index);
     }
 }

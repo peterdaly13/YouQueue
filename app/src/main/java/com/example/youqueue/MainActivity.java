@@ -493,7 +493,7 @@ public class MainActivity extends AppCompatActivity {
     This displays the queue... Need some help from front end folks
      */
         private void displayQueue (SongQueue st){
-
+            st.sortSongs();
         }
 
         private void updateQueue (SongQueue s){
