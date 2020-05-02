@@ -84,25 +84,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void goToJoinParty(View view) throws InterruptedException {
+        //LatLong latLong= new LatLong(0.01,-0.01);
+        //PartyLocation partyLocation = new PartyLocation(latLong,12345,"Test Location" );
+        //pullLocation("addLocation", 111, partyLocation);
         Log.i("Info2", "Join Party Button pressed");
         Intent intent = new Intent(this, JoinPartyActivity.class);
         startActivity(intent);
     }
 
     public void goToStartParty(View view) {
-        /*
-        try {
-            Song s = new Song("1dfsccdf",100, 12, "TestSong");
-            Song s2 = new Song("jsdhfiweur",1000, 120, "TestSong2");
-            SongQueue songQueue= new SongQueue(111);
-            songQueue.addSong(s);
-            songQueue.addSong(s2);
-            pushData(songQueue);
-        }catch (Exception e){
-            Log.w("Potato", "Error adding document", e);
-        }
-         */
-
         Log.i("Info", "Start Party Button pressed");
         Intent intent = new Intent(this, StartPartyActivity.class);
         startActivity(intent);

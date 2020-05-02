@@ -32,7 +32,7 @@ public class StartPartyActivity extends AppCompatActivity {
     private static final String REDIRECT_URI = "com.youqueue://callback";
     private SpotifyAppRemote mSpotifyAppRemote = null;
     int songLengthCounter =0;
-    String currentURI= "";
+    Song currentSong;
 
     public String yourPartyID;
     public DatabaseReference mDatabase;
@@ -107,7 +107,7 @@ public class StartPartyActivity extends AppCompatActivity {
     }
     //Saving the URI of the previous song doesn't seem feasible, instead re-starts current song
     public void prevSong(View view) throws InterruptedException {
-        playSong(currentURI);
+        playSong(currentSong.getURI());
     }
     public void nextSong(View view) {
         pullData(Integer.parseInt(yourPartyID), "playNextSong", null, null);
@@ -116,7 +116,7 @@ public class StartPartyActivity extends AppCompatActivity {
         pullData(Integer.parseInt(yourPartyID),"addASong", null, s);
     }
     public void updateVotes(View v, Song s){
-        pullData(Integer.parseInt(yourPartyID),"addASong", s.getURI(), null);
+        pullData(Integer.parseInt(yourPartyID),"updateVotes", s.getURI(), null);
     }
     public void endParty(View v){
         pullData(Integer.parseInt(yourPartyID),"endParty",null, null);
@@ -278,6 +278,7 @@ public class StartPartyActivity extends AppCompatActivity {
      */
     private void playNextSong (SongQueue songQueue) throws InterruptedException {
         Song s = songQueue.nextSong();
+        currentSong=s;
         playSong(s.getURI());
         songQueue.removeSong(s.getURI());
         pushData(songQueue);
@@ -336,7 +337,6 @@ public class StartPartyActivity extends AppCompatActivity {
 
     //SPOTIFY METHODS (MIGHT NEED MORE)
     private void playSong(String uri) throws InterruptedException {
-        currentURI=uri;
         mSpotifyAppRemote.getPlayerApi().play(uri);
         songLengthCounter=0;
         startCounting();
