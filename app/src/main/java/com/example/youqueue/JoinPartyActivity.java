@@ -26,6 +26,7 @@ import java.util.List;
 public class JoinPartyActivity extends AppCompatActivity {
     List<PartyLocation> nearbyParties = MainActivity.getPartiesNearby();
     String[] parties = new String[nearbyParties.size()];
+    static String yourPartyId="";
 
 
     public DatabaseReference mDatabase;
@@ -78,9 +79,13 @@ public class JoinPartyActivity extends AppCompatActivity {
     }
 
     private void changeScreen() {
-        String yourPartyId = ((EditText)findViewById(R.id.editText)).getText().toString();
+        yourPartyId = ((EditText)findViewById(R.id.editText)).getText().toString();
         Intent intent = new Intent(this, JoinedParty.class);
         startActivity(intent);
+    }
+
+    public static String getYourPartyId(){
+        return yourPartyId;
     }
 
     public void addNearbyParties() {
