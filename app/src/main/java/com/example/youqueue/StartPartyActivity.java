@@ -37,7 +37,6 @@ public class StartPartyActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     private songListAdapter mAdapter;
-    private RecyclerView.LayoutManager layoutManager;
 
     Song[] songList;
     String songNames[];
@@ -86,10 +85,8 @@ public class StartPartyActivity extends AppCompatActivity {
         recyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         mAdapter = new songListAdapter(this, songNameList);
-        mAdapter.setClickListener((songListAdapter.ItemClickListener) this);
+        //mAdapter.setClickListener(this);
         recyclerView.setAdapter(mAdapter);
-
-
 
         //login to spotify
         ConnectionParams connectionParams =

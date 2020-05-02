@@ -47,7 +47,7 @@ public class songListAdapter extends RecyclerView.Adapter<songListAdapter.ViewHo
 
         ViewHolder(View itemView) {
             super(itemView);
-            myTextView = itemView.findViewById(R.id.tvAnimalName);
+            myTextView = itemView.findViewById(R.id.songName);
             itemView.setOnClickListener(this);
         }
 
