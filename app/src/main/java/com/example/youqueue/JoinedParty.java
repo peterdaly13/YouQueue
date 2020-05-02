@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -18,6 +19,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 import com.spotify.android.appremote.api.SpotifyAppRemote;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -31,6 +34,8 @@ public class JoinedParty extends AppCompatActivity {
     private RecyclerView recyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
+    Song[] songList;
+    String[] songNames;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +45,16 @@ public class JoinedParty extends AppCompatActivity {
         TextView xmlPartyID = (TextView) findViewById(R.id.xmlPartyID);
         xmlPartyID.setText(yourPartyID);
         mLinLay = (LinearLayout) this.findViewById(R.id.linlay);
+
+        SongList sl = new SongList();
+        songList = sl.getSongs();
+        songNames = sl.getSongNames();
+        ArrayList<String> songNameList = new ArrayList<>(Arrays.asList(songNames));
+        recyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mAdapter = new songListAdapter(this, songNameList);
+        //mAdapter.setClickListener(this);
+        recyclerView.setAdapter(mAdapter);
     }
 
     public void goHome(View view) {
