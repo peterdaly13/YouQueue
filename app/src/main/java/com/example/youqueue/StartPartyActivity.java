@@ -41,7 +41,7 @@ public class StartPartyActivity extends AppCompatActivity {
     private songListAdapter mAdapter;
     private RecyclerView dqRecycleView;
     private displayQueueAdapter dqAdapter;
-    private songListAdapterStartParty mAdapter;
+    private songListAdapterStartParty mAdapterStartParty;
 
     Song[] songList;
     String songNames[];
@@ -91,7 +91,7 @@ public class StartPartyActivity extends AppCompatActivity {
         ArrayList<String> songNameList = new ArrayList<>(Arrays.asList(songNames));
         recyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mAdapter = new songListAdapter(this, songNameList);
+        mAdapterStartParty = new songListAdapterStartParty(this, songNameList);
         //mAdapter.setClickListener(this);
         recyclerView.setAdapter(mAdapter);
 
