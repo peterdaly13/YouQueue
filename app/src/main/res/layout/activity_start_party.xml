@@ -84,7 +84,7 @@
     <!--    </LinearLayout>-->
 
     <LinearLayout
-        android:id="@+id/queue"
+        android:id="@+id/linlay"
         android:layout_width="262dp"
         android:layout_height="216dp"
         android:background="@drawable/rounded_border_edittext"
