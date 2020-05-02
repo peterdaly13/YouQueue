@@ -10,14 +10,21 @@ public class SongQueue {
     public int partyLeaderID;
     public List<Song> queue;
 
+    public int queueSize;
+
     // This is needed for Firebase stuff to work
     public SongQueue(){}
 
+    public void setQueueSize() {
+        this.queueSize = queue.size();
+    }
 
     // A Basic constructor which creates an empty ArrayList for the queue field
     public SongQueue(int partyLeaderID) {
+        queueSize = 0;
         this.partyLeaderID = partyLeaderID;
         queue = new ArrayList<Song>();
+        queue.add(new Song("spotify:track:6brdWUL8mJTw8LP6MRFwUu", 0, -10, "", 35, "Silence"));
     }
 
     // Used to get the song with the highest number of votes

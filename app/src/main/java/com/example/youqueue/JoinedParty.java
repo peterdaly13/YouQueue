@@ -16,6 +16,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.spotify.android.appremote.api.SpotifyAppRemote;
 
@@ -41,6 +42,11 @@ public class JoinedParty extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_in_party);
+
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+
+
+
         yourPartyID= JoinPartyActivity.getYourPartyId();
         TextView xmlPartyID = (TextView) findViewById(R.id.xmlPartyID);
         xmlPartyID.setText(yourPartyID);
@@ -64,6 +70,10 @@ public class JoinedParty extends AppCompatActivity {
     }
 
     public void queueSong(Song s){
+        yourPartyID= JoinPartyActivity.getYourPartyId();
+        Log.i("QueueSong", yourPartyID);
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        System.out.println(mDatabase);
         pullData(Integer.parseInt(yourPartyID),"addASong", null, s);
     }
     public void updateVotes(Song s){

@@ -5,44 +5,43 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-public class songListAdapter extends RecyclerView.Adapter<songListAdapter.ViewHolder> {
+public class songListAdapterStartParty extends RecyclerView.Adapter<songListAdapterStartParty.ViewHolder>{
     private List<String> mDataset;
     private LayoutInflater mInflater;
-    private ItemClickListener mClickListener;
+    private songListAdapterStartParty.ItemClickListener mClickListener;
     SongList sl = new SongList();
     Song[] songObjects = sl.getSongs();
-    JoinedParty jp = new JoinedParty();
+    StartPartyActivity sp = new StartPartyActivity();
 
 
     // data is passed into the constructor
-    songListAdapter(Context context, List<String> data) {
+    songListAdapterStartParty(Context context, List<String> data) {
         this.mInflater = LayoutInflater.from(context);
         this.mDataset = data;
     }
 
     // inflates the row layout from xml when needed
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public songListAdapterStartParty.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = mInflater.inflate(R.layout.listsongs, parent, false);
-        return new ViewHolder(view);
+        return new songListAdapterStartParty.ViewHolder(view);
     }
 
     // binds the data to the TextView in each row
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(songListAdapterStartParty.ViewHolder holder, int position) {
         String song = mDataset.get(position);
         holder.myTextView.setText(song);
         holder.myTextView.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
                 System.out.println("Pressed " + songObjects[position].getName());
-                jp.queueSong(songObjects[position]);
+                sp.queueSong(songObjects[position]);
             }
         });
     }
@@ -75,7 +74,7 @@ public class songListAdapter extends RecyclerView.Adapter<songListAdapter.ViewHo
     }
 
     // allows clicks events to be caught
-    void setClickListener(ItemClickListener itemClickListener) {
+    void setClickListener(songListAdapterStartParty.ItemClickListener itemClickListener) {
         this.mClickListener = itemClickListener;
     }
 

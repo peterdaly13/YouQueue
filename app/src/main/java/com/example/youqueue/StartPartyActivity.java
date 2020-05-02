@@ -37,7 +37,7 @@ import java.util.Random;
 public class StartPartyActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
-    private songListAdapter mAdapter;
+    private songListAdapterStartParty mAdapter;
 
     Song[] songList;
     String songNames[];
@@ -82,14 +82,13 @@ public class StartPartyActivity extends AppCompatActivity {
         SongQueue sq= new SongQueue(Integer.parseInt(yourPartyID));
         pushData(sq);
 
-
         SongList sl = new SongList();
         songList = sl.getSongs();
         songNames = sl.getSongNames();
         ArrayList<String> songNameList = new ArrayList<>(Arrays.asList(songNames));
         recyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mAdapter = new songListAdapter(this, songNameList);
+        mAdapter = new songListAdapterStartParty(this, songNameList);
         //mAdapter.setClickListener(this);
         recyclerView.setAdapter(mAdapter);
 
@@ -113,6 +112,9 @@ public class StartPartyActivity extends AppCompatActivity {
                         // Something went wrong when attempting to connect! Handle errors here
                     }
                 });
+
+        //pullData(284375,"playNextSong", null,null);
+
     }
 
     //@Override
@@ -145,7 +147,9 @@ public class StartPartyActivity extends AppCompatActivity {
     public void nextSong(View view) {
         pullData(Integer.parseInt(yourPartyID), "playNextSong", null, null);
     }
-    public void queueSong(View v, Song s){
+    public void queueSong(Song s){
+        yourPartyID= MainActivity.yourUserID;
+        mDatabase = FirebaseDatabase.getInstance().getReference();
         pullData(Integer.parseInt(yourPartyID),"addASong", null, s);
     }
     public void updateVotes(View v, Song s){
@@ -321,7 +325,7 @@ public class StartPartyActivity extends AppCompatActivity {
         Song s = songQueue.nextSong();
         if (s != null) {
             currentSong = s;
-            playSong(s.getURI());
+            //playSong(s.getURI());
             songQueue.removeSong(s.getURI());
             pushData(songQueue);
         }
