@@ -17,6 +17,8 @@ public class songListAdapter extends RecyclerView.Adapter<songListAdapter.ViewHo
     private ItemClickListener mClickListener;
     SongList sl = new SongList();
     Song[] songObjects = sl.getSongs();
+    JoinedParty jp = new JoinedParty();
+
 
     // data is passed into the constructor
     songListAdapter(Context context, List<String> data) {
@@ -40,7 +42,7 @@ public class songListAdapter extends RecyclerView.Adapter<songListAdapter.ViewHo
             @Override
             public void onClick(View v) {
                 System.out.println("Pressed " + songObjects[position].getName());
-
+                jp.queueSong(songObjects[position]);
             }
         });
     }

@@ -8,33 +8,42 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class displayQueueAdapter extends RecyclerView.Adapter<displayQueueAdapter.ViewHolder>{
-
-    private ArrayList<String> mDataset;
+public class songListAdapterStartParty extends RecyclerView.Adapter<songListAdapterStartParty.ViewHolder>{
+    private List<String> mDataset;
     private LayoutInflater mInflater;
-    private displayQueueAdapter.ItemClickListener mClickListener;
+    private songListAdapterStartParty.ItemClickListener mClickListener;
+    SongList sl = new SongList();
+    Song[] songObjects = sl.getSongs();
+    StartPartyActivity sp = new StartPartyActivity();
 
-    //Constructor
-    public displayQueueAdapter(Context context, ArrayList<String> myDataset) {
+
+    // data is passed into the constructor
+    songListAdapterStartParty(Context context, List<String> data) {
         this.mInflater = LayoutInflater.from(context);
-        this.mDataset = myDataset;
+        this.mDataset = data;
     }
 
     // inflates the row layout from xml when needed
     @Override
-    public displayQueueAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = mInflater.inflate(R.layout.dqlistsongs, parent, false);
-        return new displayQueueAdapter.ViewHolder(view);
+    public songListAdapterStartParty.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = mInflater.inflate(R.layout.listsongs, parent, false);
+        return new songListAdapterStartParty.ViewHolder(view);
     }
 
     // binds the data to the TextView in each row
     @Override
-    public void onBindViewHolder(displayQueueAdapter.ViewHolder holder, int position) {
-        String animal = mDataset.get(position);
-        holder.myTextView.setText(animal);
+    public void onBindViewHolder(songListAdapterStartParty.ViewHolder holder, int position) {
+        String song = mDataset.get(position);
+        holder.myTextView.setText(song);
+        holder.myTextView.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                System.out.println("Pressed " + songObjects[position].getName());
+                sp.queueSong(songObjects[position]);
+            }
+        });
     }
 
     // Return the size of your dataset (invoked by the layout manager)
@@ -49,7 +58,7 @@ public class displayQueueAdapter extends RecyclerView.Adapter<displayQueueAdapte
 
         ViewHolder(View itemView) {
             super(itemView);
-            myTextView = itemView.findViewById(R.id.dqSongName);
+            myTextView = itemView.findViewById(R.id.songName);
             itemView.setOnClickListener(this);
         }
 
@@ -65,7 +74,7 @@ public class displayQueueAdapter extends RecyclerView.Adapter<displayQueueAdapte
     }
 
     // allows clicks events to be caught
-    void setClickListener(displayQueueAdapter.ItemClickListener itemClickListener) {
+    void setClickListener(songListAdapterStartParty.ItemClickListener itemClickListener) {
         this.mClickListener = itemClickListener;
     }
 

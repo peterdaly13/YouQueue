@@ -80,6 +80,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void goToStartParty(View view) {
+
         Log.i("Info", "Start Party Button pressed");
         Intent intent = new Intent(this, StartPartyActivity.class);
         startActivity(intent);

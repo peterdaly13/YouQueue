@@ -9,15 +9,18 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.spotify.android.appremote.api.SpotifyAppRemote;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -26,7 +29,9 @@ public class JoinedParty extends AppCompatActivity {
     public DatabaseReference mDatabase;
     private SpotifyAppRemote mSpotifyAppRemote = null;
     public String yourPartyID;
-    LinearLayout mLinLay;
+
+    private RecyclerView dqRecycleView;
+    private displayQueueAdapter dqAdapter;
 
     private RecyclerView recyclerView;
     private RecyclerView.Adapter mAdapter;
@@ -36,10 +41,14 @@ public class JoinedParty extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_in_party);
+
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+
+
+
         yourPartyID= JoinPartyActivity.getYourPartyId();
         TextView xmlPartyID = (TextView) findViewById(R.id.xmlPartyID);
         xmlPartyID.setText(yourPartyID);
-        mLinLay = (LinearLayout) this.findViewById(R.id.linlay);
     }
 
     public void goHome(View view) {
@@ -49,6 +58,10 @@ public class JoinedParty extends AppCompatActivity {
     }
 
     public void queueSong(Song s){
+        yourPartyID= JoinPartyActivity.getYourPartyId();
+        Log.i("QueueSong", yourPartyID);
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        System.out.println(mDatabase);
         pullData(Integer.parseInt(yourPartyID),"addASong", null, s);
     }
     public void updateVotes(Song s){
@@ -161,16 +174,18 @@ public class JoinedParty extends AppCompatActivity {
     private void displayQueue (SongQueue st){
         st.sortSongs();
         int size = st.getQueueSize();
-        LinearLayout.LayoutParams lparams = new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+
+        ArrayList<String> songsInQ = new ArrayList<>();
 
         for (int i = 0; i < size; i++) {
-            TextView tv = new TextView(this);
-            tv.setLayoutParams(lparams);
             Song mSong = st.getSongAtIndex(i);
-            tv.setText(mSong.getName());
-            this.mLinLay.addView(tv);
+            String name = mSong.getName();
+            songsInQ.add(name);
         }
+        dqRecycleView = (RecyclerView) findViewById(R.id.linlay);
+        dqRecycleView.setLayoutManager(new LinearLayoutManager(this));
+        dqAdapter = new displayQueueAdapter(this, songsInQ);
+        recyclerView.setAdapter(dqAdapter);
     }
 
     private void playSong(String uri){
