@@ -18,6 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -129,6 +130,8 @@ public class StartPartyActivity extends AppCompatActivity {
         Log.i("Info", "Back Button pressed");
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
+
+        Animatoo.animateSlideLeft(this);
     }
 
     public void resume(View view) throws InterruptedException {

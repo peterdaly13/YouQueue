@@ -38,21 +38,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.106" />
 
-    <TextView
-        android:id="@+id/largeTextContainer"
-        android:layout_width="210dp"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/raleway"
-        android:text=""
-        android:textColor="#F7F7F7"
-        android:textSize="20dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.452"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.173" />
-
     <!--    <TextView-->
     <!--        android:id="@+id/largeTextContainer2"-->
     <!--        android:layout_width="210dp"-->
@@ -82,16 +67,6 @@
     <!--        app:layout_constraintVertical_bias="0.736">-->
 
     <!--    </LinearLayout>-->
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/queueList"
-        android:layout_width="258dp"
-        android:layout_height="156dp"
-        android:layout_marginTop="180dp"
-        android:fontFamily="@font/raleway"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/largeTextContainer3"
@@ -138,48 +113,47 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.811" />
 
+
     <ImageButton
         android:id="@+id/imageButton"
         android:layout_width="68dp"
         android:layout_height="58dp"
         android:background="@null"
         android:onClick="goHome"
+        android:scaleX="-1"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.265"
+        app:layout_constraintHorizontal_bias="0.819"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.928"
+        app:layout_constraintVertical_bias="0.943"
         app:srcCompat="@drawable/back_icon_foreground"
         tools:ignore="VectorDrawableCompat" />
 
-    <ImageButton
-        android:id="@+id/playButton"
-        android:layout_width="42dp"
-        android:layout_height="36dp"
-        android:layout_marginStart="148dp"
-        android:layout_marginLeft="148dp"
-        android:background="@color/Black"
-        android:onClick="resume"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/songList"
+        android:layout_width="258dp"
+        android:layout_height="156dp"
+        android:background="@drawable/rounded_border_edittext"
+        android:fontFamily="@font/raleway"
+        app:layout_constraintBottom_toTopOf="@+id/imageButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.561"
-        app:srcCompat="@drawable/ic_play_arrow"
-        tools:ignore="VectorDrawableCompat" />
+        app:layout_constraintTop_toBottomOf="@+id/queueList"
+        app:layout_constraintVertical_bias="0.639" />
 
     <ImageButton
         android:id="@+id/pauseButton"
         android:layout_width="39dp"
         android:layout_height="36dp"
-        android:layout_marginEnd="144dp"
-        android:layout_marginRight="144dp"
+        android:layout_marginEnd="128dp"
         android:background="@color/Black"
         android:onClick="pause"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.561"
+        app:layout_constraintVertical_bias="0.499"
         app:srcCompat="@drawable/ic_pause_black_24dp"
         tools:ignore="VectorDrawableCompat" />
 
@@ -187,14 +161,13 @@
         android:id="@+id/skipNextButton"
         android:layout_width="37dp"
         android:layout_height="34dp"
-        android:layout_marginEnd="76dp"
-        android:layout_marginRight="76dp"
+        android:layout_marginEnd="64dp"
         android:background="@color/Black"
         android:onClick="nextSong"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.56"
+        app:layout_constraintVertical_bias="0.497"
         app:srcCompat="@drawable/ic_skip_next"
         tools:ignore="VectorDrawableCompat" />
 
@@ -206,38 +179,53 @@
         android:onClick="prevSong"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/playButton"
-        app:layout_constraintHorizontal_bias="0.694"
+        app:layout_constraintHorizontal_bias="0.815"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.56"
+        app:layout_constraintVertical_bias="0.498"
         app:srcCompat="@drawable/ic_skip_prev"
         tools:ignore="VectorDrawableCompat" />
 
+    <ImageButton
+        android:id="@+id/playButton"
+        android:layout_width="42dp"
+        android:layout_height="36dp"
+        android:layout_marginStart="132dp"
+        android:background="@color/Black"
+        android:onClick="resume"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.499"
+        app:srcCompat="@drawable/ic_play_arrow"
+        tools:ignore="VectorDrawableCompat" />
+
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/songList"
+        android:id="@+id/queueList"
         android:layout_width="258dp"
         android:layout_height="156dp"
+        android:layout_marginTop="104dp"
+        android:background="@drawable/rounded_border_edittext"
         android:fontFamily="@font/raleway"
-        app:layout_constraintBottom_toTopOf="@+id/imageButton"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/queueList"
-        app:layout_constraintVertical_bias="0.69" />
-
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/endParty"
-        android:layout_width="88dp"
-        android:layout_height="53dp"
-        android:layout_marginBottom="48dp"
-        android:background="@color/Black"
+        android:layout_width="62dp"
+        android:layout_height="54dp"
+        android:layout_marginBottom="28dp"
+        android:background="@drawable/end_party_background"
+        android:fontFamily="@font/raleway"
         android:onClick="endParty"
         android:text="End Party"
-        android:textColor="@color/Red"
+        android:textColor="@drawable/end_party_text"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.746"
+        app:layout_constraintHorizontal_bias="0.22"
         app:layout_constraintStart_toStartOf="parent" />
 
 
