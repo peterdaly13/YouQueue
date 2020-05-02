@@ -22,7 +22,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.106" />
+        app:layout_constraintVertical_bias="0.193" />
 
     <Switch
         android:id="@+id/locationSwitch"
@@ -33,11 +33,11 @@
         android:textColor="#F7F7F7"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.484"
+        app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.302" />
+        app:layout_constraintVertical_bias="0.387" />
 
     <TextView
         android:id="@+id/smallTextContainer3"
@@ -86,15 +86,16 @@
 
     <ImageButton
         android:id="@+id/imageButton"
-        android:layout_width="53dp"
-        android:layout_height="44dp"
+        android:layout_width="70dp"
+        android:layout_height="52dp"
         android:background="@null"
         android:onClick="goHome"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.807"
+        app:layout_constraintVertical_bias="0.916"
         app:srcCompat="@drawable/back_icon_foreground"
         tools:ignore="VectorDrawableCompat" />
 
