@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,11 +26,14 @@ public class JoinedParty extends AppCompatActivity {
     SongQueue sq = new SongQueue();
     private SpotifyAppRemote mSpotifyAppRemote = null;
     public String yourPartyID;
+    LinearLayout mLinLay;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_in_party);
+
+        mLinLay = (LinearLayout) this.findViewById(R.id.linlay);
     }
 
     public void goHome(View view) {
@@ -41,7 +46,7 @@ public class JoinedParty extends AppCompatActivity {
         pullData(Integer.parseInt(yourPartyID),"addASong", null, s);
     }
     public void updateVotes(Song s){
-        pullData(Integer.parseInt(yourPartyID),"addASong", s.getURI(), null);
+        pullData(Integer.parseInt(yourPartyID),"updateVotes", s.getURI(), null);
     }
 
 
@@ -145,7 +150,18 @@ public class JoinedParty extends AppCompatActivity {
     This displays the queue... Need some help from front end folks
      */
     private void displayQueue (SongQueue st){
+        st.sortSongs();
+        int size = st.getQueueSize();
+        LinearLayout.LayoutParams lparams = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 
+        for (int i = 0; i < size; i++) {
+            TextView tv = new TextView(this);
+            tv.setLayoutParams(lparams);
+            Song mSong = st.getSongAtIndex(i);
+            tv.setText(mSong.getName());
+            this.mLinLay.addView(tv);
+        }
     }
 
     private void updateQueue (SongQueue s){

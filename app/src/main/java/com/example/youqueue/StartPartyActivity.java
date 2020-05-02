@@ -1,5 +1,6 @@
 package com.example.youqueue;
 
+import android.app.ActionBar;
 import android.content.Intent;
 
 import androidx.annotation.NonNull;
@@ -12,6 +13,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -40,13 +43,14 @@ public class StartPartyActivity extends AppCompatActivity {
     private static final String REDIRECT_URI = "com.youqueue://callback";
     private SpotifyAppRemote mSpotifyAppRemote = null;
     int songLengthCounter =0;
-    String currentURI= "";
+    Song currentSong;
 
     public String yourPartyID;
     public DatabaseReference mDatabase;
     SongQueue sq = new SongQueue();
     PartyLocation currentLocation;
-    //MainActivity ma = new MainActivity();
+
+    LinearLayout mLinLay;
 
     // Generate the 6 Digit Party ID
     public static String generatePartyID() {
@@ -63,6 +67,8 @@ public class StartPartyActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start_party);
+
+        mLinLay = (LinearLayout) this.findViewById(R.id.linlay);
 
         // Generate the party ID using the random number generating function above
         yourPartyID = generatePartyID();
@@ -87,7 +93,7 @@ public class StartPartyActivity extends AppCompatActivity {
         // specify an adapter (see also next example)
         mAdapter = new songListAdapter(songNames);
         recyclerView.setAdapter(mAdapter);
-        
+
          */
 
         //login to spotify
@@ -132,20 +138,22 @@ public class StartPartyActivity extends AppCompatActivity {
     }
     //Saving the URI of the previous song doesn't seem feasible, instead re-starts current song
     public void prevSong(View view) throws InterruptedException {
-        playSong(currentURI);
+        playSong(currentSong.getURI());
     }
     public void nextSong(View view) {
         pullData(Integer.parseInt(yourPartyID), "playNextSong", null, null);
     }
-    public void queueSong(Song s){
+    public void queueSong(View v, Song s){
         pullData(Integer.parseInt(yourPartyID),"addASong", null, s);
     }
-    public void updateVotes(Song s){
-        pullData(Integer.parseInt(yourPartyID),"addASong", s.getURI(), null);
+    public void updateVotes(View v, Song s){
+        pullData(Integer.parseInt(yourPartyID),"updateVotes", s.getURI(), null);
     }
-    public void endParty(){
+    public void endParty(View v){
         pullData(Integer.parseInt(yourPartyID),"endParty",null, null);
         deleteLocation();
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
     }
     public void addLocation(){
         pullLocation("addLocation",Integer.parseInt(yourPartyID),currentLocation );
@@ -166,7 +174,6 @@ public class StartPartyActivity extends AppCompatActivity {
     public void stopCounting(){
         counting =false;
     }
-
 
 
 
@@ -302,6 +309,7 @@ public class StartPartyActivity extends AppCompatActivity {
      */
     private void playNextSong (SongQueue songQueue) throws InterruptedException {
         Song s = songQueue.nextSong();
+        currentSong=s;
         playSong(s.getURI());
         songQueue.removeSong(s.getURI());
         pushData(songQueue);
@@ -338,7 +346,18 @@ public class StartPartyActivity extends AppCompatActivity {
     This displays the queue... Need some help from front end folks
      */
     private void displayQueue (SongQueue st){
+        st.sortSongs();
+        int size = st.getQueueSize();
+        LinearLayout.LayoutParams lparams = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 
+        for (int i = 0; i < size; i++) {
+            TextView tv = new TextView(this);
+            tv.setLayoutParams(lparams);
+            Song mSong = st.getSongAtIndex(i);
+            tv.setText(mSong.getName());
+            this.mLinLay.addView(tv);
+        }
     }
 
     private void updateQueue (SongQueue s){
@@ -349,7 +368,6 @@ public class StartPartyActivity extends AppCompatActivity {
 
     //SPOTIFY METHODS (MIGHT NEED MORE)
     private void playSong(String uri) throws InterruptedException {
-        currentURI=uri;
         mSpotifyAppRemote.getPlayerApi().play(uri);
         songLengthCounter=0;
         startCounting();

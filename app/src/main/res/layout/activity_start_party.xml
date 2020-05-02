@@ -84,7 +84,7 @@
     <!--    </LinearLayout>-->
 
     <LinearLayout
-        android:id="@+id/queue"
+        android:id="@+id/linlay"
         android:layout_width="262dp"
         android:layout_height="216dp"
         android:background="@drawable/rounded_border_edittext"
@@ -97,6 +97,21 @@
         app:layout_constraintVertical_bias="0.308">
 
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/largeTextContainer3"
+        android:layout_width="210dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/raleway"
+        android:text=""
+        android:textColor="#F7F7F7"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.623" />
 
     <!--    <TextView-->
     <!--        android:id="@+id/largeTextContainer5"-->
@@ -113,6 +128,40 @@
     <!--        app:layout_constraintTop_toTopOf="parent"-->
     <!--        app:layout_constraintVertical_bias="0.839" />-->
 
+    <EditText
+        android:id="@+id/editText"
+        android:layout_width="260dp"
+        android:layout_height="50dp"
+        android:background="@drawable/rounded_border_edittext"
+        android:ems="10"
+        android:fontFamily="@font/raleway"
+        android:hint="Search "
+        android:inputType="textVisiblePassword"
+        android:paddingLeft="12dp"
+        android:textColor="#F7F7F7"
+        android:textColorHint="#F7F7F7"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.737" />
+
+    <TextView
+        android:id="@+id/largeTextContainer4"
+        android:layout_width="210dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/raleway"
+        android:text=""
+        android:textColor="#F7F7F7"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.811" />
+
     <ImageButton
         android:id="@+id/imageButton"
         android:layout_width="68dp"
@@ -120,11 +169,11 @@
         android:background="@null"
         android:onClick="goHome"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.519"
+        app:layout_constraintHorizontal_bias="0.265"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.932"
+        app:layout_constraintVertical_bias="0.928"
         app:srcCompat="@drawable/back_icon_foreground"
         tools:ignore="VectorDrawableCompat" />
 
@@ -199,6 +248,20 @@
         app:layout_constraintTop_toBottomOf="@+id/queue"
         app:layout_constraintVertical_bias="0.69" />
 
+
+    <Button
+        android:id="@+id/endParty"
+        android:layout_width="88dp"
+        android:layout_height="53dp"
+        android:layout_marginBottom="48dp"
+        android:background="@color/Black"
+        android:onClick="endParty"
+        android:text="End Party"
+        android:textColor="@color/Red"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.746"
+        app:layout_constraintStart_toStartOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
