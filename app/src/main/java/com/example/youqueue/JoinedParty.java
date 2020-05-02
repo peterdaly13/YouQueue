@@ -41,7 +41,7 @@ public class JoinedParty extends AppCompatActivity {
         pullData(Integer.parseInt(yourPartyID),"addASong", null, s);
     }
     public void updateVotes(Song s){
-        pullData(Integer.parseInt(yourPartyID),"addASong", s.getURI(), null);
+        pullData(Integer.parseInt(yourPartyID),"updateVotes", s.getURI(), null);
     }
 
 
