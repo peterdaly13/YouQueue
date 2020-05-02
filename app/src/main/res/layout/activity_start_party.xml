@@ -84,7 +84,7 @@
     <!--    </LinearLayout>-->
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/linlay"
+        android:id="@+id/queueList"
         android:layout_width="258dp"
         android:layout_height="156dp"
         android:layout_marginTop="180dp"
@@ -214,7 +214,7 @@
         tools:ignore="VectorDrawableCompat" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/my_recycler_view"
+        android:id="@+id/songList"
         android:layout_width="258dp"
         android:layout_height="156dp"
         android:fontFamily="@font/raleway"
@@ -222,7 +222,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linlay"
+        app:layout_constraintTop_toBottomOf="@+id/queueList"
         app:layout_constraintVertical_bias="0.69" />
 
 

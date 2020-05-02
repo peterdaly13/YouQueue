@@ -14,27 +14,27 @@ import java.util.List;
 public class displayQueueAdapter extends RecyclerView.Adapter<displayQueueAdapter.ViewHolder>{
 
     private ArrayList<String> mDataset;
-    private LayoutInflater mInflater;
+    private LayoutInflater mInflater1;
     private displayQueueAdapter.ItemClickListener mClickListener;
 
     //Constructor
     public displayQueueAdapter(Context context, ArrayList<String> myDataset) {
-        this.mInflater = LayoutInflater.from(context);
+        this.mInflater1 = LayoutInflater.from(context);
         this.mDataset = myDataset;
     }
 
     // inflates the row layout from xml when needed
     @Override
     public displayQueueAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = mInflater.inflate(R.layout.dqlistsongs, parent, false);
+        View view = mInflater1.inflate(R.layout.dqlistsongs, parent, false);
         return new displayQueueAdapter.ViewHolder(view);
     }
 
     // binds the data to the TextView in each row
     @Override
     public void onBindViewHolder(displayQueueAdapter.ViewHolder holder, int position) {
-        String animal = mDataset.get(position);
-        holder.myTextView.setText(animal);
+        String song = mDataset.get(position);
+        holder.myTextView.setText(song);
     }
 
     // Return the size of your dataset (invoked by the layout manager)

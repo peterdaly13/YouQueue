@@ -21,6 +21,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.spotify.android.appremote.api.SpotifyAppRemote;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -37,6 +38,9 @@ public class JoinedParty extends AppCompatActivity {
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
 
+    Song[] songList;
+    String songNames[];
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,6 +53,22 @@ public class JoinedParty extends AppCompatActivity {
         yourPartyID= JoinPartyActivity.getYourPartyId();
         TextView xmlPartyID = (TextView) findViewById(R.id.xmlPartyID);
         xmlPartyID.setText(yourPartyID);
+
+        pullData(Integer.parseInt(yourPartyID), "displayQueue", null,null);
+
+        SongList sl = new SongList();
+        songList = sl.getSongs();
+        songNames = sl.getSongNames();
+        ArrayList<String> songNameList = new ArrayList<>(Arrays.asList(songNames));
+        recyclerView = (RecyclerView) findViewById(R.id.songList);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mAdapter = new songListAdapterStartParty(this, songNameList);
+        //mAdapter.setClickListener(this);
+        recyclerView.setAdapter(mAdapter);
+
+
+
+
     }
 
     public void goHome(View view) {
@@ -182,10 +202,12 @@ public class JoinedParty extends AppCompatActivity {
             String name = mSong.getName();
             songsInQ.add(name);
         }
-        dqRecycleView = (RecyclerView) findViewById(R.id.linlay);
+        dqRecycleView = (RecyclerView) findViewById(R.id.queueList);
         dqRecycleView.setLayoutManager(new LinearLayoutManager(this));
         dqAdapter = new displayQueueAdapter(this, songsInQ);
         recyclerView.setAdapter(dqAdapter);
+
+
     }
 
     private void playSong(String uri){
