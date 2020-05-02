@@ -82,38 +82,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void goToJoinParty(View view) throws InterruptedException {
-        Log.i("Info1", "before Pull Data");
-        //Song s = new Song("Taco3", 11123, 12345, "Peter's Song Please work again");
-        //pullData(111 , "addASong", null, s);
-        /*
-        LatLong latlng = new LatLong(0.5, 8.1);
-        LatLong latlng2 = new LatLong(0.0, 0.0);
-        PartyLocation location = new PartyLocation(latlng, 123, "Ethan");
-        PartyLocation location2 = new PartyLocation(latlng2, 56, "Peter");
-        List<PartyLocation> list = new ArrayList<PartyLocation>();
-        list.add(location);
-        list.add(location2);
-        LocationList loclist = new LocationList(list);
-        pushLocation(loclist);
-        */
-
-        //LatLong latlng = new LatLong(6.5, 9.7);
-        //PartyLocation location = new PartyLocation(latlng, 1234, "Ethan");
-
-        Song s = new Song("Taco3", 11123, 12345, "Peter's Song Please work again", 120, "Tom");
-        SongQueue sq2 = new SongQueue(111);
-        sq2.addSong(s);
-        SongQueue sq3 = new SongQueue(222);
-        sq3.addSong(s);
-
-        //pushData(sq2);
-        //pushData(sq3);
-
-
-        //pullData(222, "endParty", null, null);
-        //pullLocation("addLocation",0 ,location );
-
-
         Log.i("Info2", "Join Party Button pressed");
         Intent intent = new Intent(this, JoinPartyActivity.class);
         startActivity(intent);
