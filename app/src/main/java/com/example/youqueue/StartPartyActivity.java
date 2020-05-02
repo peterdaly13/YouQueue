@@ -121,6 +121,8 @@ public class StartPartyActivity extends AppCompatActivity {
     public void endParty(View v){
         pullData(Integer.parseInt(yourPartyID),"endParty",null, null);
         deleteLocation();
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
     }
     public void addLocation(){
         pullLocation("addLocation",Integer.parseInt(yourPartyID),currentLocation );
