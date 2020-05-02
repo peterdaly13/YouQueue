@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
                     + "redirect_uri="+REDIRECT_URI+"&"
                     + "scope=user-read-private%20user-read-email&";
 
-    private List<PartyLocation> partiesNearby = new ArrayList<PartyLocation>();
+    private static List<PartyLocation> partiesNearby = new ArrayList<PartyLocation>();
 
     public void goToSettings(View view) {
         Log.i("Info", "Settings Button pressed");
@@ -446,7 +446,7 @@ public class MainActivity extends AppCompatActivity {
     /*
     Getter method which returns the list of parties nearby
      */
-    private List<PartyLocation> getPartiesNearby() {
+    public static List<PartyLocation> getPartiesNearby() {
         return partiesNearby;
     }
 

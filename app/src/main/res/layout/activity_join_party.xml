@@ -152,7 +152,7 @@
         android:layout_height="42dp"
         android:background="@drawable/rounded_border_button"
         android:fontFamily="@font/raleway"
-        android:onClick="goToJoinedParty"
+        android:onClick="displayAlertDialog"
         android:text="Join By Location"
         android:textColor="#282728"
         android:textSize="20dp"
