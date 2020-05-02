@@ -36,7 +36,6 @@ public class StartPartyActivity extends AppCompatActivity {
 
     public String yourPartyID;
     public DatabaseReference mDatabase;
-    SongQueue sq = new SongQueue();
     PartyLocation currentLocation;
 
     LinearLayout mLinLay;
@@ -173,24 +172,25 @@ public class StartPartyActivity extends AppCompatActivity {
                 // Get Post object and use the values to update the UI
                 SongQueue st = dataSnapshot.getValue(SongQueue.class);
                 //Log.i("onDataChange", action + "    " + st.toString());
-                if (actionRef[0].equals("displayQueue")) {
-                    displayQueue(st);
-                } else if (actionRef[0].equals("updateVotes")){
-                    updateVotes(st,uri);
-                } else if (actionRef[0].equals("addASong")) {
-                    addASong(st, song);
-                } else if (actionRef[0].equals("playNextSong")) {
-                    try {
-                        playNextSong(st);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
+                if (st != null) {
+                    if (actionRef[0].equals("displayQueue")) {
+                        displayQueue(st);
+                    } else if (actionRef[0].equals("updateVotes")) {
+                        updateVotes(st, uri);
+                    } else if (actionRef[0].equals("addASong")) {
+                        addASong(st, song);
+                    } else if (actionRef[0].equals("playNextSong")) {
+                        try {
+                            playNextSong(st);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    } else if (actionRef[0].equals("endParty")) {
+                        endParty(st);
                     }
-                }else if (actionRef[0].equals("endParty")) {
-                    endParty(st);
+                    actionRef[0] = "";
                 }
-                actionRef[0] ="";
                 Log.i("InPullData","asdfaddd");
-                updateQueue(st);
                 //Log.d("PullData", sq.toString());
 
                 // ...
@@ -278,10 +278,12 @@ public class StartPartyActivity extends AppCompatActivity {
      */
     private void playNextSong (SongQueue songQueue) throws InterruptedException {
         Song s = songQueue.nextSong();
-        currentSong=s;
-        playSong(s.getURI());
-        songQueue.removeSong(s.getURI());
-        pushData(songQueue);
+        if (s != null) {
+            currentSong = s;
+            playSong(s.getURI());
+            songQueue.removeSong(s.getURI());
+            pushData(songQueue);
+        }
     }
 
     /*
@@ -289,8 +291,10 @@ public class StartPartyActivity extends AppCompatActivity {
     returns the queue to firebase
      */
     private void addASong (SongQueue songQueue, Song song){
-        songQueue.addSong(song);
-        pushData(songQueue);
+        if (song != null) {
+            songQueue.addSong(song);
+            pushData(songQueue);
+        }
     }
 
     /*
@@ -299,8 +303,9 @@ public class StartPartyActivity extends AppCompatActivity {
      */
     private void updateVotes (SongQueue songQueue, String uri){
         Log.i("updateVotes", songQueue.toString());
-        songQueue.getSong(uri).incrementVotes();
-
+        if (songQueue.getSong(uri) != null) {
+            songQueue.getSong(uri).incrementVotes();
+        }
         pushData(songQueue);
         Log.i("updateVotes2", songQueue.toString());
     }
@@ -327,11 +332,6 @@ public class StartPartyActivity extends AppCompatActivity {
             tv.setText(mSong.getName());
             this.mLinLay.addView(tv);
         }
-    }
-
-    private void updateQueue (SongQueue s){
-        sq = s;
-        Log.i("Info3", s.toString());
     }
 
 
