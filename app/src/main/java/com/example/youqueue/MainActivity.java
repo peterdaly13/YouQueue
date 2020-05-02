@@ -368,14 +368,15 @@ public class MainActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // Get the LocationList stored in Firebase
                 LocationList partyLocations = dataSnapshot.getValue(LocationList.class);
-
-                // Choose which method should be called
-                if (actionRef[0].equals("addLocation")) {
-                    addLocation(partyLocations, userLocation);
-                } else if (actionRef[0].equals("compareLocations")) {
-                    compareLocations(partyLocations, userLocation);
-                } else if (actionRef[0].equals("deleteLocation")) {
-                    deleteLocation(partyLocations, partyId);
+                if (partyLocations != null) {
+                    // Choose which method should be called
+                    if (actionRef[0].equals("addLocation")) {
+                        addLocation(partyLocations, userLocation);
+                    } else if (actionRef[0].equals("compareLocations")) {
+                        compareLocations(partyLocations, userLocation);
+                    } else if (actionRef[0].equals("deleteLocation")) {
+                        deleteLocation(partyLocations, partyId);
+                    }
                 }
 
                 // Set action to "" so the same action doesn't repeat in one call
@@ -412,16 +413,19 @@ public class MainActivity extends AppCompatActivity {
     private void compareLocations(LocationList locationList, PartyLocation userLocation) {
         List<PartyLocation> partyLocations = locationList.getPl();
         double distanceBetween;
+        if (userLocation != null) {
+            for (int i = 0; i < partyLocations.size(); i++) {
+                // Calculate the distance between the userLocation and location i in the locationList
+                distanceBetween = calculateDistance(userLocation.getLocation().getLat(),
+                        userLocation.getLocation().getLawng(), partyLocations.get(i).getLocation().getLat(),
+                        partyLocations.get(i).getLocation().getLawng());
 
-        for(int i = 0; i < partyLocations.size(); i++) {
-            // Calculate the distance between the userLocation and location i in the locationList
-            distanceBetween = calculateDistance(userLocation.getLocation().getLat(),
-                    userLocation.getLocation().getLawng(), partyLocations.get(i).getLocation().getLat(),
-                    partyLocations.get(i).getLocation().getLawng());
-
-            if(distanceBetween < 1.0) {
-                partiesNearby.add(partyLocations.get(i));
+                if (distanceBetween < 1.0) {
+                    partiesNearby.add(partyLocations.get(i));
+                }
             }
+        } else{
+            Log.i("compareLocations", "User location is null");
         }
     }
 
@@ -429,10 +433,12 @@ public class MainActivity extends AppCompatActivity {
     This adds a location to the list of locations
      */
     private void addLocation(LocationList locationList, PartyLocation userLocation) {
-        List<PartyLocation> partyLocations = locationList.getPl();
-        partyLocations.add(userLocation);
-        locationList.setPl(partyLocations);
-        pushLocation(locationList);
+        if (userLocation != null) {
+            List<PartyLocation> partyLocations = locationList.getPl();
+            partyLocations.add(userLocation);
+            locationList.setPl(partyLocations);
+            pushLocation(locationList);
+        }
     }
 
     /*

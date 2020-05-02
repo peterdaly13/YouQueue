@@ -259,14 +259,16 @@ public class StartPartyActivity extends AppCompatActivity {
                 // Get Post object and use the values to update the UI
                 Log.i("datasnapshot", dataSnapshot.getValue().toString());
                 LocationList partyLocations = dataSnapshot.getValue(LocationList.class);
-                if (actionRef[0].equals("addLocation")) {
-                    addLocation(partyLocations, userLocation);
-                } else if (actionRef[0].equals("compareLocations")) {
-                    compareLocations(partyLocations, userLocation);
-                } else if (actionRef[0].equals("deleteLocation")) {
-                    deleteLocation(partyLocations, partyId);
+                if (partyLocations != null) {
+                    if (actionRef[0].equals("addLocation")) {
+                        addLocation(partyLocations, userLocation);
+                    } else if (actionRef[0].equals("compareLocations")) {
+                        compareLocations(partyLocations, userLocation);
+                    } else if (actionRef[0].equals("deleteLocation")) {
+                        deleteLocation(partyLocations, partyId);
+                    }
+                    actionRef[0] = "";
                 }
-                actionRef[0] ="";
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
@@ -277,6 +279,7 @@ public class StartPartyActivity extends AppCompatActivity {
         };
         qReference.addValueEventListener(postListener);
     }
+
     private void deleteLocation(LocationList locationList, int partyId) {
         List<PartyLocation> partyLocations = locationList.getPl();
         for (int i = partyLocations.size()-1; i>=0; i--){
@@ -291,15 +294,19 @@ public class StartPartyActivity extends AppCompatActivity {
         Bilal could you fill this out?
      */
     private void compareLocations(LocationList locationList, PartyLocation userLocation) {
+
     }
+
     /*
     This adds a location to the list of locations
      */
     private void addLocation(LocationList locationList, PartyLocation userLocation) {
-        List<PartyLocation> partyLocations = locationList.getPl();
-        partyLocations.add(userLocation);
-        locationList.setPl(partyLocations);
-        pushLocation(locationList);
+        if (userLocation != null) {
+            List<PartyLocation> partyLocations = locationList.getPl();
+            partyLocations.add(userLocation);
+            locationList.setPl(partyLocations);
+            pushLocation(locationList);
+        }
     }
 
     /*
