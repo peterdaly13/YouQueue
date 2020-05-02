@@ -75,6 +75,8 @@ public class MainActivity extends AppCompatActivity {
                     + "redirect_uri="+REDIRECT_URI+"&"
                     + "scope=user-read-private%20user-read-email&";
 
+    private static List<PartyLocation> partiesNearby = new ArrayList<PartyLocation>();
+
     public void goToSettings(View view) {
         Log.i("Info", "Settings Button pressed");
         Intent intent = new Intent(this, SettingsActivity.class);
@@ -152,9 +154,7 @@ public class MainActivity extends AppCompatActivity {
                 .getDefaultSharedPreferences(this);
         String userName = prefs.getString("user_name", null);
         // Check if the preference field is set. If not, prompt the user to input their username
-        if (userName == null || yourUserID == null) {
-            // Generate userID using the random number generating function above
-            yourUserID = generateUserID();
+        if (userName == null) {
             EditText input = new EditText(this);
             input.setId(Integer.parseInt(yourUserID));
             AlertDialog dialog = new AlertDialog.Builder(this)
@@ -179,6 +179,22 @@ public class MainActivity extends AppCompatActivity {
                             }).create();
             dialog.show();
         }
+
+        // Saves the userID generated in a preference field
+        final SharedPreferences prefs2 = PreferenceManager
+                .getDefaultSharedPreferences(this);
+
+        // Check if the userID is set already
+        if (yourUserID == null) {
+            // Generate userID using the random number generating function above
+            yourUserID = generateUserID();
+            SharedPreferences.Editor editor = prefs2
+                    .edit();
+            editor.putString("userID",
+                    yourUserID);
+            editor.commit();
+        }
+
         // Text to check if the username is being set correctly (Can also be kept and styled if we want to display their username)
         TextView xmlUserNameCheck = (TextView) findViewById(R.id.userNameCheck);
         xmlUserNameCheck.setText("HELLO, " + userName.toUpperCase());
@@ -397,9 +413,24 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /*
-        Bilal could you fill this out?
+    This method takes the user's current location, iterates through the total list of party locations,
+    and compares each index. If the distance is within 1 km, then the party at that current index
+    is added to the global variable list of "Parties Nearby"
      */
     private void compareLocations(LocationList locationList, PartyLocation userLocation) {
+        List<PartyLocation> partyLocations = locationList.getPl();
+        double distanceBetween;
+
+        for(int i = 0; i < partyLocations.size(); i++) {
+            // Calculate the distance between the userLocation and location i in the locationList
+            distanceBetween = calculateDistance(userLocation.getLocation().getLat(),
+                    userLocation.getLocation().getLawng(), partyLocations.get(i).getLocation().getLat(),
+                    partyLocations.get(i).getLocation().getLawng());
+
+            if(distanceBetween < 1.0) {
+                partiesNearby.add(partyLocations.get(i));
+            }
+        }
     }
 
     /*
@@ -410,6 +441,13 @@ public class MainActivity extends AppCompatActivity {
         partyLocations.add(userLocation);
         locationList.setPl(partyLocations);
         pushLocation(locationList);
+    }
+
+    /*
+    Getter method which returns the list of parties nearby
+     */
+    public static List<PartyLocation> getPartiesNearby() {
+        return partiesNearby;
     }
 
     /*

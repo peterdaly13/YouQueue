@@ -8,19 +8,19 @@
     tools:context=".JoinPartyActivity">
 
     <TextView
-        android:id="@+id/joinPartyText"
-        android:layout_width="247dp"
-        android:layout_height="56dp"
+        android:id="@+id/largeTextContainer2"
+        android:layout_width="210dp"
+        android:layout_height="wrap_content"
         android:fontFamily="@font/raleway"
-        android:text="Enter Your Party Code"
+        android:text=""
         android:textColor="#F7F7F7"
-        android:textSize="24dp"
+        android:textSize="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.562"
+        app:layout_constraintHorizontal_bias="0.552"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.306" />
+        app:layout_constraintVertical_bias="0.478" />
 
     <TextView
         android:id="@+id/smallTextContainer"
@@ -31,11 +31,11 @@
         android:textColor="#F7F7F7"
         android:textSize="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.537"
+        app:layout_constraintHorizontal_bias="0.552"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.366" />
+        app:layout_constraintVertical_bias="0.189" />
 
     <EditText
         android:id="@+id/editText"
@@ -48,57 +48,43 @@
         android:text=""
         android:textColor="#F7F7F7"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.537"
+        app:layout_constraintHorizontal_bias="0.524"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.423" />
+        app:layout_constraintVertical_bias="0.237" />
 
     <TextView
         android:id="@+id/largeTextContainer"
         android:layout_width="210dp"
-        android:layout_height="wrap_content"
+        android:layout_height="6dp"
         android:fontFamily="@font/raleway"
         android:text=""
         android:textColor="#F7F7F7"
         android:textSize="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.537"
+        app:layout_constraintHorizontal_bias="0.552"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.32" />
 
     <Button
-        android:id="@+id/button2"
-        android:layout_width="247dp"
-        android:layout_height="56dp"
+        android:id="@+id/joinByIDButton"
+        android:layout_width="244dp"
+        android:layout_height="42dp"
         android:background="@drawable/rounded_border_button"
         android:fontFamily="@font/raleway"
+        android:onClick="goToJoinedParty"
         android:text="Enter"
         android:textColor="#282728"
         android:textSize="20dp"
-        android:onClick="goToJoinedParty"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.537"
+        app:layout_constraintHorizontal_bias="0.532"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.57" />
-
-    <TextView
-        android:id="@+id/largeTextContainer2"
-        android:layout_width="210dp"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/raleway"
-        android:text=""
-        android:textColor="#F7F7F7"
-        android:textSize="20dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.537"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.681" />
+        app:layout_constraintVertical_bias="0.362" />
 
     <TextView
         android:id="@+id/largeTextContainer3"
@@ -109,11 +95,73 @@
         android:textColor="#F7F7F7"
         android:textSize="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.537"
+        app:layout_constraintHorizontal_bias="0.552"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.643" />
+        app:layout_constraintVertical_bias="0.438" />
+
+    <TextView
+        android:id="@+id/joinPartyText"
+        android:layout_width="247dp"
+        android:layout_height="56dp"
+        android:fontFamily="@font/raleway"
+        android:text="Enter Your Party Code"
+        android:textColor="#F7F7F7"
+        android:textSize="24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.554"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.118" />
+
+    <TextView
+        android:id="@+id/OrText"
+        android:layout_width="wrap_content"
+        android:layout_height="56dp"
+        android:fontFamily="@font/raleway"
+        android:text="OR"
+        android:textColor="#F7F7F7"
+        android:textSize="24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.539" />
+
+    <ImageButton
+        android:id="@+id/imageButton"
+        android:layout_width="80dp"
+        android:layout_height="78dp"
+        android:background="@color/back_icon_background"
+        android:onClick="goHome"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.879"
+        app:srcCompat="@drawable/back_icon_foreground"
+        tools:ignore="VectorDrawableCompat" />
+
+    <Button
+        android:id="@+id/joinByLocationButton"
+        android:layout_width="244dp"
+        android:layout_height="42dp"
+        android:background="@drawable/rounded_border_button"
+        android:fontFamily="@font/raleway"
+        android:onClick="displayAlertDialog"
+        android:text="Join By Location"
+        android:textColor="#282728"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.544"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.676" />
 
     <TextView
         android:id="@+id/largeTextContainer4"
@@ -124,25 +172,10 @@
         android:textColor="#F7F7F7"
         android:textSize="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.537"
+        app:layout_constraintHorizontal_bias="0.522"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.72" />
-
-    <ImageButton
-        android:id="@+id/imageButton"
-        android:layout_width="80dp"
-        android:layout_height="78dp"
-        android:background="@color/back_icon_background"
-        android:onClick="goHome"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.523"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.833"
-        app:srcCompat="@drawable/back_icon_foreground"
-        tools:ignore="VectorDrawableCompat" />
+        app:layout_constraintVertical_bias="0.762" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
