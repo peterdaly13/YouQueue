@@ -8,10 +8,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.preference.PreferenceManager;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
-import android.location.Location;
 import android.widget.TextView;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -29,7 +26,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.android.gms.maps.model.LatLng;
 import com.spotify.android.appremote.api.ConnectionParams;
 import com.spotify.android.appremote.api.Connector;
 import com.spotify.android.appremote.api.SpotifyAppRemote;
@@ -42,7 +38,6 @@ import com.spotify.protocol.types.Track;
 import com.spotify.protocol.types.Repeat;
 
 
-import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -69,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String REDIRECT_URI = "com.youqueue://callback";
     private SpotifyAppRemote mSpotifyAppRemote = null;
     // Access a Cloud Firestore instance from your Activity
-    private DatabaseReference mDatabase;
+    public DatabaseReference mDatabase;
     public static String yourUserID;
     HashMap map;
     SongQueue sq = new SongQueue();
@@ -87,38 +82,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void goToJoinParty(View view) throws InterruptedException {
-        Log.i("Info1", "before Pull Data");
-        //Song s = new Song("Taco3", 11123, 12345, "Peter's Song Please work again");
-        //pullData(111 , "addASong", null, s);
-        /*
-        LatLong latlng = new LatLong(0.5, 8.1);
-        LatLong latlng2 = new LatLong(0.0, 0.0);
-        PartyLocation location = new PartyLocation(latlng, 123, "Ethan");
-        PartyLocation location2 = new PartyLocation(latlng2, 56, "Peter");
-        List<PartyLocation> list = new ArrayList<PartyLocation>();
-        list.add(location);
-        list.add(location2);
-        LocationList loclist = new LocationList(list);
-        pushLocation(loclist);
-        */
-
-        //LatLong latlng = new LatLong(6.5, 9.7);
-        //PartyLocation location = new PartyLocation(latlng, 1234, "Ethan");
-
-        Song s = new Song("Taco3", 11123, 12345, "Peter's Song Please work again", 120, "Tom");
-        SongQueue sq2 = new SongQueue(111);
-        sq2.addSong(s);
-        SongQueue sq3 = new SongQueue(222);
-        sq3.addSong(s);
-
-        //pushData(sq2);
-        //pushData(sq3);
-
-
-        //pullData(222, "endParty", null, null);
-        //pullLocation("addLocation",0 ,location );
-
-
         Log.i("Info2", "Join Party Button pressed");
         Intent intent = new Intent(this, JoinPartyActivity.class);
         startActivity(intent);
@@ -218,7 +181,7 @@ public class MainActivity extends AppCompatActivity {
         }
         // Text to check if the username is being set correctly (Can also be kept and styled if we want to display their username)
         TextView xmlUserNameCheck = (TextView) findViewById(R.id.userNameCheck);
-        //xmlUserNameCheck.setText("HELLO, " + userName.toUpperCase());
+        xmlUserNameCheck.setText("HELLO, " + userName.toUpperCase());
     }
 
     @Override
@@ -291,9 +254,13 @@ public class MainActivity extends AppCompatActivity {
 
     private void search(String track){ }
 
-    //Need to write code to push a songQueue to Firebase
+    /*
+        This method is used to push a SongQueue to firebase, it's location in firebase
+        is determined by the SongQueue's partyLeaderID
+     */
     private void pushData(SongQueue s){
-        Log.d("PushData", "1234");
+        // A HashMap is used to upload information to firebase, the String is the location in
+        // firebase and the Object is the SongQueue to be put in firebase
         HashMap<String, Object> map = new HashMap<>();
         String folder = "/queues/"+ Integer.toString(s.partyLeaderID);
         map.put(folder, s);
@@ -301,21 +268,35 @@ public class MainActivity extends AppCompatActivity {
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Log.w("Potato", "Error adding document", e);
+                        Log.w("pushData", "Error adding a SongQueue", e);
                     }
                 });
     }
-    //Need to write code to pull a songQueue from Firebase
-    private void pullData(int partyLeaderID, final String action, final String uri, final Song song) throws InterruptedException {
+
+    /*
+        This method is used to perform any action that reads or updates the SongQueue that is in
+        Firebase. It takes in an "action" parameter which specifies which method should be called.
+        Possible methods are: displayQueue, updateVotes, addASong, playNextSong, and endParty.
+        updateVotes requires the song uri and addASong requires a song, otherwise, the song and
+        uri parameters can be left blank
+     */
+    private void pullData(int partyLeaderID, final String action, final String uri, final Song song) {
+        // Somehow this allows the action String to work as intented
         final String[] actionRef = {action};
-        Log.i("InPullData","asdfad");
+
+        // Use the partyLeaderID to access the correct database
         DatabaseReference qReference = mDatabase.child("queues").child(Integer.toString(partyLeaderID));
+
+        // The onDataChange will be called once to perform an action, and then once again if the
+        // data was changed. The action var is set to "" so that no action repeats in one call of
+        // pullData
         ValueEventListener postListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                // Get Post object and use the values to update the UI
+                // Get the SongQueue from Firebase
                 SongQueue st = dataSnapshot.getValue(SongQueue.class);
-                //Log.i("onDataChange", action + "    " + st.toString());
+
+                // Perform the desired action
                 if (actionRef[0].equals("displayQueue")) {
                     displayQueue(st);
                 } else if (actionRef[0].equals("updateVotes")){
@@ -327,26 +308,27 @@ public class MainActivity extends AppCompatActivity {
                 }else if (actionRef[0].equals("endParty")) {
                     endParty(st);
                 }
+                // Set action to "" so that the action doesn't repeat
                 actionRef[0] ="";
-                Log.i("InPullData","asdfaddd");
-                updateQueue(st);
-                //Log.d("PullData", sq.toString());
-
-                // ...
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                // Getting Post failed, log a message
+                // Getting SongQueue failed, log a message
                 Log.w("PullData", "Failed to Load SongQueue from Firebase", databaseError.toException());
-                // ...
             }
         };
         qReference.addValueEventListener(postListener);
     }
 
-
+    /*
+        This method puts the LocationList it is given into Firebase, once the Location list is
+        initialized in Firebase, this should only be called from the pullLocation related methods.
+        The layout of this is very similar to pushData.
+     */
     private void pushLocation(LocationList ll) {
+        // HashMap used to put things into Firebase, String is location in the database, object is
+        // the LocationList object
         HashMap<String, Object> map = new HashMap<>();
         String folder = "/locations";
         map.put(folder, ll);
@@ -354,19 +336,32 @@ public class MainActivity extends AppCompatActivity {
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Log.w("Potato", "Error adding document", e);
+                        Log.w("pushLocation", "Error adding the LocationList", e);
                     }
                 });
     }
+
+    /*
+        This method is used to perform any action that relates to checking locations or adding /
+        removing locations from the database.
+        The action variable must be either: addLocation, compareLocations, or deleteLocation
+        and specifies which method will be used.
+        partyId is needed for delete location, and userLocation is needed for add a location or
+        compareLocations, otherwise, the partyId and userLocation will not be used.
+     */
     private void pullLocation(final String action, final int partyId, final PartyLocation userLocation){
+        // Used to make the action variable work as intended
         final String[] actionRef = {action};
+
+        // Get to the locations part of Firebase
         DatabaseReference qReference = mDatabase.child("locations");
         ValueEventListener postListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                // Get Post object and use the values to update the UI
-                Log.i("datasnapshot", dataSnapshot.getValue().toString());
+                // Get the LocationList stored in Firebase
                 LocationList partyLocations = dataSnapshot.getValue(LocationList.class);
+
+                // Choose which method should be called
                 if (actionRef[0].equals("addLocation")) {
                     addLocation(partyLocations, userLocation);
                 } else if (actionRef[0].equals("compareLocations")) {
@@ -374,17 +369,22 @@ public class MainActivity extends AppCompatActivity {
                 } else if (actionRef[0].equals("deleteLocation")) {
                     deleteLocation(partyLocations, partyId);
                 }
+
+                // Set action to "" so the same action doesn't repeat in one call
                 actionRef[0] ="";
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                // Getting Post failed, log a message
-                Log.w("PullData", "Failed to Load SongQueue from Firebase", databaseError.toException());
-                // ...
+                Log.w("PullLocation", "Failed to Load LocationList from Firebase", databaseError.toException());
             }
         };
         qReference.addValueEventListener(postListener);
     }
+
+    /*
+        This method takes in the locationlist and removes the location corresponding to the
+        provided partyId and pushes the result to Firebase
+     */
     private void deleteLocation(LocationList locationList, int partyId) {
         List<PartyLocation> partyLocations = locationList.getPl();
         for (int i = partyLocations.size()-1; i>=0; i--){
@@ -395,11 +395,13 @@ public class MainActivity extends AppCompatActivity {
         locationList.setPl(partyLocations);
         pushLocation(locationList);
     }
+
     /*
         Bilal could you fill this out?
      */
     private void compareLocations(LocationList locationList, PartyLocation userLocation) {
     }
+
     /*
     This adds a location to the list of locations
      */
@@ -415,7 +417,7 @@ public class MainActivity extends AppCompatActivity {
     deletes the song from the queue and pushes the queue
     back to firebase
      */
-        private void playNextSong (SongQueue songQueue){
+        protected void playNextSong (SongQueue songQueue){
             Song s = songQueue.nextSong();
             playSong(s.getURI());
             songQueue.removeSong(s.getURI());
