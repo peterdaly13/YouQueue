@@ -237,6 +237,18 @@
         app:srcCompat="@drawable/ic_skip_prev"
         tools:ignore="VectorDrawableCompat" />
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/my_recycler_view"
+        android:layout_width="258dp"
+        android:layout_height="156dp"
+        app:layout_constraintBottom_toTopOf="@+id/imageButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/queue"
+        app:layout_constraintVertical_bias="0.69" />
+
+
     <Button
         android:id="@+id/endParty"
         android:layout_width="88dp"

@@ -5,10 +5,14 @@ import android.content.Intent;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -27,6 +31,13 @@ import java.util.List;
 import java.util.Random;
 
 public class StartPartyActivity extends AppCompatActivity {
+
+    private RecyclerView recyclerView;
+    private RecyclerView.Adapter mAdapter;
+    private RecyclerView.LayoutManager layoutManager;
+
+    Song[] songList;
+    String songNames[];
 
     private static final String CLIENT_ID = "d19dfd48fcd54626a0f8ff696ada3b9e";
     private static final String REDIRECT_URI = "com.youqueue://callback";
@@ -63,6 +74,26 @@ public class StartPartyActivity extends AppCompatActivity {
         // Set the party ID to display on the activity
         TextView xmlPartyID = (TextView) findViewById(R.id.xmlPartyID);
         xmlPartyID.setText(yourPartyID);
+
+        /*
+        SongList sl = new SongList();
+        songList = sl.getSongs();
+        songNames = sl.getSongNames();
+        recyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
+
+        // use this setting to improve performance if you know that changes
+        // in content do not change the layout size of the RecyclerView
+        recyclerView.setHasFixedSize(true);
+
+        // use a linear layout manager
+        layoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
+
+        // specify an adapter (see also next example)
+        mAdapter = new songListAdapter(songNames);
+        recyclerView.setAdapter(mAdapter);
+
+         */
 
         //login to spotify
         ConnectionParams connectionParams =
@@ -342,5 +373,5 @@ public class StartPartyActivity extends AppCompatActivity {
         startCounting();
 
     }
-
 }
+

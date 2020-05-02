@@ -1,5 +1,8 @@
 package com.example.youqueue;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class SongList {
     public static Song[] getSongs(){
 
@@ -66,5 +69,20 @@ public class SongList {
             }
         }
         return null;
+    }
+
+    public static List<Song> listSongs(){
+        Song[] songs = getSongs();
+        List<Song> songList = Arrays.asList(songs);
+        return songList;
+    }
+
+    public static String[] getSongNames(){
+        String[] songNames = new String[48];
+        Song[] songs = getSongs();
+        for(int i = 0; i < 48; i++){
+            songNames[i] = songs[i].getName();
+        }
+        return songNames;
     }
 }
