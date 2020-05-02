@@ -18,6 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -38,10 +39,9 @@ import java.util.Random;
 public class StartPartyActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
-    private songListAdapter mAdapter;
     private RecyclerView dqRecycleView;
     private displayQueueAdapter dqAdapter;
-    private songListAdapterStartParty mAdapterStartParty;
+    private songListAdapterStartParty mAdapter;
 
     Song[] songList;
     String songNames[];
@@ -91,7 +91,7 @@ public class StartPartyActivity extends AppCompatActivity {
         ArrayList<String> songNameList = new ArrayList<>(Arrays.asList(songNames));
         recyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mAdapterStartParty = new songListAdapterStartParty(this, songNameList);
+        mAdapter = new songListAdapterStartParty(this, songNameList);
         //mAdapter.setClickListener(this);
         recyclerView.setAdapter(mAdapter);
 
@@ -129,6 +129,7 @@ public class StartPartyActivity extends AppCompatActivity {
         Log.i("Info", "Back Button pressed");
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
+        Animatoo.animateSlideLeft(this);
     }
 
     public void resume(View view) throws InterruptedException {
