@@ -6,7 +6,7 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-public class displayQueueAdapter extends RecyclerView.Adapter<songListAdapter.MyViewHolder>{
+public class displayQueueAdapter extends RecyclerView.Adapter<displayQueueAdapter.MyViewHolder>{
 
     private String[] mDataset;
 
@@ -29,19 +29,19 @@ public class displayQueueAdapter extends RecyclerView.Adapter<songListAdapter.My
 
     // Create new views (invoked by the layout manager)
     @Override
-    public songListAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent,
+    public displayQueueAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent,
                                                            int viewType) {
         // create a new view
         TextView v = (TextView) LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.listsongs, parent, false);
 
-        songListAdapter.MyViewHolder vh = new songListAdapter.MyViewHolder(v);
+        displayQueueAdapter.MyViewHolder vh = new displayQueueAdapter.MyViewHolder(v);
         return vh;
     }
 
     // Replace the contents of a view (invoked by the layout manager)
     @Override
-    public void onBindViewHolder(songListAdapter.MyViewHolder holder, int position) {
+    public void onBindViewHolder(displayQueueAdapter.MyViewHolder holder, int position) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
         holder.textView.setText(mDataset[position]);
