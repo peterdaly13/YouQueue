@@ -23,7 +23,6 @@ import java.util.List;
 public class JoinedParty extends AppCompatActivity {
 
     public DatabaseReference mDatabase;
-    SongQueue sq = new SongQueue();
     private SpotifyAppRemote mSpotifyAppRemote = null;
     public String yourPartyID;
     LinearLayout mLinLay;
@@ -81,23 +80,21 @@ public class JoinedParty extends AppCompatActivity {
                 // Get Post object and use the values to update the UI
                 SongQueue st = dataSnapshot.getValue(SongQueue.class);
                 //Log.i("onDataChange", action + "    " + st.toString());
-                if (actionRef[0].equals("displayQueue")) {
-                    displayQueue(st);
-                } else if (actionRef[0].equals("updateVotes")){
-                    updateVotes(st,uri);
-                } else if (actionRef[0].equals("addASong")) {
-                    addASong(st, song);
-                } else if (actionRef[0].equals("playNextSong")) {
-                    playNextSong(st);
-                }else if (actionRef[0].equals("endParty")) {
-                    endParty(st);
+                if (st != null) {
+                    if (actionRef[0].equals("displayQueue")) {
+                        displayQueue(st);
+                    } else if (actionRef[0].equals("updateVotes")) {
+                        updateVotes(st, uri);
+                    } else if (actionRef[0].equals("addASong")) {
+                        addASong(st, song);
+                    } else if (actionRef[0].equals("playNextSong")) {
+                        playNextSong(st);
+                    } else if (actionRef[0].equals("endParty")) {
+                        endParty(st);
+                    }
+                    actionRef[0] = "";
+                    Log.i("InPullData", "asdfaddd");
                 }
-                actionRef[0] ="";
-                Log.i("InPullData","asdfaddd");
-                updateQueue(st);
-                //Log.d("PullData", sq.toString());
-
-                // ...
             }
 
             @Override
@@ -116,17 +113,21 @@ public class JoinedParty extends AppCompatActivity {
      */
     private void playNextSong (SongQueue songQueue){
         Song s = songQueue.nextSong();
-        playSong(s.getURI());
-        songQueue.removeSong(s.getURI());
-        pushData(songQueue);
+        if (s != null) {
+            playSong(s.getURI());
+            songQueue.removeSong(s.getURI());
+            pushData(songQueue);
+        }
     }
     /*
     This adds a song to the queue and then
     returns the queue to firebase
      */
     private void addASong (SongQueue songQueue, Song song){
-        songQueue.addSong(song);
-        pushData(songQueue);
+        if (song != null) {
+            songQueue.addSong(song);
+            pushData(songQueue);
+        }
     }
     /*
     This updates the specific song with one more vote and
@@ -134,9 +135,10 @@ public class JoinedParty extends AppCompatActivity {
      */
     private void updateVotes (SongQueue songQueue, String uri){
         Log.i("updateVotes", songQueue.toString());
-        songQueue.getSong(uri).incrementVotes();
-
-        pushData(songQueue);
+        if (songQueue.getSong(uri) != null) {
+            songQueue.getSong(uri).incrementVotes();
+            pushData(songQueue);
+        }
         Log.i("updateVotes2", songQueue.toString());
     }
 
@@ -162,11 +164,6 @@ public class JoinedParty extends AppCompatActivity {
             tv.setText(mSong.getName());
             this.mLinLay.addView(tv);
         }
-    }
-
-    private void updateQueue (SongQueue s){
-        sq = s;
-        Log.i("Info3", s.toString());
     }
 
     private void playSong(String uri){

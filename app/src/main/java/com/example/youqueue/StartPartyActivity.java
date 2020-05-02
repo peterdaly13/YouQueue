@@ -50,7 +50,6 @@ public class StartPartyActivity extends AppCompatActivity {
 
     public String yourPartyID;
     public DatabaseReference mDatabase;
-    SongQueue sq = new SongQueue();
     PartyLocation currentLocation;
 
     LinearLayout mLinLay;
@@ -205,24 +204,25 @@ public class StartPartyActivity extends AppCompatActivity {
                 // Get Post object and use the values to update the UI
                 SongQueue st = dataSnapshot.getValue(SongQueue.class);
                 //Log.i("onDataChange", action + "    " + st.toString());
-                if (actionRef[0].equals("displayQueue")) {
-                    displayQueue(st);
-                } else if (actionRef[0].equals("updateVotes")){
-                    updateVotes(st,uri);
-                } else if (actionRef[0].equals("addASong")) {
-                    addASong(st, song);
-                } else if (actionRef[0].equals("playNextSong")) {
-                    try {
-                        playNextSong(st);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
+                if (st != null) {
+                    if (actionRef[0].equals("displayQueue")) {
+                        displayQueue(st);
+                    } else if (actionRef[0].equals("updateVotes")) {
+                        updateVotes(st, uri);
+                    } else if (actionRef[0].equals("addASong")) {
+                        addASong(st, song);
+                    } else if (actionRef[0].equals("playNextSong")) {
+                        try {
+                            playNextSong(st);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    } else if (actionRef[0].equals("endParty")) {
+                        endParty(st);
                     }
-                }else if (actionRef[0].equals("endParty")) {
-                    endParty(st);
+                    actionRef[0] = "";
                 }
-                actionRef[0] ="";
                 Log.i("InPullData","asdfaddd");
-                updateQueue(st);
                 //Log.d("PullData", sq.toString());
 
                 // ...
@@ -260,14 +260,16 @@ public class StartPartyActivity extends AppCompatActivity {
                 // Get Post object and use the values to update the UI
                 Log.i("datasnapshot", dataSnapshot.getValue().toString());
                 LocationList partyLocations = dataSnapshot.getValue(LocationList.class);
-                if (actionRef[0].equals("addLocation")) {
-                    addLocation(partyLocations, userLocation);
-                } else if (actionRef[0].equals("compareLocations")) {
-                    compareLocations(partyLocations, userLocation);
-                } else if (actionRef[0].equals("deleteLocation")) {
-                    deleteLocation(partyLocations, partyId);
+                if (partyLocations != null) {
+                    if (actionRef[0].equals("addLocation")) {
+                        addLocation(partyLocations, userLocation);
+                    } else if (actionRef[0].equals("compareLocations")) {
+                        compareLocations(partyLocations, userLocation);
+                    } else if (actionRef[0].equals("deleteLocation")) {
+                        deleteLocation(partyLocations, partyId);
+                    }
+                    actionRef[0] = "";
                 }
-                actionRef[0] ="";
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
@@ -278,6 +280,7 @@ public class StartPartyActivity extends AppCompatActivity {
         };
         qReference.addValueEventListener(postListener);
     }
+
     private void deleteLocation(LocationList locationList, int partyId) {
         List<PartyLocation> partyLocations = locationList.getPl();
         for (int i = partyLocations.size()-1; i>=0; i--){
@@ -292,15 +295,19 @@ public class StartPartyActivity extends AppCompatActivity {
         Bilal could you fill this out?
      */
     private void compareLocations(LocationList locationList, PartyLocation userLocation) {
+
     }
+
     /*
     This adds a location to the list of locations
      */
     private void addLocation(LocationList locationList, PartyLocation userLocation) {
-        List<PartyLocation> partyLocations = locationList.getPl();
-        partyLocations.add(userLocation);
-        locationList.setPl(partyLocations);
-        pushLocation(locationList);
+        if (userLocation != null) {
+            List<PartyLocation> partyLocations = locationList.getPl();
+            partyLocations.add(userLocation);
+            locationList.setPl(partyLocations);
+            pushLocation(locationList);
+        }
     }
 
     /*
@@ -310,10 +317,12 @@ public class StartPartyActivity extends AppCompatActivity {
      */
     private void playNextSong (SongQueue songQueue) throws InterruptedException {
         Song s = songQueue.nextSong();
-        currentSong=s;
-        playSong(s.getURI());
-        songQueue.removeSong(s.getURI());
-        pushData(songQueue);
+        if (s != null) {
+            currentSong = s;
+            playSong(s.getURI());
+            songQueue.removeSong(s.getURI());
+            pushData(songQueue);
+        }
     }
 
     /*
@@ -321,8 +330,10 @@ public class StartPartyActivity extends AppCompatActivity {
     returns the queue to firebase
      */
     private void addASong (SongQueue songQueue, Song song){
-        songQueue.addSong(song);
-        pushData(songQueue);
+        if (song != null) {
+            songQueue.addSong(song);
+            pushData(songQueue);
+        }
     }
 
     /*
@@ -331,8 +342,9 @@ public class StartPartyActivity extends AppCompatActivity {
      */
     private void updateVotes (SongQueue songQueue, String uri){
         Log.i("updateVotes", songQueue.toString());
-        songQueue.getSong(uri).incrementVotes();
-
+        if (songQueue.getSong(uri) != null) {
+            songQueue.getSong(uri).incrementVotes();
+        }
         pushData(songQueue);
         Log.i("updateVotes2", songQueue.toString());
     }
@@ -359,11 +371,6 @@ public class StartPartyActivity extends AppCompatActivity {
             tv.setText(mSong.getName());
             this.mLinLay.addView(tv);
         }
-    }
-
-    private void updateQueue (SongQueue s){
-        sq = s;
-        Log.i("Info3", s.toString());
     }
 
 

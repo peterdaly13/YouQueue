@@ -302,17 +302,19 @@ public class MainActivity extends AppCompatActivity {
                 // Get the SongQueue from Firebase
                 SongQueue st = dataSnapshot.getValue(SongQueue.class);
 
-                // Perform the desired action
-                if (actionRef[0].equals("displayQueue")) {
-                    displayQueue(st);
-                } else if (actionRef[0].equals("updateVotes")){
-                    updateVotes(st,uri);
-                } else if (actionRef[0].equals("addASong")) {
-                    addASong(st, song);
-                } else if (actionRef[0].equals("playNextSong")) {
-                    playNextSong(st);
-                }else if (actionRef[0].equals("endParty")) {
-                    endParty(st);
+                if (st != null) {
+                    // Perform the desired action
+                    if (actionRef[0].equals("displayQueue")) {
+                        displayQueue(st);
+                    } else if (actionRef[0].equals("updateVotes")) {
+                        updateVotes(st, uri);
+                    } else if (actionRef[0].equals("addASong")) {
+                        addASong(st, song);
+                    } else if (actionRef[0].equals("playNextSong")) {
+                        playNextSong(st);
+                    } else if (actionRef[0].equals("endParty")) {
+                        endParty(st);
+                    }
                 }
                 // Set action to "" so that the action doesn't repeat
                 actionRef[0] ="";
@@ -366,14 +368,15 @@ public class MainActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // Get the LocationList stored in Firebase
                 LocationList partyLocations = dataSnapshot.getValue(LocationList.class);
-
-                // Choose which method should be called
-                if (actionRef[0].equals("addLocation")) {
-                    addLocation(partyLocations, userLocation);
-                } else if (actionRef[0].equals("compareLocations")) {
-                    compareLocations(partyLocations, userLocation);
-                } else if (actionRef[0].equals("deleteLocation")) {
-                    deleteLocation(partyLocations, partyId);
+                if (partyLocations != null) {
+                    // Choose which method should be called
+                    if (actionRef[0].equals("addLocation")) {
+                        addLocation(partyLocations, userLocation);
+                    } else if (actionRef[0].equals("compareLocations")) {
+                        compareLocations(partyLocations, userLocation);
+                    } else if (actionRef[0].equals("deleteLocation")) {
+                        deleteLocation(partyLocations, partyId);
+                    }
                 }
 
                 // Set action to "" so the same action doesn't repeat in one call
@@ -410,16 +413,19 @@ public class MainActivity extends AppCompatActivity {
     private void compareLocations(LocationList locationList, PartyLocation userLocation) {
         List<PartyLocation> partyLocations = locationList.getPl();
         double distanceBetween;
+        if (userLocation != null) {
+            for (int i = 0; i < partyLocations.size(); i++) {
+                // Calculate the distance between the userLocation and location i in the locationList
+                distanceBetween = calculateDistance(userLocation.getLocation().getLat(),
+                        userLocation.getLocation().getLawng(), partyLocations.get(i).getLocation().getLat(),
+                        partyLocations.get(i).getLocation().getLawng());
 
-        for(int i = 0; i < partyLocations.size(); i++) {
-            // Calculate the distance between the userLocation and location i in the locationList
-            distanceBetween = calculateDistance(userLocation.getLocation().getLat(),
-                    userLocation.getLocation().getLawng(), partyLocations.get(i).getLocation().getLat(),
-                    partyLocations.get(i).getLocation().getLawng());
-
-            if(distanceBetween < 1.0) {
-                partiesNearby.add(partyLocations.get(i));
+                if (distanceBetween < 1.0) {
+                    partiesNearby.add(partyLocations.get(i));
+                }
             }
+        } else{
+            Log.i("compareLocations", "User location is null");
         }
     }
 
@@ -427,10 +433,12 @@ public class MainActivity extends AppCompatActivity {
     This adds a location to the list of locations
      */
     private void addLocation(LocationList locationList, PartyLocation userLocation) {
-        List<PartyLocation> partyLocations = locationList.getPl();
-        partyLocations.add(userLocation);
-        locationList.setPl(partyLocations);
-        pushLocation(locationList);
+        if (userLocation != null) {
+            List<PartyLocation> partyLocations = locationList.getPl();
+            partyLocations.add(userLocation);
+            locationList.setPl(partyLocations);
+            pushLocation(locationList);
+        }
     }
 
     /*
@@ -447,8 +455,10 @@ public class MainActivity extends AppCompatActivity {
      */
         protected void playNextSong (SongQueue songQueue){
             Song s = songQueue.nextSong();
-            playSong(s.getURI());
-            songQueue.removeSong(s.getURI());
+            if (s != null) {
+                playSong(s.getURI());
+                songQueue.removeSong(s.getURI());
+            }
             pushData(songQueue);
         }
 
@@ -457,7 +467,9 @@ public class MainActivity extends AppCompatActivity {
     returns the queue to firebase
      */
         private void addASong (SongQueue songQueue, Song song){
-            songQueue.addSong(song);
+            if (song != null) {
+                songQueue.addSong(song);
+            }
             pushData(songQueue);
         }
 
@@ -467,16 +479,16 @@ public class MainActivity extends AppCompatActivity {
      */
         private void updateVotes (SongQueue songQueue, String uri){
             Log.i("updateVotes", songQueue.toString());
-            songQueue.getSong(uri).incrementVotes();
+            if (songQueue.getSong(uri) != null) {
+                songQueue.getSong(uri).incrementVotes();
+            }
 
             pushData(songQueue);
             Log.i("updateVotes2", songQueue.toString());
         }
 
     private void endParty(SongQueue st) {
-        if(st!=null) {
             mDatabase.child("/queues/" + st.getPartyLeaderID()).removeValue();
-        }
     }
 
     /*
