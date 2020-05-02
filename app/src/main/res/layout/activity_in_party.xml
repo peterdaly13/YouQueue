@@ -52,20 +52,35 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.122" />
 
-    <LinearLayout
-        android:id="@+id/linlay"
-        android:layout_width="262dp"
-        android:layout_height="160dp"
-        android:background="@drawable/rounded_border_edittext"
-        android:orientation="vertical"
+    <TextView
+        android:id="@+id/largeTextContainer"
+        android:layout_width="210dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/raleway"
+        android:text=""
+        android:textColor="#F7F7F7"
+        android:textSize="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintHorizontal_bias="0.522"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.287">
+        app:layout_constraintVertical_bias="0.191" />
 
-    </LinearLayout>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/queueList"
+        android:layout_width="262dp"
+        android:layout_height="216dp"
+        android:background="@drawable/rounded_border_edittext"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.59"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.341">
+
+    </androidx.recyclerview.widget.RecyclerView>
 
     <ImageButton
         android:id="@+id/imageButton"
@@ -74,27 +89,26 @@
         android:background="@null"
         android:onClick="goHome"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.519"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.947"
+        app:layout_constraintVertical_bias="0.932"
         app:srcCompat="@drawable/back_icon_foreground"
         tools:ignore="VectorDrawableCompat" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/my_recycler_view"
+        android:id="@+id/songList"
         android:layout_width="258dp"
-        android:layout_height="150dp"
+        android:layout_height="156dp"
         android:background="@drawable/rounded_border_edittext"
         android:fontFamily="@font/raleway"
-        android:textSize="12sp"
         app:layout_constraintBottom_toTopOf="@+id/imageButton"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.509"
+        app:layout_constraintHorizontal_bias="0.575"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linlay"
-        app:layout_constraintVertical_bias="0.647" />
+        app:layout_constraintTop_toBottomOf="@+id/queueList"
+        app:layout_constraintVertical_bias="0.65" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

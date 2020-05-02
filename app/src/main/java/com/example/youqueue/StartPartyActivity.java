@@ -18,7 +18,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -39,9 +38,10 @@ import java.util.Random;
 public class StartPartyActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
+    private songListAdapterStartParty mAdapter;
     private RecyclerView dqRecycleView;
     private displayQueueAdapter dqAdapter;
-    private songListAdapterStartParty mAdapter;
+
 
     Song[] songList;
     String songNames[];
@@ -89,7 +89,7 @@ public class StartPartyActivity extends AppCompatActivity {
         songList = sl.getSongs();
         songNames = sl.getSongNames();
         ArrayList<String> songNameList = new ArrayList<>(Arrays.asList(songNames));
-        recyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
+        recyclerView = (RecyclerView) findViewById(R.id.songList);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         mAdapter = new songListAdapterStartParty(this, songNameList);
         //mAdapter.setClickListener(this);
@@ -129,7 +129,6 @@ public class StartPartyActivity extends AppCompatActivity {
         Log.i("Info", "Back Button pressed");
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
-        Animatoo.animateSlideLeft(this);
     }
 
     public void resume(View view) throws InterruptedException {
@@ -386,7 +385,7 @@ public class StartPartyActivity extends AppCompatActivity {
             String name = mSong.getName();
             songsInQ.add(name);
         }
-        dqRecycleView = (RecyclerView) findViewById(R.id.linlay);
+        dqRecycleView = (RecyclerView) findViewById(R.id.queueList);
         dqRecycleView.setLayoutManager(new LinearLayoutManager(this));
         dqAdapter = new displayQueueAdapter(this, songsInQ);
         recyclerView.setAdapter(dqAdapter);
