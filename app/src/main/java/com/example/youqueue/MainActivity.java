@@ -82,6 +82,14 @@ public class MainActivity extends AppCompatActivity {
                     + "response_type=code&"
                     + "redirect_uri="+REDIRECT_URI+"&"
                     + "scope=user-read-private%20user-read-email&";
+    
+    private FusedLocationProviderClient mFusedLocationProviderClient;
+    private boolean mLocationPermissionsGranted = false;
+    private static LatLong initial = new LatLong(0,0);
+
+    // Variable which stores the user's current location - Before permissions are granted, the initial location is set to (0,0)
+    private static PartyLocation userLocation = new PartyLocation(initial, Integer.parseInt(yourUserID), userName);
+    private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 12;
 
     private static List<PartyLocation> partiesNearby = new ArrayList<PartyLocation>();
 
@@ -200,10 +208,8 @@ public class MainActivity extends AppCompatActivity {
         TextView xmlUserNameCheck = (TextView) findViewById(R.id.userNameCheck);
         xmlUserNameCheck.setText("HELLO, " + userName.toUpperCase());
 
-        getDeviceLocation();
-
-//        // Obtain a FusedLocationProviderClient
-//        mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+        // Obtain a FusedLocationProviderClient
+        mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
     }
 
     @Override
@@ -231,6 +237,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
             */
+        getDeviceLocation();
     }
 
     @Override
@@ -544,12 +551,6 @@ public class MainActivity extends AppCompatActivity {
             return (rad * 180.0 / Math.PI);
         }
 
-        private FusedLocationProviderClient mFusedLocationProviderClient;
-        private boolean mLocationPermissionsGranted = false;
-        private LatLong initial = new LatLong(0,0);
-        private PartyLocation userLocation = new PartyLocation(initial, Integer.parseInt(yourUserID), userName);
-        private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 12;
-
         private void getDeviceLocation() {
             // Check if permission granted
             int permission = ActivityCompat.checkSelfPermission(this.getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION);
@@ -562,13 +563,20 @@ public class MainActivity extends AppCompatActivity {
 
             // If permission granted, grab the lat and long of the current location
             else {
-//                mFusedLocationProviderClient.getLastLocation().addOnCompleteListener(this, task -> {
-//                    Location mLastKnownLocation = task.getResult();
-//                    if (task.isSuccessful() && mLastKnownLocation != null) {
-//                        LatLong newLocation = new LatLong(mLastKnownLocation.getLatitude(), mLastKnownLocation.getLongitude());
-//                        userLocation.setLocation(newLocation);
-//                    }
-//                });
+                mFusedLocationProviderClient.getLastLocation()
+                        .addOnSuccessListener(this, new OnSuccessListener<Location>() {
+                            @Override
+                            public void onSuccess(Location location) {
+                                // Got last known location. In some rare situations this can be null.
+                                if (location != null) {
+                                    LatLong newLocation = new LatLong(location.getLatitude(), location.getLongitude());
+                                    userLocation.setLocation(newLocation);
+                                    Log.i("Current Latitude", String.valueOf(userLocation.getLocation().getLat()));
+                                    Log.i("Current Longitude", String.valueOf(userLocation.getLocation().getLawng()));
+                                }
+                            }
+                        });
+
             }
         }
 
