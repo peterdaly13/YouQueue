@@ -353,8 +353,14 @@ public class MainActivity extends AppCompatActivity {
         qReference.addValueEventListener(postListener);
     }
 
-
+    /*
+        This method puts the LocationList it is given into Firebase, once the Location list is
+        initialized in Firebase, this should only be called from the pullLocation related methods.
+        The layout of this is very similar to pushData.
+     */
     private void pushLocation(LocationList ll) {
+        // HashMap used to put things into Firebase, String is location in the database, object is
+        // the LocationList object
         HashMap<String, Object> map = new HashMap<>();
         String folder = "/locations";
         map.put(folder, ll);
@@ -362,19 +368,32 @@ public class MainActivity extends AppCompatActivity {
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Log.w("Potato", "Error adding document", e);
+                        Log.w("pushLocation", "Error adding the LocationList", e);
                     }
                 });
     }
+
+    /*
+        This method is used to perform any action that relates to checking locations or adding /
+        removing locations from the database.
+        The action variable must be either: addLocation, compareLocations, or deleteLocation
+        and specifies which method will be used.
+        partyId is needed for delete location, and userLocation is needed for add a location or
+        compareLocations, otherwise, the partyId and userLocation will not be used.
+     */
     private void pullLocation(final String action, final int partyId, final PartyLocation userLocation){
+        // Used to make the action variable work as intended
         final String[] actionRef = {action};
+
+        // Get to the locations part of Firebase
         DatabaseReference qReference = mDatabase.child("locations");
         ValueEventListener postListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                // Get Post object and use the values to update the UI
-                Log.i("datasnapshot", dataSnapshot.getValue().toString());
+                // Get the LocationList stored in Firebase
                 LocationList partyLocations = dataSnapshot.getValue(LocationList.class);
+
+                // Choose which method should be called
                 if (actionRef[0].equals("addLocation")) {
                     addLocation(partyLocations, userLocation);
                 } else if (actionRef[0].equals("compareLocations")) {
@@ -382,17 +401,22 @@ public class MainActivity extends AppCompatActivity {
                 } else if (actionRef[0].equals("deleteLocation")) {
                     deleteLocation(partyLocations, partyId);
                 }
+
+                // Set action to "" so the same action doesn't repeat in one call
                 actionRef[0] ="";
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                // Getting Post failed, log a message
-                Log.w("PullData", "Failed to Load SongQueue from Firebase", databaseError.toException());
-                // ...
+                Log.w("PullLocation", "Failed to Load LocationList from Firebase", databaseError.toException());
             }
         };
         qReference.addValueEventListener(postListener);
     }
+
+    /*
+        This method takes in the locationlist and removes the location corresponding to the
+        provided partyId and pushes the result to Firebase
+     */
     private void deleteLocation(LocationList locationList, int partyId) {
         List<PartyLocation> partyLocations = locationList.getPl();
         for (int i = partyLocations.size()-1; i>=0; i--){
@@ -403,11 +427,13 @@ public class MainActivity extends AppCompatActivity {
         locationList.setPl(partyLocations);
         pushLocation(locationList);
     }
+
     /*
         Bilal could you fill this out?
      */
     private void compareLocations(LocationList locationList, PartyLocation userLocation) {
     }
+
     /*
     This adds a location to the list of locations
      */
