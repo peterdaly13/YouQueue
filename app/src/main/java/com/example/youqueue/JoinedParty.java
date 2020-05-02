@@ -21,7 +21,6 @@ import com.google.firebase.database.ValueEventListener;
 import com.spotify.android.appremote.api.SpotifyAppRemote;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -30,13 +29,13 @@ public class JoinedParty extends AppCompatActivity {
     public DatabaseReference mDatabase;
     private SpotifyAppRemote mSpotifyAppRemote = null;
     public String yourPartyID;
-    LinearLayout mLinLay;
+
+    private RecyclerView dqRecycleView;
+    private displayQueueAdapter dqAdapter;
 
     private RecyclerView recyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
-    Song[] songList;
-    String[] songNames;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,17 +49,6 @@ public class JoinedParty extends AppCompatActivity {
         yourPartyID= JoinPartyActivity.getYourPartyId();
         TextView xmlPartyID = (TextView) findViewById(R.id.xmlPartyID);
         xmlPartyID.setText(yourPartyID);
-        mLinLay = (LinearLayout) this.findViewById(R.id.linlay);
-
-        SongList sl = new SongList();
-        songList = sl.getSongs();
-        songNames = sl.getSongNames();
-        ArrayList<String> songNameList = new ArrayList<>(Arrays.asList(songNames));
-        recyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mAdapter = new songListAdapter(this, songNameList);
-        //mAdapter.setClickListener(this);
-        recyclerView.setAdapter(mAdapter);
     }
 
     public void goHome(View view) {
@@ -186,16 +174,18 @@ public class JoinedParty extends AppCompatActivity {
     private void displayQueue (SongQueue st){
         st.sortSongs();
         int size = st.getQueueSize();
-        LinearLayout.LayoutParams lparams = new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+
+        ArrayList<String> songsInQ = new ArrayList<>();
 
         for (int i = 0; i < size; i++) {
-            TextView tv = new TextView(this);
-            tv.setLayoutParams(lparams);
             Song mSong = st.getSongAtIndex(i);
-            tv.setText(mSong.getName());
-            this.mLinLay.addView(tv);
+            String name = mSong.getName();
+            songsInQ.add(name);
         }
+        dqRecycleView = (RecyclerView) findViewById(R.id.linlay);
+        dqRecycleView.setLayoutManager(new LinearLayoutManager(this));
+        dqAdapter = new displayQueueAdapter(this, songsInQ);
+        recyclerView.setAdapter(dqAdapter);
     }
 
     private void playSong(String uri){

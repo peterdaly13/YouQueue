@@ -28,6 +28,7 @@ import com.spotify.android.appremote.api.ConnectionParams;
 import com.spotify.android.appremote.api.Connector;
 import com.spotify.android.appremote.api.SpotifyAppRemote;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -37,6 +38,9 @@ import java.util.Random;
 public class StartPartyActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
+    private songListAdapter mAdapter;
+    private RecyclerView dqRecycleView;
+    private displayQueueAdapter dqAdapter;
     private songListAdapterStartParty mAdapter;
 
     Song[] songList;
@@ -47,12 +51,11 @@ public class StartPartyActivity extends AppCompatActivity {
     private SpotifyAppRemote mSpotifyAppRemote = null;
     int songLengthCounter =0;
     Song currentSong;
-
+    ArrayList<Song> songsYouVotedFor= new ArrayList<Song>();
     public String yourPartyID;
     public DatabaseReference mDatabase;
     PartyLocation currentLocation;
 
-    LinearLayout mLinLay;
 
     // Generate the 6 Digit Party ID
     public static String generatePartyID() {
@@ -70,7 +73,7 @@ public class StartPartyActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start_party);
 
-        mLinLay = (LinearLayout) this.findViewById(R.id.linlay);
+
 
         // Generate the party ID using the random number generating function above
         yourPartyID = generatePartyID();
@@ -112,9 +115,6 @@ public class StartPartyActivity extends AppCompatActivity {
                         // Something went wrong when attempting to connect! Handle errors here
                     }
                 });
-
-        //pullData(284375,"playNextSong", null,null);
-
     }
 
     //@Override
@@ -152,12 +152,22 @@ public class StartPartyActivity extends AppCompatActivity {
         mDatabase = FirebaseDatabase.getInstance().getReference();
         pullData(Integer.parseInt(yourPartyID),"addASong", null, s);
     }
-    public void updateVotes(View v, Song s){
-        pullData(Integer.parseInt(yourPartyID),"updateVotes", s.getURI(), null);
+    public void addAVote(View v, Song s){
+        boolean addVote=true;
+        for(int i =0; i< songsYouVotedFor.size(); i++){
+            if(songsYouVotedFor.get(i).getURI().equals(s.getURI())){
+                addVote=false;
+            }
+        }
+        if(addVote) {
+            pullData(Integer.parseInt(yourPartyID), "updateVotes", s.getURI(), null);
+            songsYouVotedFor.add(s);
+        }
     }
     public void endParty(View v){
         pullData(Integer.parseInt(yourPartyID),"endParty",null, null);
         deleteLocation();
+        songsYouVotedFor.clear();
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
@@ -325,7 +335,7 @@ public class StartPartyActivity extends AppCompatActivity {
         Song s = songQueue.nextSong();
         if (s != null) {
             currentSong = s;
-            //playSong(s.getURI());
+            playSong(s.getURI());
             songQueue.removeSong(s.getURI());
             pushData(songQueue);
         }
@@ -367,16 +377,18 @@ public class StartPartyActivity extends AppCompatActivity {
     private void displayQueue (SongQueue st){
         st.sortSongs();
         int size = st.getQueueSize();
-        LinearLayout.LayoutParams lparams = new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+
+        ArrayList<String> songsInQ = new ArrayList<>();
 
         for (int i = 0; i < size; i++) {
-            TextView tv = new TextView(this);
-            tv.setLayoutParams(lparams);
             Song mSong = st.getSongAtIndex(i);
-            tv.setText(mSong.getName());
-            this.mLinLay.addView(tv);
+            String name = mSong.getName();
+            songsInQ.add(name);
         }
+        dqRecycleView = (RecyclerView) findViewById(R.id.linlay);
+        dqRecycleView.setLayoutManager(new LinearLayoutManager(this));
+        dqAdapter = new displayQueueAdapter(this, songsInQ);
+        recyclerView.setAdapter(dqAdapter);
     }
 
 
