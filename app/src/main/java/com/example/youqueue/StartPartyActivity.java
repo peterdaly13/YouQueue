@@ -47,7 +47,7 @@ public class StartPartyActivity extends AppCompatActivity {
     private SpotifyAppRemote mSpotifyAppRemote = null;
     int songLengthCounter =0;
     Song currentSong;
-
+    ArrayList<Song> songsYouVotedFor= new ArrayList<Song>();
     public String yourPartyID;
     public DatabaseReference mDatabase;
     PartyLocation currentLocation;
@@ -148,12 +148,22 @@ public class StartPartyActivity extends AppCompatActivity {
     public void queueSong(View v, Song s){
         pullData(Integer.parseInt(yourPartyID),"addASong", null, s);
     }
-    public void updateVotes(View v, Song s){
-        pullData(Integer.parseInt(yourPartyID),"updateVotes", s.getURI(), null);
+    public void addAVote(View v, Song s){
+        boolean addVote=true;
+        for(int i =0; i< songsYouVotedFor.size(); i++){
+            if(songsYouVotedFor.get(i).getURI().equals(s.getURI())){
+                addVote=false;
+            }
+        }
+        if(addVote) {
+            pullData(Integer.parseInt(yourPartyID), "updateVotes", s.getURI(), null);
+            songsYouVotedFor.add(s);
+        }
     }
     public void endParty(View v){
         pullData(Integer.parseInt(yourPartyID),"endParty",null, null);
         deleteLocation();
+        songsYouVotedFor.clear();
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }

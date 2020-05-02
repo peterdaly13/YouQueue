@@ -18,6 +18,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 import com.spotify.android.appremote.api.SpotifyAppRemote;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -31,6 +32,7 @@ public class JoinedParty extends AppCompatActivity {
     private RecyclerView recyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
+    ArrayList<Song> songsYouVotedFor= new ArrayList<Song>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,11 +50,20 @@ public class JoinedParty extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void queueSong(Song s){
+    public void queueSong(View v, Song s){
         pullData(Integer.parseInt(yourPartyID),"addASong", null, s);
     }
-    public void updateVotes(Song s){
-        pullData(Integer.parseInt(yourPartyID),"updateVotes", s.getURI(), null);
+    public void addAVote(View v, Song s){
+        boolean addVote=true;
+        for(int i =0; i< songsYouVotedFor.size(); i++){
+            if(songsYouVotedFor.get(i).getURI().equals(s.getURI())){
+                addVote=false;
+            }
+        }
+        if(addVote) {
+            pullData(Integer.parseInt(yourPartyID), "updateVotes", s.getURI(), null);
+            songsYouVotedFor.add(s);
+        }
     }
 
 
