@@ -7,7 +7,6 @@ import android.Manifest;
 import android.content.Intent;
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.preference.PreferenceManager;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
@@ -19,8 +18,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -31,39 +28,13 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.spotify.android.appremote.api.ConnectionParams;
-import com.spotify.android.appremote.api.Connector;
 import com.spotify.android.appremote.api.SpotifyAppRemote;
-
-import com.spotify.protocol.client.CallResult;
-import com.spotify.protocol.client.Subscription;
-import com.spotify.protocol.types.ListItems;
-import com.spotify.protocol.types.PlayerState;
-import com.spotify.protocol.types.Track;
-import com.spotify.protocol.types.Repeat;
 
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.HashMap;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.ProtocolException;
-import java.net.URL;
-import java.net.URLConnection;
-import java.util.List;
 import java.util.Random;
-import java.util.Scanner;
-import java.util.concurrent.ExecutionException;
-import javax.net.ssl.HttpsURLConnection;
-import android.os.AsyncTask;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -82,15 +53,15 @@ public class MainActivity extends AppCompatActivity {
                     + "response_type=code&"
                     + "redirect_uri="+REDIRECT_URI+"&"
                     + "scope=user-read-private%20user-read-email&";
-    
-    private FusedLocationProviderClient mFusedLocationProviderClient;
-    private boolean mLocationPermissionsGranted = false;
-    private static LatLong initial = new LatLong(0,0);
 
-    // Variable which stores the user's current location - Before permissions are granted, the initial location is set to (0,0)
-    private static PartyLocation userLocation = new PartyLocation(initial, Integer.parseInt(yourUserID), userName);
+    private FusedLocationProviderClient mFusedLocationProviderClient;
     private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 12;
 
+    // Initial LatLong variable to store (0,0)
+    private static LatLong initial = new LatLong(0,0);
+    // Variable which stores the user's current location - Before permissions are granted, the initial location is set to (0,0)
+    private static PartyLocation userLocationGlobal = new PartyLocation(initial, Integer.parseInt(yourUserID), userName);
+    // List to store parties nearby to the current location
     private static List<PartyLocation> partiesNearby = new ArrayList<PartyLocation>();
 
     public void goToSettings(View view) {
@@ -571,9 +542,9 @@ public class MainActivity extends AppCompatActivity {
                                 // Got last known location. In some rare situations this can be null.
                                 if (location != null) {
                                     LatLong newLocation = new LatLong(location.getLatitude(), location.getLongitude());
-                                    userLocation.setLocation(newLocation);
-                                    Log.i("Current Latitude", String.valueOf(userLocation.getLocation().getLat()));
-                                    Log.i("Current Longitude", String.valueOf(userLocation.getLocation().getLawng()));
+                                    userLocationGlobal.setLocation(newLocation);
+                                    Log.i("Current Latitude", String.valueOf(userLocationGlobal.getLocation().getLat()));
+                                    Log.i("Current Longitude", String.valueOf(userLocationGlobal.getLocation().getLawng()));
                                 }
                             }
                         });
