@@ -1,18 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="10dp">
 
     <TextView
-        android:id="@+id/songName"
+        android:id="@+id/tvAnimalName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
-        android:textSize="20dp"
-        android:textColor="#000"
-        android:layout_marginLeft="5dp"
-        tools:layout_editor_absoluteX="15dp"
-        tools:layout_editor_absoluteY="22dp" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:textSize="20sp"
+        android:textColor="#000"/>
+
+</LinearLayout>

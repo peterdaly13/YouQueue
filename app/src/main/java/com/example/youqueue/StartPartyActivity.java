@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.firebase.database.DataSnapshot;
@@ -26,6 +27,8 @@ import com.spotify.android.appremote.api.ConnectionParams;
 import com.spotify.android.appremote.api.Connector;
 import com.spotify.android.appremote.api.SpotifyAppRemote;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
@@ -33,7 +36,7 @@ import java.util.Random;
 public class StartPartyActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
-    private RecyclerView.Adapter mAdapter;
+    private songListAdapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
 
     Song[] songList;
@@ -76,25 +79,18 @@ public class StartPartyActivity extends AppCompatActivity {
         TextView xmlPartyID = (TextView) findViewById(R.id.xmlPartyID);
         xmlPartyID.setText(yourPartyID);
 
-        /*
+
         SongList sl = new SongList();
         songList = sl.getSongs();
         songNames = sl.getSongNames();
+        ArrayList<String> songNameList = new ArrayList<>(Arrays.asList(songNames));
         recyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
-
-        // use this setting to improve performance if you know that changes
-        // in content do not change the layout size of the RecyclerView
-        recyclerView.setHasFixedSize(true);
-
-        // use a linear layout manager
-        layoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(layoutManager);
-
-        // specify an adapter (see also next example)
-        mAdapter = new songListAdapter(songNames);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mAdapter = new songListAdapter(this, songNameList);
+        mAdapter.setClickListener((songListAdapter.ItemClickListener) this);
         recyclerView.setAdapter(mAdapter);
 
-         */
+
 
         //login to spotify
         ConnectionParams connectionParams =
@@ -116,6 +112,11 @@ public class StartPartyActivity extends AppCompatActivity {
                         // Something went wrong when attempting to connect! Handle errors here
                     }
                 });
+    }
+
+    //@Override
+    public void onItemClick(View view, int position) {
+        Toast.makeText(this, "You clicked " + mAdapter.getItem(position) + " on row number " + position, Toast.LENGTH_SHORT).show();
     }
 
 
