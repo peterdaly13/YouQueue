@@ -115,7 +115,7 @@ public class MainActivity extends AppCompatActivity {
         //pushData(sq3);
 
 
-        pullData(222, "endParty", null, null);
+        //pullData(222, "endParty", null, null);
         //pullLocation("addLocation",0 ,location );
 
 
