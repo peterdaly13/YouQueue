@@ -21,6 +21,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.spotify.android.appremote.api.ConnectionParams;
 import com.spotify.android.appremote.api.Connector;
@@ -74,6 +75,10 @@ public class StartPartyActivity extends AppCompatActivity {
         // Set the party ID to display on the activity
         TextView xmlPartyID = (TextView) findViewById(R.id.xmlPartyID);
         xmlPartyID.setText(yourPartyID);
+        //Push empty queue to firebase
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        SongQueue sq= new SongQueue(Integer.parseInt(yourPartyID));
+        pushData(sq);
 
         /*
         SongList sl = new SongList();
