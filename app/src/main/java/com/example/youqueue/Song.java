@@ -43,9 +43,6 @@ public class Song implements Comparable<Song>{
     public void incrementVotes(){
         this.votes+=1;
     }
-    public void setURI(String URI) {
-        this.URI = URI;
-    }
     public void setUserID(int userID) {
         this.userID = userID;
     }

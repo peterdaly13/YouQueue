@@ -36,7 +36,9 @@ public class JoinedParty extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_in_party);
-
+        yourPartyID= JoinPartyActivity.getYourPartyId();
+        TextView xmlPartyID = (TextView) findViewById(R.id.xmlPartyID);
+        xmlPartyID.setText(yourPartyID);
         mLinLay = (LinearLayout) this.findViewById(R.id.linlay);
     }
 
