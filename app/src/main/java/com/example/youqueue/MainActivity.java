@@ -3,11 +3,16 @@ package com.example.youqueue;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.Manifest;
 import android.content.Intent;
 import androidx.appcompat.app.AlertDialog;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.preference.PreferenceManager;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.location.Location;
 import android.widget.TextView;
 import android.net.Uri;
 import android.os.Bundle;
@@ -17,6 +22,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
@@ -65,7 +72,8 @@ public class MainActivity extends AppCompatActivity {
     private SpotifyAppRemote mSpotifyAppRemote = null;
     // Access a Cloud Firestore instance from your Activity
     public DatabaseReference mDatabase;
-    public static String yourUserID;
+    public static String userName = "";
+    public static String yourUserID = "000000";
     HashMap map;
     SongQueue sq = new SongQueue();
     String url_auth =
@@ -128,6 +136,9 @@ public class MainActivity extends AppCompatActivity {
         // Generate random number from 0 to 999999
         Random rnd = new Random();
         int number = rnd.nextInt(999999);
+        if(number == 0) {
+            number++;
+        }
         // Convert any number sequence into 6 digits (Example: 0 becomes 000000)
         return String.format("%06d", number);
     }
@@ -142,9 +153,9 @@ public class MainActivity extends AppCompatActivity {
         // Saves the username in a preference field
         final SharedPreferences prefs = PreferenceManager
                 .getDefaultSharedPreferences(this);
-        String userName = prefs.getString("user_name", null);
+        userName = prefs.getString("user_name", null);
         // Check if the preference field is set. If not, prompt the user to input their username
-        if (userName == null) {
+        if (userName == "") {
             EditText input = new EditText(this);
             input.setId(Integer.parseInt(yourUserID));
             AlertDialog dialog = new AlertDialog.Builder(this)
@@ -175,7 +186,7 @@ public class MainActivity extends AppCompatActivity {
                 .getDefaultSharedPreferences(this);
 
         // Check if the userID is set already
-        if (yourUserID == null) {
+        if (yourUserID == "000000") {
             // Generate userID using the random number generating function above
             yourUserID = generateUserID();
             SharedPreferences.Editor editor = prefs2
@@ -188,6 +199,11 @@ public class MainActivity extends AppCompatActivity {
         // Text to check if the username is being set correctly (Can also be kept and styled if we want to display their username)
         TextView xmlUserNameCheck = (TextView) findViewById(R.id.userNameCheck);
         xmlUserNameCheck.setText("HELLO, " + userName.toUpperCase());
+
+        getDeviceLocation();
+
+//        // Obtain a FusedLocationProviderClient
+//        mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
     }
 
     @Override
@@ -526,6 +542,34 @@ public class MainActivity extends AppCompatActivity {
 
         private double rad2deg(double rad) {
             return (rad * 180.0 / Math.PI);
+        }
+
+        private FusedLocationProviderClient mFusedLocationProviderClient;
+        private boolean mLocationPermissionsGranted = false;
+        private LatLong initial = new LatLong(0,0);
+        private PartyLocation userLocation = new PartyLocation(initial, Integer.parseInt(yourUserID), userName);
+        private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 12;
+
+        private void getDeviceLocation() {
+            // Check if permission granted
+            int permission = ActivityCompat.checkSelfPermission(this.getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION);
+            // If not, ask for it
+            if (permission == PackageManager.PERMISSION_DENIED) {
+                ActivityCompat.requestPermissions(this,
+                    new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
+                    PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
+            }
+
+            // If permission granted, grab the lat and long of the current location
+            else {
+//                mFusedLocationProviderClient.getLastLocation().addOnCompleteListener(this, task -> {
+//                    Location mLastKnownLocation = task.getResult();
+//                    if (task.isSuccessful() && mLastKnownLocation != null) {
+//                        LatLong newLocation = new LatLong(mLastKnownLocation.getLatitude(), mLastKnownLocation.getLongitude());
+//                        userLocation.setLocation(newLocation);
+//                    }
+//                });
+            }
         }
 
     }

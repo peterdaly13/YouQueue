@@ -31,4 +31,8 @@ public class PartyLocation {
     public String getUsername() {
         return username;
     }
+
+    public void setLocation(LatLong loc) {
+        location = loc;
+    }
 }
