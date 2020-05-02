@@ -46,15 +46,41 @@ public class JoinPartyActivity extends AppCompatActivity {
 
     public void goToJoinedParty(View view) {
         String code = ((EditText)findViewById(R.id.editText)).getText().toString();
-        if (code != "") {
-            Log.i("Info", "Enter Button pressed");
-            Intent intent = new Intent(this, JoinedParty.class);
-            startActivity(intent);
-        } else {
-            EnterValidCodeDialog dialog = new EnterValidCodeDialog();
-            dialog.show(getSupportFragmentManager(), "enter valid code dialog");
-        }
+        checkIfValidParty(code);
+    }
 
+    public void checkIfValidParty(String code) {
+        DatabaseReference qReference = mDatabase.child("queues").child(code);
+
+        ValueEventListener postListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // Get the SongQueue from Firebase
+                SongQueue st = dataSnapshot.getValue(SongQueue.class);
+
+                if (st == null) {
+                    Log.i("CheckIfValidParty", "not a valid party");
+                    EnterValidCodeDialog dialog = new EnterValidCodeDialog();
+                    dialog.show(getSupportFragmentManager(), "enter valid code dialog");
+                } else {
+                    Log.i("Info", "Enter Button pressed");
+                    changeScreen();
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // Getting SongQueue failed, log a message
+                Log.w("CheckIfValidParty", "Failed to check for valid party", databaseError.toException());
+            }
+        };
+        qReference.addValueEventListener(postListener);
+    }
+
+    private void changeScreen() {
+        String yourPartyId = ((EditText)findViewById(R.id.editText)).getText().toString();
+        Intent intent = new Intent(this, JoinedParty.class);
+        startActivity(intent);
     }
 
     public void addNearbyParties() {
