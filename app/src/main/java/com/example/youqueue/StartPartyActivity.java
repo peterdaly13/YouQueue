@@ -112,13 +112,13 @@ public class StartPartyActivity extends AppCompatActivity {
     public void nextSong(View view) {
         pullData(Integer.parseInt(yourPartyID), "playNextSong", null, null);
     }
-    public void queueSong(Song s){
+    public void queueSong(View v, Song s){
         pullData(Integer.parseInt(yourPartyID),"addASong", null, s);
     }
-    public void updateVotes(Song s){
+    public void updateVotes(View v, Song s){
         pullData(Integer.parseInt(yourPartyID),"addASong", s.getURI(), null);
     }
-    public void endParty(){
+    public void endParty(View v){
         pullData(Integer.parseInt(yourPartyID),"endParty",null, null);
         deleteLocation();
     }
