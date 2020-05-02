@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -14,6 +15,8 @@ public class songListAdapter extends RecyclerView.Adapter<songListAdapter.ViewHo
     private List<String> mDataset;
     private LayoutInflater mInflater;
     private ItemClickListener mClickListener;
+    SongList sl = new SongList();
+    Song[] songObjects = sl.getSongs();
 
     // data is passed into the constructor
     songListAdapter(Context context, List<String> data) {
@@ -31,8 +34,15 @@ public class songListAdapter extends RecyclerView.Adapter<songListAdapter.ViewHo
     // binds the data to the TextView in each row
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        String animal = mDataset.get(position);
-        holder.myTextView.setText(animal);
+        String song = mDataset.get(position);
+        holder.myTextView.setText(song);
+        holder.myTextView.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                System.out.println("Pressed " + songObjects[position].getName());
+
+            }
+        });
     }
 
     // Return the size of your dataset (invoked by the layout manager)
