@@ -18,12 +18,13 @@ public class displayQueueAdapter extends RecyclerView.Adapter<displayQueueAdapte
     private displayQueueAdapter.ItemClickListener mClickListener;
     StartPartyActivity sp = new StartPartyActivity();
     SongList sl = new SongList();
-    Song[] songObjects = sl.getSongs();
+    Song[] songObjects;
 
     //Constructor
-    public displayQueueAdapter(Context context, ArrayList<String> myDataset) {
+    public displayQueueAdapter(Context context, ArrayList<String> myDataset, Song[] songArray) {
         this.mInflater1 = LayoutInflater.from(context);
         this.mDataset = myDataset;
+        this.songObjects = songArray;
     }
 
     // inflates the row layout from xml when needed

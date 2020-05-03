@@ -204,15 +204,17 @@ public class JoinedParty extends AppCompatActivity {
         int size = st.getQueueSize();
 
         ArrayList<String> songsInQ = new ArrayList<>();
+        Song[] songsArray = new Song[50];
 
         for (int i = 0; i < size; i++) {
             Song mSong = st.getSongAtIndex(i);
             String name = mSong.getName();
             songsInQ.add(name);
+            songsArray[i] = mSong;
         }
         dqRecycleView = (RecyclerView) findViewById(R.id.queueList);
         dqRecycleView.setLayoutManager(new LinearLayoutManager(this));
-        dqAdapter = new displayQueueAdapter(this, songsInQ);
+        dqAdapter = new displayQueueAdapter(this, songsInQ, songsArray);
         dqRecycleView.setAdapter(dqAdapter);
 
 

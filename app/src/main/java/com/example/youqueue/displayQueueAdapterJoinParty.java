@@ -19,12 +19,13 @@ public class displayQueueAdapterJoinParty extends RecyclerView.Adapter<displayQu
     private displayQueueAdapterJoinParty.ItemClickListener mClickListener;
     JoinedParty jp = new JoinedParty();
     SongList sl = new SongList();
-    Song[] songObjects = sl.getSongs();
+    Song[] songObjects;
 
     //Constructor
-    public displayQueueAdapterJoinParty(Context context, ArrayList<String> myDataset) {
+    public displayQueueAdapterJoinParty(Context context, ArrayList<String> myDataset, Song[] songArray) {
         this.mInflater1 = LayoutInflater.from(context);
         this.mDataset = myDataset;
+        this.songObjects = songArray;
     }
 
     // inflates the row layout from xml when needed

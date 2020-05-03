@@ -185,7 +185,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Text to check if the username is being set correctly (Can also be kept and styled if we want to display their username)
         TextView xmlUserNameCheck = (TextView) findViewById(R.id.userNameCheck);
-        xmlUserNameCheck.setText("HELLO, " + userName.toUpperCase());
+        //xmlUserNameCheck.setText("HELLO, " + userName.toUpperCase());
 
         // Obtain a FusedLocationProviderClient
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
