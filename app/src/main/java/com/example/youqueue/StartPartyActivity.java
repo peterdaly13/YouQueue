@@ -240,7 +240,11 @@ public class StartPartyActivity extends AppCompatActivity {
                     } else if (actionRef[0].equals("updateVotes")) {
                         updateVotes(st, uri);
                     } else if (actionRef[0].equals("addASong")) {
-                        addASong(st, song);
+                        try {
+                            addASong(st, song);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
                     } else if (actionRef[0].equals("playNextSong")) {
                         try {
                             playNextSong(st);
@@ -359,10 +363,13 @@ public class StartPartyActivity extends AppCompatActivity {
     This adds a song to the queue and then
     returns the queue to firebase
      */
-    private void addASong (SongQueue songQueue, Song song){
+    private void addASong (SongQueue songQueue, Song song) throws InterruptedException {
         if (song != null) {
             songQueue.addSong(song);
             pushData(songQueue);
+        }
+        if (songQueue.getQueue().size() == 2){
+            playNextSong(songQueue);
         }
     }
 

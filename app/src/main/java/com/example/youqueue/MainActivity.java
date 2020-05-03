@@ -29,6 +29,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.spotify.android.appremote.api.ConnectionParams;
+import com.spotify.android.appremote.api.Connector;
 import com.spotify.android.appremote.api.SpotifyAppRemote;
 
 
@@ -195,7 +197,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         // Set the connection parameters
-        /*
+
         ConnectionParams connectionParams =
                 new ConnectionParams.Builder(CLIENT_ID)
                         .setRedirectUri(REDIRECT_URI)
@@ -215,7 +217,7 @@ public class MainActivity extends AppCompatActivity {
                         // Something went wrong when attempting to connect! Handle errors here
                     }
                 });
-            */
+
         getDeviceLocation();
     }
 
@@ -229,7 +231,7 @@ public class MainActivity extends AppCompatActivity {
         //queueSong("spotify:track:5nrmGFJ87crVoJF5xdRqwn");
         //resumePlayback();
         //pausePlayback();
-        //playSong("spotify:track:1Eolhana7nKHYpcYpdVcT5");
+        playSong("spotify:track:1Eolhana7nKHYpcYpdVcT5");
         //search("Jude");
         /*
         // Play a playlist
