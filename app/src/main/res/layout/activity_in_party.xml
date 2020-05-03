@@ -67,11 +67,12 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.191" />
 
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/queueList"
         android:layout_width="258dp"
         android:layout_height="156dp"
-        android:layout_marginTop="104dp"
+        android:layout_marginTop="224dp"
         android:background="@drawable/rounded_border_edittext"
         android:fontFamily="@font/raleway"
         app:layout_constraintEnd_toEndOf="parent"
@@ -80,7 +81,6 @@
         app:layout_constraintTop_toTopOf="parent">
 
     </androidx.recyclerview.widget.RecyclerView>
-
 
     <ImageButton
         android:id="@+id/imageButton"

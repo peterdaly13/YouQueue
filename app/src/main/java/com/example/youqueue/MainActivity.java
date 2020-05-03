@@ -76,6 +76,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void goToJoinParty(View view) throws InterruptedException {
+        PartyLocation dummyParty = new PartyLocation(userLocationGlobal.getLocation(), 111111, "Bob");
+        partiesNearby.add(dummyParty);
         //LatLong latLong= new LatLong(0.01,-0.01);
         //PartyLocation partyLocation = new PartyLocation(latLong,12345,"Test Location" );
         //pullLocation("addLocation", 111, partyLocation);
@@ -562,8 +564,6 @@ public class MainActivity extends AppCompatActivity {
                                     userLocationGlobal.setLocation(newLocation);
                                     userLocationGlobal.setUsername(userName);
                                     userLocationGlobal.setPartyId(Integer.parseInt(yourUserID));
-                                    PartyLocation dummyParty = new PartyLocation(newLocation, 111111, "Bob");
-                                    partiesNearby.add(dummyParty);
 
                                     pullLocation("addLocation", userLocationGlobal.getPartyId(), userLocationGlobal);
                                     pullLocation("compareLocation", userLocationGlobal.getPartyId(), userLocationGlobal);

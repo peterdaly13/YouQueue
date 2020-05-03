@@ -94,7 +94,7 @@ public class JoinPartyActivity extends AppCompatActivity {
 
     public void addNearbyParties() {
         for (int i = 0; i < parties.length; i++) {
-            parties[i] = nearbyParties.get(i).getPartyId() + "'s Party";
+            parties[i] = nearbyParties.get(i).getUsername() + "'s Party";
         }
     }
 
