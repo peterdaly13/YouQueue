@@ -28,6 +28,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.spotify.android.appremote.api.ConnectionParams;
 import com.spotify.android.appremote.api.Connector;
 import com.spotify.android.appremote.api.SpotifyAppRemote;
+import com.spotify.protocol.client.CallResult;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -49,7 +50,7 @@ public class StartPartyActivity extends AppCompatActivity {
 
     private static final String CLIENT_ID = "d19dfd48fcd54626a0f8ff696ada3b9e";
     private static final String REDIRECT_URI = "com.youqueue://callback";
-    private SpotifyAppRemote mSpotifyAppRemote = null;
+    public static SpotifyAppRemote mSpotifyAppRemote = null;
     int songLengthCounter =0;
     Song currentSong;
     ArrayList<Song> songsYouVotedFor= new ArrayList<Song>();
@@ -87,7 +88,10 @@ public class StartPartyActivity extends AppCompatActivity {
         pushData(sq);
         pullData(Integer.parseInt(yourPartyID), "displayQueue", null,null);
 
-        pullLocation("addLocation", Integer.parseInt(yourPartyID), MainActivity.userLocationGlobal);
+        PartyLocation myLocation = MainActivity.userLocationGlobal;
+        myLocation.setPartyId(Integer.parseInt(yourPartyID));
+        myLocation.setUsername(MainActivity.userName);
+        pullLocation("addLocation", Integer.parseInt(yourPartyID), myLocation);
 
         SongList sl = new SongList();
         songList = sl.getSongs();
@@ -99,6 +103,8 @@ public class StartPartyActivity extends AppCompatActivity {
         //mAdapter.setClickListener(this);
         recyclerView.setAdapter(mAdapter);
 
+        mSpotifyAppRemote = MainActivity.mSpotifyAppRemote;
+        /*
         //login to spotify
         ConnectionParams connectionParams =
                 new ConnectionParams.Builder(CLIENT_ID)
@@ -110,15 +116,18 @@ public class StartPartyActivity extends AppCompatActivity {
                     @Override
                     public void onConnected(SpotifyAppRemote spotifyAppRemote) {
                         mSpotifyAppRemote = spotifyAppRemote;
-                        Log.d("MainActivity", "Connected! Yay!");
+                        Log.d("StartPartyActivity", "Connected! Yay!");
                         //connected();
                     }
                     @Override
                     public void onFailure(Throwable throwable) {
-                        Log.e("MainActivity", throwable.getMessage(), throwable);
+                        Log.e("StartPartyActivity", throwable.getMessage(), throwable);
                         // Something went wrong when attempting to connect! Handle errors here
                     }
                 });
+
+         */
+
     }
 
     //@Override
@@ -355,9 +364,10 @@ public class StartPartyActivity extends AppCompatActivity {
         Song s = songQueue.nextSong();
         if (s != null) {
             currentSong = s;
-            playSong(s.getURI());
-            songQueue.removeSong(s.getURI());
-            pushData(songQueue);
+            //playSong(s.getURI());
+            mSpotifyAppRemote.getPlayerApi().play(s.getURI());
+            //songQueue.removeSong(s.getURI());
+            //pushData(songQueue);
         }
     }
 
@@ -370,9 +380,14 @@ public class StartPartyActivity extends AppCompatActivity {
             songQueue.addSong(song);
             pushData(songQueue);
         }
-        if (songQueue.getQueue().size() == 2){
-            playNextSong(songQueue);
+
+        if (songQueue.getQueueSize() == 2){
+            Log.i("Song queue size", Integer.toString(songQueue.getQueueSize()));
+            //playNextSong(songQueue);
+            CallResult result = mSpotifyAppRemote.getPlayerApi().play(song.getURI());
+            Log.i("Call Result: ", result.toString());
         }
+
     }
 
     /*
@@ -419,9 +434,11 @@ public class StartPartyActivity extends AppCompatActivity {
 
     //SPOTIFY METHODS (MIGHT NEED MORE)
     private void playSong(String uri) throws InterruptedException {
+        Log.i("URI: ", uri);
+        mSpotifyAppRemote = MainActivity.mSpotifyAppRemote;
         mSpotifyAppRemote.getPlayerApi().play(uri);
         songLengthCounter=0;
-        startCounting();
+        //startCounting();
 
     }
 }
