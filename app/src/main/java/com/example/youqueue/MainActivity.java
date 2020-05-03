@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
     // Initial LatLong variable to store (0,0)
     private static LatLong initial = new LatLong(0,0);
     // Variable which stores the user's current location - Before permissions are granted, the initial location is set to (0,0)
-    private static PartyLocation userLocationGlobal = new PartyLocation(initial, Integer.parseInt(yourUserID), userName);
+    public static PartyLocation userLocationGlobal = new PartyLocation(initial, Integer.parseInt(yourUserID), userName);
     // List to store parties nearby to the current location
     private static List<PartyLocation> partiesNearby = new ArrayList<PartyLocation>();
 
