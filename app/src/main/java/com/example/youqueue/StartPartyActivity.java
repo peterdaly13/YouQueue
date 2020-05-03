@@ -108,15 +108,21 @@ public class StartPartyActivity extends AppCompatActivity {
                     @Override
                     public void onConnected(SpotifyAppRemote spotifyAppRemote) {
                         mSpotifyAppRemote = spotifyAppRemote;
-                        Log.d("MainActivity", "Connected! Yay!");
+                        Log.d("StartPartyActivity", "Connected! Yay!");
                         //connected();
                     }
                     @Override
                     public void onFailure(Throwable throwable) {
-                        Log.e("MainActivity", throwable.getMessage(), throwable);
+                        Log.e("StartPartyActivity", throwable.getMessage(), throwable);
                         // Something went wrong when attempting to connect! Handle errors here
                     }
                 });
+
+        try {
+            playSong("spotify:track:59WN2psjkt1tyaxjspN8fp");
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     //@Override
@@ -410,6 +416,26 @@ public class StartPartyActivity extends AppCompatActivity {
 
     //SPOTIFY METHODS (MIGHT NEED MORE)
     private void playSong(String uri) throws InterruptedException {
+        //login to spotify
+        ConnectionParams connectionParams =
+                new ConnectionParams.Builder(CLIENT_ID)
+                        .setRedirectUri(REDIRECT_URI)
+                        .showAuthView(true)
+                        .build();
+        SpotifyAppRemote.connect(this, connectionParams,
+                new Connector.ConnectionListener() {
+                    @Override
+                    public void onConnected(SpotifyAppRemote spotifyAppRemote) {
+                        mSpotifyAppRemote = spotifyAppRemote;
+                        Log.d("MainActivity", "Connected! Yay!");
+                        //connected();
+                    }
+                    @Override
+                    public void onFailure(Throwable throwable) {
+                        Log.e("MainActivity", throwable.getMessage(), throwable);
+                        // Something went wrong when attempting to connect! Handle errors here
+                    }
+                });
         mSpotifyAppRemote.getPlayerApi().play(uri);
         songLengthCounter=0;
         startCounting();
