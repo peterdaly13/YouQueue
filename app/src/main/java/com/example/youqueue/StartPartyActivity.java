@@ -1,6 +1,7 @@
 package com.example.youqueue;
 
 import android.app.ActionBar;
+import android.content.Context;
 import android.content.Intent;
 
 import androidx.annotation.NonNull;
@@ -44,7 +45,6 @@ public class StartPartyActivity extends AppCompatActivity {
     private RecyclerView dqRecycleView;
     private displayQueueAdapter dqAdapter;
 
-
     Song[] songList;
     String songNames[];
 
@@ -76,7 +76,6 @@ public class StartPartyActivity extends AppCompatActivity {
         setContentView(R.layout.activity_start_party);
 
 
-
         // Generate the party ID using the random number generating function above
         yourPartyID = generatePartyID();
         // Set the party ID to display on the activity
@@ -86,7 +85,7 @@ public class StartPartyActivity extends AppCompatActivity {
         mDatabase = FirebaseDatabase.getInstance().getReference();
         SongQueue sq= new SongQueue(Integer.parseInt(yourPartyID));
         pushData(sq);
-        pullData(Integer.parseInt(yourPartyID), "displayQueue", null,null);
+        //pullData(Integer.parseInt(yourPartyID), "displayQueue", null,null);
 
 
         PartyLocation myLocation = MainActivity.userLocationGlobal;
@@ -157,7 +156,7 @@ public class StartPartyActivity extends AppCompatActivity {
 
     public void resume(View view) throws InterruptedException {
         resumePlayback();
-        startCounting();
+        //startCounting();
     }
 
     public void pause(View view) {
@@ -367,8 +366,16 @@ public class StartPartyActivity extends AppCompatActivity {
         Song s = songQueue.nextSong();
         if (s != null) {
             currentSong = s;
-            //playSong(s.getURI());
+            mSpotifyAppRemote.getPlayerApi().getPlayerState().setResultCallback(playerState -> {
+                mSpotifyAppRemote.getPlayerApi().play(s.getURI());
+            })
+                    .setErrorCallback(throwable -> {
+                        Log.i("Error in playSong", mSpotifyAppRemote.toString());
+                    });
+
             mSpotifyAppRemote.getPlayerApi().play(s.getURI());
+            //playSong(s.getURI());
+            //mSpotifyAppRemote.getPlayerApi().play(s.getURI());
             //songQueue.removeSong(s.getURI());
             //pushData(songQueue);
         }
@@ -383,18 +390,12 @@ public class StartPartyActivity extends AppCompatActivity {
             songQueue.addSong(song);
             pushData(songQueue);
         }
+        //pullData(Integer.parseInt(yourPartyID), "displayQueue", null,null);
+
 
         if (songQueue.getQueueSize() == 2){
             Log.i("Song queue size", Integer.toString(songQueue.getQueueSize()));
-            //playNextSong(songQueue);
-            mSpotifyAppRemote.getPlayerApi().getPlayerState().setResultCallback(playerState -> {
-                mSpotifyAppRemote.getPlayerApi().play(song.getURI());
-            })
-                    .setErrorCallback(throwable -> {
-                        Log.i("Error in playSong", mSpotifyAppRemote.toString());
-                    });
-
-            mSpotifyAppRemote.getPlayerApi().play(song.getURI());
+            playNextSong(songQueue);
             //Log.i("Call Result: ", result.toString());
         }
 

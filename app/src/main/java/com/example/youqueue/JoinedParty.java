@@ -33,7 +33,7 @@ public class JoinedParty extends AppCompatActivity {
     public String yourPartyID;
 
     private RecyclerView dqRecycleView;
-    private displayQueueAdapter dqAdapter;
+    private displayQueueAdapterJoinParty dqAdapter;
 
     private RecyclerView recyclerView;
     private RecyclerView.Adapter mAdapter;
@@ -53,12 +53,12 @@ public class JoinedParty extends AppCompatActivity {
 
 
 
-        yourPartyID= JoinPartyActivity.getYourPartyId();
+        yourPartyID= MainActivity.yourUserID;
         TextView xmlPartyID = (TextView) findViewById(R.id.xmlPartyID);
         xmlPartyID.setText(yourPartyID);
 
         // I commented this line below out because it was causing my app to crash whenever I entered to JoinedParty Activity - Bilal
-//        pullData(Integer.parseInt(yourPartyID), "displayQueue", null,null);
+        pullData(Integer.parseInt(yourPartyID), "displayQueue", null,null);
 
         SongList sl = new SongList();
         songList = sl.getSongs();
@@ -176,6 +176,8 @@ public class JoinedParty extends AppCompatActivity {
             songQueue.addSong(song);
             pushData(songQueue);
         }
+        pullData(Integer.parseInt(yourPartyID), "displayQueue", null,null);
+
     }
     /*
     This updates the specific song with one more vote and
@@ -217,7 +219,7 @@ public class JoinedParty extends AppCompatActivity {
         }
         dqRecycleView = (RecyclerView) findViewById(R.id.queueList);
         dqRecycleView.setLayoutManager(new LinearLayoutManager(this));
-        dqAdapter = new displayQueueAdapter(this, songsInQ, songsArray);
+        dqAdapter = new displayQueueAdapterJoinParty(this, songsInQ, songsArray);
         dqRecycleView.setAdapter(dqAdapter);
 
 
