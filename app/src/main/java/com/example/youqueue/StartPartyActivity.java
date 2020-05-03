@@ -85,6 +85,7 @@ public class StartPartyActivity extends AppCompatActivity {
         mDatabase = FirebaseDatabase.getInstance().getReference();
         SongQueue sq= new SongQueue(Integer.parseInt(yourPartyID));
         pushData(sq);
+        pullData(Integer.parseInt(yourPartyID), "displayQueue", null,null);
 
         SongList sl = new SongList();
         songList = sl.getSongs();
