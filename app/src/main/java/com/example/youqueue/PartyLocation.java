@@ -35,4 +35,12 @@ public class PartyLocation {
     public void setLocation(LatLong loc) {
         location = loc;
     }
+
+    public void setPartyId(int partyId) {
+        this.partyId = partyId;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
 }
