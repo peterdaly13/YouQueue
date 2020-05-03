@@ -19,6 +19,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
+import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -68,6 +69,8 @@ public class MainActivity extends AppCompatActivity {
         Log.i("Info", "Settings Button pressed");
         Intent intent = new Intent(this, SettingsActivity.class);
         startActivity(intent);
+
+        Animatoo.animateSlideRight(this);
     }
 
     public void goToJoinParty(View view) throws InterruptedException {
@@ -77,6 +80,8 @@ public class MainActivity extends AppCompatActivity {
         Log.i("Info2", "Join Party Button pressed");
         Intent intent = new Intent(this, JoinPartyActivity.class);
         startActivity(intent);
+
+        Animatoo.animateSlideLeft(this);
     }
 
     public void goToStartParty(View view) {
@@ -84,6 +89,8 @@ public class MainActivity extends AppCompatActivity {
         Log.i("Info", "Start Party Button pressed");
         Intent intent = new Intent(this, StartPartyActivity.class);
         startActivity(intent);
+
+        Animatoo.animateSlideRight(this);
 
     }
 

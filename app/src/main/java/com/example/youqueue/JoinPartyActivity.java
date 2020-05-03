@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.app.AlertDialog;
 
+import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -43,11 +44,13 @@ public class JoinPartyActivity extends AppCompatActivity {
         Log.i("Info", "Back Button pressed");
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
+        Animatoo.animateSlideRight(this);
     }
 
     public void goToJoinedParty(View view) {
         String code = ((EditText)findViewById(R.id.editText)).getText().toString();
         checkIfValidParty(code);
+        Animatoo.animateSlideLeft(this);
     }
 
     public void checkIfValidParty(String code) {
@@ -82,6 +85,7 @@ public class JoinPartyActivity extends AppCompatActivity {
         yourPartyId = ((EditText)findViewById(R.id.editText)).getText().toString();
         Intent intent = new Intent(this, JoinedParty.class);
         startActivity(intent);
+        Animatoo.animateSlideLeft(this);
     }
 
     public static String getYourPartyId(){

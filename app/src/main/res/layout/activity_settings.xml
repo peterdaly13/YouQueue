@@ -90,6 +90,7 @@
         android:layout_height="52dp"
         android:background="@null"
         android:onClick="goHome"
+        android:scaleX="-1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintLeft_toLeftOf="parent"

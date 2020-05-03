@@ -12,6 +12,7 @@ import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.Switch;
 
+import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 import com.spotify.android.appremote.api.SpotifyAppRemote;
 
 public class SettingsActivity extends AppCompatActivity {
@@ -59,6 +60,7 @@ public class SettingsActivity extends AppCompatActivity {
         Log.i("Info", "Back Button pressed");
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
+        Animatoo.animateSlideLeft(this);
     }
 
     public void logOut(View view) {
