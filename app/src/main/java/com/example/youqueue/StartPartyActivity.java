@@ -87,6 +87,8 @@ public class StartPartyActivity extends AppCompatActivity {
         pushData(sq);
         pullData(Integer.parseInt(yourPartyID), "displayQueue", null,null);
 
+        pullLocation("addLocation", Integer.parseInt(yourPartyID), MainActivity.userLocationGlobal);
+
         SongList sl = new SongList();
         songList = sl.getSongs();
         songNames = sl.getSongNames();
