@@ -88,6 +88,7 @@ public class StartPartyActivity extends AppCompatActivity {
         pushData(sq);
         pullData(Integer.parseInt(yourPartyID), "displayQueue", null,null);
 
+
         PartyLocation myLocation = MainActivity.userLocationGlobal;
         myLocation.setPartyId(Integer.parseInt(yourPartyID));
         myLocation.setUsername(MainActivity.userName);
@@ -104,7 +105,7 @@ public class StartPartyActivity extends AppCompatActivity {
         recyclerView.setAdapter(mAdapter);
 
         mSpotifyAppRemote = MainActivity.mSpotifyAppRemote;
-        /*
+
         //login to spotify
         ConnectionParams connectionParams =
                 new ConnectionParams.Builder(CLIENT_ID)
@@ -126,9 +127,11 @@ public class StartPartyActivity extends AppCompatActivity {
                     }
                 });
 
-         */
+
 
     }
+
+
 
     //@Override
     public void onItemClick(View view, int position) {
@@ -384,8 +387,15 @@ public class StartPartyActivity extends AppCompatActivity {
         if (songQueue.getQueueSize() == 2){
             Log.i("Song queue size", Integer.toString(songQueue.getQueueSize()));
             //playNextSong(songQueue);
-            CallResult result = mSpotifyAppRemote.getPlayerApi().play(song.getURI());
-            Log.i("Call Result: ", result.toString());
+            mSpotifyAppRemote.getPlayerApi().getPlayerState().setResultCallback(playerState -> {
+                mSpotifyAppRemote.getPlayerApi().play(song.getURI());
+            })
+                    .setErrorCallback(throwable -> {
+                        Log.i("Error in playSong", mSpotifyAppRemote.toString());
+                    });
+
+            mSpotifyAppRemote.getPlayerApi().play(song.getURI());
+            //Log.i("Call Result: ", result.toString());
         }
 
     }
@@ -412,7 +422,7 @@ public class StartPartyActivity extends AppCompatActivity {
     /*
     This displays the queue... Need some help from front end folks
      */
-    private void displayQueue (SongQueue st){
+    public void displayQueue (SongQueue st){
         st.sortSongs();
         int size = st.getQueueSize();
 
@@ -436,7 +446,14 @@ public class StartPartyActivity extends AppCompatActivity {
     private void playSong(String uri) throws InterruptedException {
         Log.i("URI: ", uri);
         mSpotifyAppRemote = MainActivity.mSpotifyAppRemote;
-        mSpotifyAppRemote.getPlayerApi().play(uri);
+        mSpotifyAppRemote.getPlayerApi().getPlayerState().setResultCallback(playerState -> {
+            mSpotifyAppRemote.getPlayerApi().play(uri);
+        })
+        .setErrorCallback(throwable -> {
+            Log.i("Error in playSong", mSpotifyAppRemote.toString());
+        });
+
+                mSpotifyAppRemote.getPlayerApi().play(uri);
         songLengthCounter=0;
         //startCounting();
 

@@ -198,7 +198,7 @@ public class MainActivity extends AppCompatActivity {
         super.onStart();
         // Set the connection parameters
 
-
+/*
         ConnectionParams connectionParams =
                 new ConnectionParams.Builder(CLIENT_ID)
                         .setRedirectUri(REDIRECT_URI)
@@ -219,7 +219,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
 
-
+*/
 
         getDeviceLocation();
     }

@@ -42,6 +42,7 @@ public class songListAdapterStartParty extends RecyclerView.Adapter<songListAdap
             public void onClick(View v) {
                 System.out.println("Pressed " + songObjects[position].getName());
                 sp.queueSong(songObjects[position]);
+
             }
         });
     }
