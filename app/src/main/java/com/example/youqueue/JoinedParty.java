@@ -38,6 +38,8 @@ public class JoinedParty extends AppCompatActivity {
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
 
+    ArrayList<Song> songsYouVotedFor= new ArrayList<Song>();
+
     Song[] songList;
     String songNames[];
 
@@ -85,6 +87,8 @@ public class JoinedParty extends AppCompatActivity {
         pullData(Integer.parseInt(yourPartyID),"addASong", null, s);
     }
     public void updateVotes(Song s){
+        yourPartyID= MainActivity.yourUserID;
+        mDatabase = FirebaseDatabase.getInstance().getReference();
         pullData(Integer.parseInt(yourPartyID),"updateVotes", s.getURI(), null);
     }
 
@@ -124,8 +128,9 @@ public class JoinedParty extends AppCompatActivity {
                     if (actionRef[0].equals("displayQueue")) {
                         displayQueue(st);
                     } else if (actionRef[0].equals("updateVotes")) {
-                        updateVotes(st, uri);
+                        addAVote(st, uri);
                     } else if (actionRef[0].equals("addASong")) {
+                        Log.i("In pullData", "addSong");
                         addASong(st, song);
                     } else if (actionRef[0].equals("playNextSong")) {
                         playNextSong(st);
@@ -185,6 +190,9 @@ public class JoinedParty extends AppCompatActivity {
     private void endParty(SongQueue st) {
         if(st!=null) {
             mDatabase.child("/queues/" + st.getPartyLeaderID()).removeValue();
+            songsYouVotedFor.clear();
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
         }
     }
 
@@ -205,13 +213,36 @@ public class JoinedParty extends AppCompatActivity {
         dqRecycleView = (RecyclerView) findViewById(R.id.queueList);
         dqRecycleView.setLayoutManager(new LinearLayoutManager(this));
         dqAdapter = new displayQueueAdapter(this, songsInQ);
-        recyclerView.setAdapter(dqAdapter);
+        dqRecycleView.setAdapter(dqAdapter);
 
 
     }
 
     private void playSong(String uri){
         mSpotifyAppRemote.getPlayerApi().play(uri);
+    }
+
+    public void addAVote(SongQueue sq, String URI){
+        yourPartyID= MainActivity.yourUserID;
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        boolean addVote=true;
+        for(int i =0; i< songsYouVotedFor.size(); i++){
+            if(songsYouVotedFor.get(i).getURI().equals(URI)){
+                addVote=false;
+            }
+        }
+        Log.i("addVoteBoolean", Boolean.toString(addVote));
+        Log.i("Songs voted for",songsYouVotedFor.toString());
+        if(addVote) {
+            for(int i =0; i< sq.getQueueSize(); i++){
+                if(sq.getSongAtIndex(i).getURI().equals(URI)){
+                    sq.getSongAtIndex(i).incrementVotes();
+                    songsYouVotedFor.add(sq.getSongAtIndex(i));
+                }
+            }
+            pushData(sq);
+
+        }
     }
 
 

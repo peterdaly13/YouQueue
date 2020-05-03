@@ -131,12 +131,19 @@ public class StartPartyActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    protected void pausePlayback(){
+        mSpotifyAppRemote.getPlayerApi().pause();
+    }
+
+    protected void resumePlayback(){ mSpotifyAppRemote.getPlayerApi().resume(); }
+
     public void resume(View view) throws InterruptedException {
-        //ma.resumePlayback();
+        resumePlayback();
         startCounting();
     }
 
     public void pause(View view) {
+        pausePlayback();
         stopCounting();
         //ma.pausePlayback();
     }
@@ -152,7 +159,9 @@ public class StartPartyActivity extends AppCompatActivity {
         mDatabase = FirebaseDatabase.getInstance().getReference();
         pullData(Integer.parseInt(yourPartyID),"addASong", null, s);
     }
-    public void addAVote(View v, Song s){
+    public void addAVote(Song s){
+        yourPartyID= MainActivity.yourUserID;
+        mDatabase = FirebaseDatabase.getInstance().getReference();
         boolean addVote=true;
         for(int i =0; i< songsYouVotedFor.size(); i++){
             if(songsYouVotedFor.get(i).getURI().equals(s.getURI())){
@@ -162,6 +171,7 @@ public class StartPartyActivity extends AppCompatActivity {
         if(addVote) {
             pullData(Integer.parseInt(yourPartyID), "updateVotes", s.getURI(), null);
             songsYouVotedFor.add(s);
+            Log.i("Add vote",songsYouVotedFor.toString());
         }
     }
     public void endParty(View v){
@@ -388,7 +398,7 @@ public class StartPartyActivity extends AppCompatActivity {
         dqRecycleView = (RecyclerView) findViewById(R.id.queueList);
         dqRecycleView.setLayoutManager(new LinearLayoutManager(this));
         dqAdapter = new displayQueueAdapter(this, songsInQ);
-        recyclerView.setAdapter(dqAdapter);
+        dqRecycleView.setAdapter(dqAdapter);
     }
 
 

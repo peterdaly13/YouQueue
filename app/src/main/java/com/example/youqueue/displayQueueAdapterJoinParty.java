@@ -1,6 +1,7 @@
 package com.example.youqueue;
 
 import android.content.Context;
+import android.graphics.Paint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,38 +12,38 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class displayQueueAdapter extends RecyclerView.Adapter<displayQueueAdapter.ViewHolder>{
+public class displayQueueAdapterJoinParty extends RecyclerView.Adapter<displayQueueAdapterJoinParty.ViewHolder>{
 
     private ArrayList<String> mDataset;
     private LayoutInflater mInflater1;
-    private displayQueueAdapter.ItemClickListener mClickListener;
-    StartPartyActivity sp = new StartPartyActivity();
+    private displayQueueAdapterJoinParty.ItemClickListener mClickListener;
+    JoinedParty jp = new JoinedParty();
     SongList sl = new SongList();
     Song[] songObjects = sl.getSongs();
 
     //Constructor
-    public displayQueueAdapter(Context context, ArrayList<String> myDataset) {
+    public displayQueueAdapterJoinParty(Context context, ArrayList<String> myDataset) {
         this.mInflater1 = LayoutInflater.from(context);
         this.mDataset = myDataset;
     }
 
     // inflates the row layout from xml when needed
     @Override
-    public displayQueueAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public displayQueueAdapterJoinParty.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = mInflater1.inflate(R.layout.dqlistsongs, parent, false);
-        return new displayQueueAdapter.ViewHolder(view);
+        return new displayQueueAdapterJoinParty.ViewHolder(view);
     }
 
     // binds the data to the TextView in each row
     @Override
-    public void onBindViewHolder(displayQueueAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(displayQueueAdapterJoinParty.ViewHolder holder, int position) {
         String song = mDataset.get(position);
         holder.myTextView.setText(song);
         holder.myTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 System.out.println("Pressed " + songObjects[position].getName());
-                sp.addAVote(songObjects[position]);
+                jp.updateVotes(songObjects[position]);
             }
         });
     }
@@ -75,7 +76,7 @@ public class displayQueueAdapter extends RecyclerView.Adapter<displayQueueAdapte
     }
 
     // allows clicks events to be caught
-    void setClickListener(displayQueueAdapter.ItemClickListener itemClickListener) {
+    void setClickListener(displayQueueAdapterJoinParty.ItemClickListener itemClickListener) {
         this.mClickListener = itemClickListener;
     }
 
@@ -84,3 +85,4 @@ public class displayQueueAdapter extends RecyclerView.Adapter<displayQueueAdapte
         void onItemClick(View view, int position);
     }
 }
+
