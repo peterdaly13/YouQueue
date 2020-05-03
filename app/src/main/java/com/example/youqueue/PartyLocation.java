@@ -35,4 +35,12 @@ public class PartyLocation {
     public void setLocation(LatLong loc) {
         location = loc;
     }
+
+    public void setUsername(String usernameInput) {
+        username = usernameInput;
+    }
+
+    public void setPartyId(int partyIDInput) {
+        partyId = partyIDInput;
+    }
 }

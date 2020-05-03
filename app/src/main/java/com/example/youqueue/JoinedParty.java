@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -56,7 +57,8 @@ public class JoinedParty extends AppCompatActivity {
         TextView xmlPartyID = (TextView) findViewById(R.id.xmlPartyID);
         xmlPartyID.setText(yourPartyID);
 
-        pullData(Integer.parseInt(yourPartyID), "displayQueue", null,null);
+        // I commented this line below out because it was causing my app to crash whenever I entered to JoinedParty Activity - Bilal
+//        pullData(Integer.parseInt(yourPartyID), "displayQueue", null,null);
 
         SongList sl = new SongList();
         songList = sl.getSongs();
@@ -77,6 +79,7 @@ public class JoinedParty extends AppCompatActivity {
         Log.i("Info", "Back Button pressed");
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
+        Animatoo.animateSlideRight(this);
     }
 
     public void queueSong(Song s){

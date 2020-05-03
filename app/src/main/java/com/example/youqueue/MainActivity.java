@@ -364,6 +364,7 @@ public class MainActivity extends AppCompatActivity {
     private void pullLocation(final String action, final int partyId, final PartyLocation userLocation){
         // Used to make the action variable work as intended
         final String[] actionRef = {action};
+        Log.i("Current inPullLocation", partiesNearby.toString());
 
         // Get to the locations part of Firebase
         DatabaseReference qReference = mDatabase.child("locations");
@@ -376,12 +377,16 @@ public class MainActivity extends AppCompatActivity {
                     // Choose which method should be called
                     if (actionRef[0].equals("addLocation")) {
                         addLocation(partyLocations, userLocation);
+                        Log.i("Current total locations", partyLocations.toString());
                     } else if (actionRef[0].equals("compareLocations")) {
                         compareLocations(partyLocations, userLocation);
+                        Log.i("Current nearby locs", partiesNearby.toString());
                     } else if (actionRef[0].equals("deleteLocation")) {
                         deleteLocation(partyLocations, partyId);
                     }
+                    Log.i("Current entered&failed", partiesNearby.toString());
                 }
+                Log.i("Current didnotenter", partiesNearby.toString());
 
                 // Set action to "" so the same action doesn't repeat in one call
                 actionRef[0] ="";
@@ -508,7 +513,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
     /*
-    Function to calculate the distance between two lat/long location coordinates in kilometers
+    Function to calculate the distance between two lat/long location coordinates in miles
     (Used when guest wants to join party by location, will find locations within given range)
      */
         private double calculateDistance(double lat1, double lon1, double lat2, double lon2) {
@@ -552,12 +557,21 @@ public class MainActivity extends AppCompatActivity {
                                 if (location != null) {
                                     LatLong newLocation = new LatLong(location.getLatitude(), location.getLongitude());
                                     userLocationGlobal.setLocation(newLocation);
+                                    userLocationGlobal.setUsername(userName);
+                                    userLocationGlobal.setPartyId(Integer.parseInt(yourUserID));
+                                    PartyLocation dummyParty = new PartyLocation(newLocation, 111111, "Bob");
+                                    partiesNearby.add(dummyParty);
+
+                                    pullLocation("addLocation", userLocationGlobal.getPartyId(), userLocationGlobal);
+                                    pullLocation("compareLocation", userLocationGlobal.getPartyId(), userLocationGlobal);
                                     Log.i("Current Latitude", String.valueOf(userLocationGlobal.getLocation().getLat()));
                                     Log.i("Current Longitude", String.valueOf(userLocationGlobal.getLocation().getLawng()));
+                                    Log.i("Current userName", String.valueOf(userLocationGlobal.getUsername()));
+                                    Log.i("Current userID", String.valueOf(userLocationGlobal.getPartyId()));
+                                    Log.i("Calculate Distance", String.valueOf(calculateDistance(37.4219831, -122.0840074, 37.4219831, -122.0840074)));
                                 }
                             }
                         });
-
             }
         }
 
