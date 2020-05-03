@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String CLIENT_ID = "d19dfd48fcd54626a0f8ff696ada3b9e";
     private static final String REDIRECT_URI = "com.youqueue://callback";
-    private SpotifyAppRemote mSpotifyAppRemote = null;
+    public static SpotifyAppRemote mSpotifyAppRemote = null;
     // Access a Cloud Firestore instance from your Activity
     public DatabaseReference mDatabase;
     public static String userName = "";
@@ -198,6 +198,7 @@ public class MainActivity extends AppCompatActivity {
         super.onStart();
         // Set the connection parameters
 
+
         ConnectionParams connectionParams =
                 new ConnectionParams.Builder(CLIENT_ID)
                         .setRedirectUri(REDIRECT_URI)
@@ -217,6 +218,8 @@ public class MainActivity extends AppCompatActivity {
                         // Something went wrong when attempting to connect! Handle errors here
                     }
                 });
+
+
 
         getDeviceLocation();
     }
